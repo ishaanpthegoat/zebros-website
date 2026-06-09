@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Blog | Team 30415 Zebros</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23ff1f8f'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='%23fff' font-family='Arial' font-weight='bold'%3EZ%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+<div class="stripe-bg"></div>
+<div class="float-stripes"></div>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">
+    <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Zebra logo">
+      <defs><linearGradient id="zg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ff1f8f"/><stop offset="100%" stop-color="#ffb3d6"/></linearGradient></defs>
+      <path d="M50 12 C 30 12, 18 28, 18 48 C 18 60, 22 70, 30 78 L 32 88 L 40 86 L 42 80 C 48 82, 52 82, 58 80 L 60 86 L 68 88 L 70 78 C 78 70, 82 60, 82 48 C 82 28, 70 12, 50 12 Z" fill="#0a0a0a" stroke="url(#zg)" stroke-width="2.5"/>
+      <path d="M28 35 Q 35 32 42 36" stroke="url(#zg)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <path d="M30 46 Q 38 44 44 47" stroke="url(#zg)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <path d="M30 58 Q 38 60 44 58" stroke="url(#zg)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <path d="M58 36 Q 65 32 72 35" stroke="url(#zg)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <path d="M56 47 Q 62 44 70 46" stroke="url(#zg)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <path d="M56 58 Q 62 60 70 58" stroke="url(#zg)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="28" cy="20" rx="6" ry="9" fill="#0a0a0a" stroke="url(#zg)" stroke-width="2" transform="rotate(-25 28 20)"/>
+      <ellipse cx="72" cy="20" rx="6" ry="9" fill="#0a0a0a" stroke="url(#zg)" stroke-width="2" transform="rotate(25 72 20)"/>
+      <circle cx="38" cy="50" r="3" fill="#ff1f8f"/>
+      <circle cx="62" cy="50" r="3" fill="#ff1f8f"/>
+      <ellipse cx="46" cy="72" rx="1.5" ry="2" fill="#ff1f8f"/>
+      <ellipse cx="54" cy="72" rx="1.5" ry="2" fill="#ff1f8f"/>
+    </svg>
+    <span>Team <span class="team-num">30415</span></span>
+  </a>
+  <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="team.html">Team</a></li>
+    <li><a href="coaches.html">Coaches</a></li>
+    <li><a href="past-seasons.html">Past Seasons</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="sponsors.html">Sponsors</a></li>
+  </ul>
+</nav>
+
+<section class="container" style="padding-top: 5rem;">
+  <div class="reveal">
+    <span class="eyebrow">Weekly updates</span>
+    <h1 class="mega-text-mid">The <span class="accent">Blog.</span></h1>
+    <p class="section-sub">A weekly record of what the team has been working on, in build, programming, strategy, and outreach.</p>
+  </div>
+
+  <!-- Featured (most recent) -->
+  <article class="featured-blog reveal mb-2">
+    <div class="featured-blog-content">
+      <span class="blog-date">Week of June 1, 2026</span>
+      <h3 class="featured-blog-title">Off-season prototyping begins</h3>
+      <p class="featured-blog-text">First week of summer build. We split into two prototype squads to compare a linear slide intake against a roller bar design. The slide squad had a working v1 by Friday, though the roller pickup proved faster off the ground. We will continue testing both before deciding.</p>
+      <span class="blog-tag">Build, Prototype</span>
+    </div>
+    <div class="featured-blog-visual" aria-hidden="true">
+      <div class="visual-orb-2"></div>
+      <div class="visual-orb"></div>
+    </div>
+  </article>
+
+  <div class="blog-grid">
+
+    <article class="blog-card reveal">
+      <span class="blog-date">Week of May 25, 2026</span>
+      <h3 class="blog-title">Season review</h3>
+      <p class="blog-excerpt">The full team sat down to review every event from the 2025 season. Highlights included our Judges' Choice run at Southeast Raleigh. We also identified a recurring servo failure pattern from Ascend, which we are addressing in our preventive maintenance plan.</p>
+      <span class="blog-tag">Strategy, Team</span>
+    </article>
+
+    <article class="blog-card reveal reveal-delay-1">
+      <span class="blog-date">Week of May 18, 2026</span>
+      <h3 class="blog-title">Roster reorganization complete</h3>
+      <p class="blog-excerpt">This week wrapped up the off-season roster reorganization. Both 30415 and 30416 continue to compete, with new lineups drawn from across the prior rosters. Coach walked through the off-season roadmap and we began reorganizing the pit.</p>
+      <span class="blog-tag">Team, Milestone</span>
+    </article>
+
+    <article class="blog-card reveal reveal-delay-2">
+      <span class="blog-date">Week of May 11, 2026</span>
+      <h3 class="blog-title">CAD training for new members</h3>
+      <p class="blog-excerpt">Our experienced CAD members ran a training session this week. Three new members are now comfortable enough in Onshape to mock up a custom mounting plate. Next week we will review the designs together as a sub-team.</p>
+      <span class="blog-tag">Training, CAD</span>
+    </article>
+
+    <article class="blog-card reveal reveal-delay-3">
+      <span class="blog-date">Week of May 4, 2026</span>
+      <h3 class="blog-title">STEM day at the Cary Library</h3>
+      <p class="blog-excerpt">Six team members ran a robotics demo booth at the Cary Library STEM day. Around 80 children came through to drive a practice bot on a mini-field. Several families requested information packets about local FLL teams.</p>
+      <span class="blog-tag">Outreach, Community</span>
+    </article>
+
+    <article class="blog-card reveal reveal-delay-4">
+      <span class="blog-date">Week of April 27, 2026</span>
+      <h3 class="blog-title">Workshop organization and inventory</h3>
+      <p class="blog-excerpt">A focused week of organization. We sorted every fastener, labeled every drawer, and discarded the bin of stripped screws we had been holding onto. The pit is in good shape for the start of build season.</p>
+      <span class="blog-tag">Logistics</span>
+    </article>
+
+    <article class="blog-card reveal">
+      <span class="blog-date">Week of April 20, 2026</span>
+      <h3 class="blog-title">Strategy planning for next season</h3>
+      <p class="blog-excerpt">With the season finished, we held our first strategy meeting for the upcoming FTC game. We rewatched last season's game reveal and brainstormed scoring priorities and robot architectures. Final architecture calls will come once the next game is announced.</p>
+      <span class="blog-tag">Strategy</span>
+    </article>
+
+    <article class="blog-card reveal reveal-delay-1">
+      <span class="blog-date">Week of April 13, 2026</span>
+      <h3 class="blog-title">FLL mentorship visit</h3>
+      <p class="blog-excerpt">Three of us visited a local FIRST LEGO League team to help them prepare for their qualifier. We ran mock judging sessions and reviewed their engineering notebook with them. Good to see the next generation working hard.</p>
+      <span class="blog-tag">Outreach, Mentorship</span>
+    </article>
+
+    <article class="blog-card reveal reveal-delay-2">
+      <span class="blog-date">Week of April 6, 2026</span>
+      <h3 class="blog-title">First sponsor outreach round</h3>
+      <p class="blog-excerpt">Sent out the first batch of sponsorship proposals this week. The whole team is working through edits to the sponsorship package. We are aiming to lock in at least one local partner before the new build season starts.</p>
+      <span class="blog-tag">Sponsorship</span>
+    </article>
+
+    <article class="blog-card reveal reveal-delay-3">
+      <span class="blog-date">Week of March 30, 2026</span>
+      <h3 class="blog-title">End of competition season recap</h3>
+      <p class="blog-excerpt">We wrapped up the competition season with our Southeast Raleigh appearance. Final tally for 30415: 6 wins, 11 losses, 2 awards. Now begins the part of the year where we learn from what worked and what didn't.</p>
+      <span class="blog-tag">Season Recap</span>
+    </article>
+
+  </div>
+
+  <p class="text-center mt-3" style="color: var(--muted); font-size: 0.9rem;">
+    Want to follow along? Check back each week or contact us at <a href="mailto:infocary@zebrarobotics.com" style="color: var(--pink-soft); font-weight: 700;">infocary@zebrarobotics.com</a>.
+  </p>
+</section>
+
+<footer class="footer">
+  <div class="footer-logo">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M50 12 C 30 12, 18 28, 18 48 C 18 60, 22 70, 30 78 L 32 88 L 40 86 L 42 80 C 48 82, 52 82, 58 80 L 60 86 L 68 88 L 70 78 C 78 70, 82 60, 82 48 C 82 28, 70 12, 50 12 Z" fill="#0a0a0a" stroke="#ff1f8f" stroke-width="2.5"/>
+      <circle cx="38" cy="50" r="3" fill="#ff1f8f"/><circle cx="62" cy="50" r="3" fill="#ff1f8f"/>
+    </svg>
+    <span>Zebros, Team 30415</span>
+  </div>
+  <p>FIRST Tech Challenge, Cary, North Carolina</p>
+  <div class="footer-contact">
+    <p>1408 Boulderstone Way, Cary, NC 27519</p>
+    <p>(919) 650-6333</p>
+    <p><a href="mailto:infocary@zebrarobotics.com">infocary@zebrarobotics.com</a></p>
+  </div>
+  <p style="margin-top: 1.5rem; font-size: 0.8rem; opacity: 0.6;">© <span data-year></span> Team 30415 Zebros</p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
