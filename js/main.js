@@ -218,7 +218,7 @@
   document.body.appendChild(overlay);
 
   const closeBtn = overlay.querySelector('.modal-close');
-  const elInitials = overlay.querySelector('[data-modal-initials]');
+  const elPhoto = overlay.querySelector('.modal-photo');
   const elName = overlay.querySelector('[data-modal-name]');
   const elRole = overlay.querySelector('[data-modal-role]');
   const elBio = overlay.querySelector('[data-modal-bio]');
@@ -227,7 +227,18 @@
 
   function openModal(card) {
     lastFocused = document.activeElement;
-    elInitials.textContent = card.dataset.initials || '';
+    elPhoto.innerHTML = '';
+    if (card.dataset.photo) {
+      const img = document.createElement('img');
+      img.src = card.dataset.photo;
+      img.alt = card.dataset.name || '';
+      elPhoto.appendChild(img);
+    } else {
+      const div = document.createElement('div');
+      div.className = 'placeholder-initials';
+      div.textContent = card.dataset.initials || '';
+      elPhoto.appendChild(div);
+    }
     elName.textContent = card.dataset.name || '';
     elRole.textContent = card.dataset.role || '';
     elBio.textContent = card.dataset.bio || '';
