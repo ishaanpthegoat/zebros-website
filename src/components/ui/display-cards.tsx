@@ -11,6 +11,7 @@ interface DisplayCardProps {
   date?: string;
   iconClassName?: string;
   titleClassName?: string;
+  onClick?: () => void;
 }
 
 function DisplayCard({
@@ -20,11 +21,14 @@ function DisplayCard({
   description = "Discover amazing content",
   date = "Just now",
   titleClassName = "text-primary",
+  onClick,
 }: DisplayCardProps) {
   return (
     <div
+      onClick={onClick}
       className={cn(
         "relative flex h-36 w-[22rem] -skew-y-[8deg] select-none flex-col justify-between rounded-xl border-2 bg-muted/70 backdrop-blur-sm px-4 py-3 transition-all duration-700 after:absolute after:-right-1 after:top-[-5%] after:h-[110%] after:w-[20rem] after:bg-gradient-to-l after:from-background after:to-transparent after:content-[''] hover:border-primary/30 hover:bg-muted [&>*]:flex [&>*]:items-center [&>*]:gap-2",
+        onClick && "cursor-pointer",
         className
       )}
     >

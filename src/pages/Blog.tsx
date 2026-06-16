@@ -1,8 +1,6 @@
 import { Wrench, Cog, ClipboardList, Users, PenTool, Megaphone, Lightbulb } from "lucide-react";
-import { Navbar } from "@/components/site/navbar";
-import { Footer } from "@/components/site/footer";
+import { Layout } from "@/components/site/layout";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
-import { useSiteEffects } from "@/hooks/use-site-effects";
 
 const timelineData = [
   {
@@ -96,7 +94,7 @@ const timelineData = [
 ];
 
 const centerCard = (
-  <div className="rounded-xl border border-white/15 bg-black/90 backdrop-blur-lg p-4 shadow-2xl shadow-black/60">
+  <div className="rounded-xl border border-primary/20 bg-card/95 backdrop-blur-lg p-4 shadow-2xl shadow-black/60">
     <span className="text-[11px] uppercase tracking-wider text-primary font-semibold">Week of June 8, 2026</span>
     <h3 className="mt-1 text-lg font-bold text-white">Outreach and first drivetrain build</h3>
     <p className="mt-1 text-sm text-white/70">
@@ -110,12 +108,8 @@ const centerCard = (
 );
 
 export function Blog() {
-  useSiteEffects();
-
   return (
-    <>
-      <Navbar active="/blog.html" />
-
+    <Layout active="/blog.html" footer={false}>
       <section className="container" style={{ paddingTop: "5.5rem", textAlign: "center", marginBottom: "-3rem" }}>
         <span className="eyebrow">Weekly updates</span>
         <h1 className="mega-text-mid">The <span className="accent">Blog.</span></h1>
@@ -123,8 +117,6 @@ export function Blog() {
       </section>
 
       <RadialOrbitalTimeline timelineData={timelineData} centerContent={centerCard} />
-
-      <Footer />
-    </>
+    </Layout>
   );
 }

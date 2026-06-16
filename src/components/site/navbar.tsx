@@ -46,7 +46,15 @@ export function Navbar({ active = "/" }: { active?: string }) {
               onClick={() => {
                 window.location.href = l.href;
               }}
-              icon={<l.Icon size={22} strokeWidth={active === l.href ? 2.6 : 1.75} />}
+              icon={
+                <span className="relative flex items-center justify-center">
+                  <l.Icon size={22} strokeWidth={active === l.href ? 2.6 : 1.75} className={active === l.href ? "text-primary" : ""} />
+                  <span className="pointer-events-none absolute left-[calc(100%+26px)] top-1/2 z-[200] -translate-y-1/2 -translate-x-2 whitespace-nowrap rounded-lg border border-border/60 bg-card/95 px-3 py-1.5 text-xs font-semibold text-foreground opacity-0 shadow-lg backdrop-blur transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100">
+                    {l.label}
+                    {active === l.href && <span className="ml-1.5 text-primary">(here)</span>}
+                  </span>
+                </span>
+              }
             />
           ))}
         </MenuContainer>

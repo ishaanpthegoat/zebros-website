@@ -1,47 +1,13 @@
-import { ArrowRight, Wrench, Code2, Megaphone } from "lucide-react";
-import { Navbar } from "@/components/site/navbar";
-import { Footer } from "@/components/site/footer";
+import { ArrowRight } from "lucide-react";
+import { Layout } from "@/components/site/layout";
 import { Spotlight } from "@/components/ui/spotlight";
 import { PixelCanvas } from "@/components/ui/pixel-perfect-hero";
 import { GooeyText } from "@/components/ui/gooey-text-morphing";
 import { ZebroGooglyLogo } from "@/components/ui/zebro-googly-logo";
-import DisplayCards from "@/components/ui/display-cards";
-import { useSiteEffects } from "@/hooks/use-site-effects";
-
-const STACK_BASE =
-  "before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0";
-
-const TEAM_CARDS = [
-  {
-    icon: <Wrench className="size-4 text-pink-200" />,
-    title: "Build",
-    description: "CAD, fabrication, drivetrain",
-    date: "Mechanical",
-    className: `[grid-area:stack] hover:-translate-y-10 ${STACK_BASE}`,
-  },
-  {
-    icon: <Code2 className="size-4 text-pink-200" />,
-    title: "Code",
-    description: "Autonomous and tele-op",
-    date: "Programming",
-    className: `[grid-area:stack] translate-x-12 translate-y-10 hover:-translate-y-1 ${STACK_BASE}`,
-  },
-  {
-    icon: <Megaphone className="size-4 text-pink-200" />,
-    title: "Outreach",
-    description: "STEM in the community",
-    date: "Community",
-    className: "[grid-area:stack] translate-x-24 translate-y-20 hover:translate-y-10",
-  },
-];
 
 export function Home() {
-  useSiteEffects();
-
   return (
-    <>
-      <Navbar active="/" />
-
+    <Layout active="/">
       {/* ========= HERO: centered logo + spotlight ========= */}
       <section className="relative w-full min-h-[100dvh] overflow-hidden bg-background flex items-center justify-center isolate px-4">
         {/* Glitter: pixel-canvas shimmer from the pixel-perfect-hero component */}
@@ -156,20 +122,6 @@ export function Home() {
         </div>
       </section>
 
-      {/* ========= MEET THE TEAM (stacked display cards) ========= */}
-      <section className="container">
-        <div className="reveal text-center">
-          <span className="eyebrow">Our people</span>
-          <h2 className="mega-text-mid">Meet the <span className="accent">team.</span></h2>
-        </div>
-        <div className="reveal flex justify-center items-center min-h-[340px] py-8">
-          <DisplayCards cards={TEAM_CARDS} />
-        </div>
-        <div className="text-center" style={{ marginTop: "1rem" }}>
-          <a href="/team.html" className="btn btn-primary">See the full roster</a>
-        </div>
-      </section>
-
       {/* ========= FEATURED BLOG TEASER ========= */}
       <section className="container">
         <div className="flex-between reveal">
@@ -202,7 +154,6 @@ export function Home() {
         </div>
       </section>
 
-      <Footer />
-    </>
+    </Layout>
   );
 }

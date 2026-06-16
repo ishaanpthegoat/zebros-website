@@ -20,6 +20,9 @@
 }
 html { scroll-behavior: smooth; }
 
+/* Old gradient/stripe background removed in favor of the shader background */
+.stripe-bg, .float-stripes { display: none !important; }
+
 /* Lenis smooth scroll */
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }

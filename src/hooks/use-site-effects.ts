@@ -132,6 +132,99 @@ export function useSiteEffects() {
       toTop.remove();
     });
 
+    /* ---- Season tabs (past-seasons page) ---- */
+    const tabs = document.querySelectorAll<HTMLElement>(".team-tab");
+    tabs.forEach((tab) => {
+      const handler = () => {
+        const id = tab.dataset.team;
+        document.querySelectorAll(".team-tab").forEach((t) => t.classList.remove("active"));
+        document.querySelectorAll(".team-panel").forEach((p) => p.classList.remove("active"));
+        tab.classList.add("active");
+        document.getElementById("panel-" + id)?.classList.add("active");
+      };
+      tab.addEventListener("click", handler);
+      cleanups.push(() => tab.removeEventListener("click", handler));
+    });
+
+    /* ---- Profile modal (clickable people cards, e.g. coaches) ---- */
+    const cards = document.querySelectorAll<HTMLElement>(".person-card[data-bio]");
+    if (cards.length) {
+      const overlay = document.createElement("div");
+      overlay.className = "modal-overlay";
+      overlay.setAttribute("aria-hidden", "true");
+      overlay.innerHTML =
+        '<div class="modal" role="dialog" aria-modal="true"><button class="modal-close" aria-label="Close profile">&times;</button>' +
+        '<div class="modal-photo"><div class="placeholder-initials" data-modal-initials></div></div>' +
+        '<div class="modal-body"><h2 class="modal-name" data-modal-name></h2><div class="modal-role" data-modal-role></div>' +
+        '<p class="modal-bio" data-modal-bio></p><div class="modal-contact" data-modal-contact></div></div></div>';
+      document.body.appendChild(overlay);
+      const closeBtn = overlay.querySelector<HTMLElement>(".modal-close")!;
+      const elPhoto = overlay.querySelector<HTMLElement>(".modal-photo")!;
+      const elName = overlay.querySelector<HTMLElement>("[data-modal-name]")!;
+      const elRole = overlay.querySelector<HTMLElement>("[data-modal-role]")!;
+      const elBio = overlay.querySelector<HTMLElement>("[data-modal-bio]")!;
+      const elContact = overlay.querySelector<HTMLElement>("[data-modal-contact]")!;
+
+      const open = (card: HTMLElement) => {
+        elPhoto.innerHTML = "";
+        if (card.dataset.photo) {
+          const img = document.createElement("img");
+          img.src = card.dataset.photo;
+          img.alt = card.dataset.name || "";
+          elPhoto.appendChild(img);
+        } else {
+          const div = document.createElement("div");
+          div.className = "placeholder-initials";
+          div.textContent = card.dataset.initials || "";
+          elPhoto.appendChild(div);
+        }
+        elName.textContent = card.dataset.name || "";
+        elRole.textContent = card.dataset.role || "";
+        elBio.textContent = card.dataset.bio || "";
+        elContact.innerHTML = "";
+        if (card.dataset.email) {
+          const row = document.createElement("div");
+          row.className = "modal-contact-item";
+          row.innerHTML = `<strong>Email:</strong><a href="mailto:${card.dataset.email}">${card.dataset.email}</a>`;
+          elContact.appendChild(row);
+        }
+        if (card.dataset.phone) {
+          const row = document.createElement("div");
+          row.className = "modal-contact-item";
+          const tel = card.dataset.phone.replace(/[^0-9+]/g, "");
+          row.innerHTML = `<strong>Phone:</strong><a href="tel:${tel}">${card.dataset.phone}</a>`;
+          elContact.appendChild(row);
+        }
+        overlay.classList.add("open");
+        overlay.setAttribute("aria-hidden", "false");
+        document.body.classList.add("modal-open");
+      };
+      const close = () => {
+        overlay.classList.remove("open");
+        overlay.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("modal-open");
+      };
+      const cardHandlers: Array<() => void> = [];
+      cards.forEach((card) => {
+        card.tabIndex = 0;
+        card.setAttribute("role", "button");
+        const h = () => open(card);
+        card.addEventListener("click", h);
+        cardHandlers.push(() => card.removeEventListener("click", h));
+      });
+      closeBtn.addEventListener("click", close);
+      const onOverlayClick = (e: MouseEvent) => { if (e.target === overlay) close(); };
+      overlay.addEventListener("click", onOverlayClick);
+      const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") close(); };
+      document.addEventListener("keydown", onKey);
+      cleanups.push(() => {
+        cardHandlers.forEach((fn) => fn());
+        document.removeEventListener("keydown", onKey);
+        overlay.remove();
+        document.body.classList.remove("modal-open");
+      });
+    }
+
     return () => cleanups.forEach((fn) => fn());
   }, []);
 }

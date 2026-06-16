@@ -1,34 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Outreach | Team 30415 Zebros</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css" />
-<link rel="stylesheet" href="css/enhance.css" />
-<link rel="icon" type="image/png" href="img/logo-mark.png" />
-</head>
-<body>
+import { Layout } from "@/components/site/layout";
 
-<div class="stripe-bg"></div>
-<div class="float-stripes"></div>
-
-<a class="brand-top" href="index.html"><img src="img/logo-mark.png" alt="Team 30415 Zebros logo"><span>Team <span class="team-num">30415</span></span></a>
-<nav class="fluid-nav" aria-label="Main menu">
-  <button class="fluid-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
-  <a class="fluid-item" style="--i:1" href="index.html" title="Home">H</a>
-  <a class="fluid-item" style="--i:2" href="about.html" title="About">A</a>
-  <a class="fluid-item" style="--i:3" href="team.html" title="Team">T</a>
-  <a class="fluid-item" style="--i:4" href="coaches.html" title="Coaches">C</a>
-  <a class="fluid-item" style="--i:5" href="past-seasons.html" title="Past Seasons">P</a>
-  <a class="fluid-item" style="--i:6" href="blog.html" title="Blog">B</a>
-  <a class="fluid-item" style="--i:7" href="sponsors.html" title="Sponsors">S</a>
-</nav>
-
-<section class="container" style="padding-top: 5rem;">
+const CONTENT = `<section class="container" style="padding-top: 5rem;">
   <div class="reveal">
     <span class="hero-pretitle">In the Community</span>
     <h1 class="section-title">Community <span class="accent">Outreach</span></h1>
@@ -108,24 +80,12 @@
     </p>
     <a href="mailto:outreach@zebros30415.example" class="btn btn-primary">Contact Outreach</a>
   </div>
-</section>
+</section>`;
 
-<footer class="footer">
-  <div class="footer-logo">
-    <img class="footer-logo-img" src="img/logo-mark.png" alt="Zebros logo" />
-    <span>Zebros, Team 30415</span>
-  </div>
-  <p>FIRST Tech Challenge, Cary, North Carolina</p>
-  <div class="footer-contact">
-    <p>1408 Boulderstone Way, Cary, NC 27519</p>
-    <p>(919) 650-6333</p>
-    <p><a href="mailto:infocary@zebrarobotics.com">infocary@zebrarobotics.com</a></p>
-  </div>
-  <p style="margin-top: 1.5rem; font-size: 0.8rem; opacity: 0.6;">© <span data-year></span> Team 30415 Zebros</p>
-</footer>
-
-<script src="js/main.js"></script>
-<script src="js/enhance.js"></script>
-  <script type="module" src="/js/smooth.js"></script>
-</body>
-</html>
+export function Outreach() {
+  return (
+    <Layout active="/outreach.html">
+      <div dangerouslySetInnerHTML={{ __html: CONTENT }} />
+    </Layout>
+  );
+}
