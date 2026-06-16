@@ -24,19 +24,22 @@ const MEMBERS: Member[] = [
   { name: "Yuvika Kandel", initials: "YK", role: "Programming, Project Management", bio: "Yuvika works on programming and project management. Yuvika helps maintain the autonomous routines and keeps the programming tasks tracked. More about Yuvika coming soon.", photo: null },
 ];
 
-// Literal class strings (Tailwind cannot detect dynamically-built names).
-// Spread the cards far enough apart that each is easy to read and click.
+// Fully literal class strings — Tailwind's scanner reads source text, so
+// these cannot be built at runtime with template interpolation.
+// Spread the cards far enough apart that each is easy to read and click. The
+// hover state nudges each card up RELATIVE to its own resting spot (a literal
+// pixel value, not a fixed keyword offset), so cards never snap or jump.
 const POS = [
-  "translate-x-[0px] translate-y-[0px]",
-  "translate-x-[40px] translate-y-[24px]",
-  "translate-x-[80px] translate-y-[48px]",
-  "translate-x-[120px] translate-y-[72px]",
-  "translate-x-[160px] translate-y-[96px]",
-  "translate-x-[200px] translate-y-[120px]",
-  "translate-x-[240px] translate-y-[144px]",
-  "translate-x-[280px] translate-y-[168px]",
-  "translate-x-[320px] translate-y-[192px]",
-  "translate-x-[360px] translate-y-[216px]",
+  "translate-x-[0px] translate-y-[0px] hover:translate-x-[0px] hover:translate-y-[-16px]",
+  "translate-x-[58px] translate-y-[33px] hover:translate-x-[58px] hover:translate-y-[17px]",
+  "translate-x-[116px] translate-y-[66px] hover:translate-x-[116px] hover:translate-y-[50px]",
+  "translate-x-[174px] translate-y-[99px] hover:translate-x-[174px] hover:translate-y-[83px]",
+  "translate-x-[232px] translate-y-[132px] hover:translate-x-[232px] hover:translate-y-[116px]",
+  "translate-x-[290px] translate-y-[165px] hover:translate-x-[290px] hover:translate-y-[149px]",
+  "translate-x-[348px] translate-y-[198px] hover:translate-x-[348px] hover:translate-y-[182px]",
+  "translate-x-[406px] translate-y-[231px] hover:translate-x-[406px] hover:translate-y-[215px]",
+  "translate-x-[464px] translate-y-[264px] hover:translate-x-[464px] hover:translate-y-[248px]",
+  "translate-x-[522px] translate-y-[297px] hover:translate-x-[522px] hover:translate-y-[281px]",
 ];
 
 export function Team() {
@@ -54,7 +57,7 @@ export function Team() {
     title: m.name,
     description: m.role,
     date: "",
-    className: `[grid-area:stack] ${POS[i] ?? POS[POS.length - 1]} transition-transform duration-300 hover:-translate-y-3 hover:z-[60]`,
+    className: `[grid-area:stack] ${POS[i] ?? POS[POS.length - 1]} transition-transform duration-300 ease-out hover:z-[60]`,
     onClick: () => setSelected(m),
   }));
 
@@ -67,8 +70,8 @@ export function Team() {
           <p className="section-sub">Ten students who build, code, and run the Zebros.</p>
         </div>
 
-        <div className="mt-12 flex min-h-[460px] items-center justify-center">
-          <div className="origin-center scale-[0.5] sm:scale-[0.7] lg:scale-90">
+        <div className="mt-12 flex min-h-[480px] items-center justify-center">
+          <div className="origin-center scale-[0.42] sm:scale-[0.6] lg:scale-[0.8]">
             <DisplayCards cards={cards} />
           </div>
         </div>
@@ -90,11 +93,11 @@ export function Team() {
             >
               <X className="h-4 w-4" />
             </button>
-            <div className="relative h-64 w-full overflow-hidden bg-gradient-to-br from-primary/30 to-card">
+            <div className="relative max-h-[60vh] w-full overflow-hidden bg-gradient-to-br from-primary/20 to-card flex items-center justify-center">
               {selected.photo ? (
-                <img src={selected.photo} alt={selected.name} className="h-full w-full object-cover object-[center_top]" />
+                <img src={selected.photo} alt={selected.name} className="w-full max-h-[60vh] object-contain" />
               ) : (
-                <div className="grid h-full w-full place-items-center text-7xl font-black text-primary/80">{selected.initials}</div>
+                <div className="grid h-64 w-full place-items-center text-7xl font-black text-primary/80">{selected.initials}</div>
               )}
             </div>
             <div className="p-6">

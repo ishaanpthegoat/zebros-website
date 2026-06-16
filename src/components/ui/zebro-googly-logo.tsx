@@ -11,8 +11,8 @@ import { cn } from '@/lib/utils'
 type Eye = { x: number; y: number; size: number }
 
 const EYES: Eye[] = [
-  { x: 61.0, y: 43.5, size: 13.5 }, // back eye, toward the snout
-  { x: 73.5, y: 47.0, size: 15.0 }, // front eye, toward the snout
+  { x: 61.0, y: 35.5, size: 13.5 }, // back eye, toward the snout (raised)
+  { x: 73.5, y: 39.0, size: 15.0 }, // front eye, toward the snout (raised)
 ]
 
 export function ZebroGooglyLogo({ className }: { className?: string }) {
