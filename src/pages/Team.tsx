@@ -70,7 +70,7 @@ export function Team() {
         <h1 className="reveal mega-text-mid">The <span className="accent">Team.</span></h1>
 
         <div className="mt-10 flex min-h-[480px] w-full items-center justify-center">
-          <div className="origin-center scale-[0.42] sm:scale-[0.6] lg:scale-[0.8]">
+          <div className="origin-center scale-[0.42] sm:scale-[0.72] lg:scale-[1]">
             <DisplayCards cards={cards} />
           </div>
         </div>

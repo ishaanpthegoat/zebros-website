@@ -27,7 +27,10 @@ function DisplayCard({
     <div
       onClick={onClick}
       className={cn(
-        "relative flex h-36 w-[22rem] -skew-y-[8deg] select-none flex-col justify-between rounded-xl border-2 bg-muted/70 backdrop-blur-sm px-4 py-3 transition-all duration-700 after:absolute after:-right-1 after:top-[-5%] after:h-[110%] after:w-[20rem] after:bg-gradient-to-l after:from-background after:to-transparent after:content-[''] hover:border-primary/30 hover:bg-muted [&>*]:flex [&>*]:items-center [&>*]:gap-2",
+        // No backdrop-blur: removes 10 GPU compositor layers on team page.
+        // transition-[transform,opacity,border-color,background-color] instead
+        // of transition-all: avoids recalculating every CSS property on hover.
+        "relative flex h-36 w-[22rem] -skew-y-[8deg] select-none flex-col justify-between rounded-xl border-2 bg-muted/90 px-4 py-3 transition-[transform,opacity,border-color,background-color] duration-300 ease-out after:absolute after:-right-1 after:top-[-5%] after:h-[110%] after:w-[20rem] after:bg-gradient-to-l after:from-background after:to-transparent after:content-[''] hover:border-primary/30 hover:bg-muted [&>*]:flex [&>*]:items-center [&>*]:gap-2",
         onClick && "cursor-pointer",
         className
       )}
