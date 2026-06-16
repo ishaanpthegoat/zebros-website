@@ -61,7 +61,7 @@ export function Navbar({ active = "/" }: { active?: string }) {
           className={`pointer-events-none absolute left-[74px] z-[200] -translate-y-1/2 whitespace-nowrap rounded-lg border border-border/60 bg-card/95 px-3 py-1.5 text-xs font-semibold text-foreground shadow-lg backdrop-blur transition-all duration-200 ${
             hovered === null ? "-translate-x-2 opacity-0" : "translate-x-0 opacity-100"
           }`}
-          style={{ top: hovered === null ? 56 : (hovered + 1) * 48 + 32 }}
+          style={{ top: hovered === null ? 56 : (hovered + 1) * 70 + 32 }}
         >
           {hovered !== null && (
             <>

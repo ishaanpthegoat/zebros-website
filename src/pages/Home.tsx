@@ -1,7 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { Layout } from "@/components/site/layout";
 import { Spotlight } from "@/components/ui/spotlight";
-import { PixelCanvas } from "@/components/ui/pixel-perfect-hero";
 import { GooeyText } from "@/components/ui/gooey-text-morphing";
 import { ZebroGooglyLogo } from "@/components/ui/zebro-googly-logo";
 import AnimatedTextCycle from "@/components/ui/animated-text-cycle";
@@ -10,11 +9,9 @@ export function Home() {
   return (
     <Layout active="/">
       {/* ========= HERO: centered logo + spotlight ========= */}
-      <section className="relative w-full min-h-[100dvh] overflow-hidden bg-background flex items-center justify-center isolate px-4">
-        {/* Glitter: pixel-canvas shimmer from the pixel-perfect-hero component */}
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-70">
-          <PixelCanvas colors={["#ff1f8f", "#ffb3d6", "#b8b8c4", "#ffffff"]} gap={7} speed={28} />
-        </div>
+      {/* No solid background here on purpose — the shader (rendered behind
+          every page in Layout) shows through, glowing from the logo. */}
+      <section className="relative w-full min-h-[100dvh] overflow-hidden flex items-center justify-center isolate px-4">
         <Spotlight className="-top-40 left-0 md:-top-20 md:left-1/4" fill="#ff1f8f" />
 
         <div className="relative z-10 flex flex-col items-center text-center gap-6 py-24">

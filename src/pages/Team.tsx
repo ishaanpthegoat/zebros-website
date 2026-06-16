@@ -63,14 +63,10 @@ export function Team() {
 
   return (
     <Layout active="/team.html">
-      <section className="container" style={{ paddingTop: "6rem", paddingBottom: "6rem" }}>
-        <div className="reveal" style={{ textAlign: "center" }}>
-          <span className="eyebrow">Our roster</span>
-          <h1 className="mega-text-mid">The <span className="accent">Team.</span></h1>
-          <p className="section-sub">Ten students who build, code, and run the Zebros.</p>
-        </div>
+      <section className="container flex min-h-[100dvh] flex-col items-center justify-center text-center">
+        <h1 className="reveal mega-text-mid">The <span className="accent">Team.</span></h1>
 
-        <div className="mt-12 flex min-h-[480px] items-center justify-center">
+        <div className="mt-10 flex min-h-[480px] w-full items-center justify-center">
           <div className="origin-center scale-[0.42] sm:scale-[0.6] lg:scale-[0.8]">
             <DisplayCards cards={cards} />
           </div>

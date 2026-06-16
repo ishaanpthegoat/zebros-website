@@ -24,7 +24,7 @@ export function Menu({ trigger, children, align = "left", showChevron = true }: 
       >
         {trigger}
         {showChevron && (
-          <ChevronDown className="ml-2 -mr-1 h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" />
+          <ChevronDown className="ml-2 -mr-1 h-4 w-4 text-muted-foreground" aria-hidden="true" />
         )}
       </div>
 
@@ -32,7 +32,7 @@ export function Menu({ trigger, children, align = "left", showChevron = true }: 
         <div
           className={`absolute ${
             align === "right" ? "right-0" : "left-0"
-          } mt-2 w-56 rounded-md bg-white dark:bg-gray-800 shadow-lg ring-1 ring-black dark:ring-gray-700 ring-opacity-9 focus:outline-none z-50`}
+          } mt-2 w-56 rounded-md bg-card shadow-lg ring-1 ring-border focus:outline-none z-50`}
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="menu-button"
@@ -60,8 +60,8 @@ export function MenuItem({ children, onClick, onMouseEnter, onMouseLeave, disabl
   return (
     <button
       className={`relative block w-full h-16 text-center group
-        ${disabled ? "text-gray-400 dark:text-gray-500 cursor-not-allowed" : "text-gray-600 dark:text-gray-300"}
-        ${isActive ? "bg-white/10" : ""}
+        ${disabled ? "text-muted-foreground/40 cursor-not-allowed" : "text-foreground/80"}
+        ${isActive ? "bg-primary/15" : ""}
       `}
       role="menuitem"
       onClick={onClick}
@@ -99,19 +99,19 @@ export function MenuContainer({ children }: { children: React.ReactNode }) {
       <div className="relative">
         {/* First item - always visible */}
         <div
-          className="relative w-16 h-16 bg-gray-100 dark:bg-gray-800 cursor-pointer rounded-full group will-change-transform z-50"
+          className="relative w-16 h-16 bg-card border border-border/60 cursor-pointer rounded-full group will-change-transform z-50"
           onClick={handleToggle}
         >
           {childrenArray[0]}
         </div>
 
-        {/* Other items */}
+        {/* Other items, spread out with generous gaps between them */}
         {childrenArray.slice(1).map((child, index) => (
           <div
             key={index}
-            className="absolute top-0 left-0 w-16 h-16 bg-gray-100 dark:bg-gray-800 will-change-transform"
+            className="absolute top-0 left-0 w-16 h-16 bg-card border border-border/60 will-change-transform"
             style={{
-              transform: `translateY(${isExpanded ? (index + 1) * 48 : 0}px)`,
+              transform: `translateY(${isExpanded ? (index + 1) * 70 : 0}px)`,
               opacity: isExpanded ? 1 : 0,
               zIndex: 40 - index,
               clipPath: index === childrenArray.length - 2

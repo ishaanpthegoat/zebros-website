@@ -6,36 +6,36 @@ const ShaderAnimation = lazy(() =>
 );
 
 /**
- * Fixed full-screen shader (team colours) behind the page. It stays invisible
- * at the top (so the homepage intro is unchanged) and fades in as you scroll.
+ * Fixed full-page shader (team colours), present on every page. It is masked
+ * with a radial gradient centered on the logo's fixed position at the top of
+ * the page, so the glow reads as light coming from the zebra rather than a
+ * flat full-bleed background. Fades in once on mount.
  */
-export function ShaderBackground({ maxOpacity = 0.38 }: { maxOpacity?: number }) {
+export function ShaderBackground({ opacity = 0.32 }: { opacity?: number }) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const fadeStart = 60;
-    const fadeEnd = 480;
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      const y = window.scrollY;
-      const t = Math.min(Math.max((y - fadeStart) / (fadeEnd - fadeStart), 0), 1);
-      if (ref.current) ref.current.style.opacity = String((reduce ? 1 : t) * maxOpacity);
-    };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    update();
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (raf) cancelAnimationFrame(raf);
-    };
-  }, [maxOpacity]);
+    const raf = requestAnimationFrame(() => {
+      if (ref.current) ref.current.style.opacity = String(opacity);
+    });
+    if (reduce && ref.current) ref.current.style.opacity = String(opacity);
+    return () => cancelAnimationFrame(raf);
+  }, [opacity]);
 
   return (
-    <div ref={ref} className="fixed inset-0 -z-10 pointer-events-none" style={{ opacity: 0 }} aria-hidden="true">
+    <div
+      ref={ref}
+      className="fixed inset-0 -z-10 pointer-events-none transition-opacity duration-[1400ms] ease-out"
+      style={{
+        opacity: 0,
+        WebkitMaskImage:
+          "radial-gradient(circle at 50% 0%, black 0%, black 28%, rgba(0,0,0,0.55) 50%, transparent 78%)",
+        maskImage:
+          "radial-gradient(circle at 50% 0%, black 0%, black 28%, rgba(0,0,0,0.55) 50%, transparent 78%)",
+      }}
+      aria-hidden="true"
+    >
       <Suspense fallback={null}>
         <ShaderAnimation />
       </Suspense>
