@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Menu as MenuIcon,
   X,
@@ -22,6 +23,8 @@ const LINKS = [
 ];
 
 export function Navbar({ active = "/" }: { active?: string }) {
+  const [hovered, setHovered] = useState<number | null>(null);
+
   return (
     <>
       {/* Fluid circular menu, top-left */}
@@ -39,25 +42,34 @@ export function Navbar({ active = "/" }: { active?: string }) {
               </div>
             }
           />
-          {LINKS.map((l) => (
+          {LINKS.map((l, i) => (
             <MenuItem
               key={l.href}
               isActive={active === l.href}
               onClick={() => {
                 window.location.href = l.href;
               }}
-              icon={
-                <span className="relative flex items-center justify-center">
-                  <l.Icon size={22} strokeWidth={active === l.href ? 2.6 : 1.75} className={active === l.href ? "text-primary" : ""} />
-                  <span className="pointer-events-none absolute left-[calc(100%+26px)] top-1/2 z-[200] -translate-y-1/2 -translate-x-2 whitespace-nowrap rounded-lg border border-border/60 bg-card/95 px-3 py-1.5 text-xs font-semibold text-foreground opacity-0 shadow-lg backdrop-blur transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100">
-                    {l.label}
-                    {active === l.href && <span className="ml-1.5 text-primary">(here)</span>}
-                  </span>
-                </span>
-              }
+              onMouseEnter={() => setHovered(i)}
+              onMouseLeave={() => setHovered((h) => (h === i ? null : h))}
+              icon={<l.Icon size={22} strokeWidth={active === l.href ? 2.6 : 1.75} className={active === l.href ? "text-primary" : ""} />}
             />
           ))}
         </MenuContainer>
+
+        {/* Hover label — rendered outside the clipped menu items so it is visible */}
+        <div
+          className={`pointer-events-none absolute left-[74px] z-[200] -translate-y-1/2 whitespace-nowrap rounded-lg border border-border/60 bg-card/95 px-3 py-1.5 text-xs font-semibold text-foreground shadow-lg backdrop-blur transition-all duration-200 ${
+            hovered === null ? "-translate-x-2 opacity-0" : "translate-x-0 opacity-100"
+          }`}
+          style={{ top: hovered === null ? 56 : (hovered + 1) * 48 + 32 }}
+        >
+          {hovered !== null && (
+            <>
+              {LINKS[hovered].label}
+              {active === LINKS[hovered].href && <span className="ml-1.5 text-primary">(you are here)</span>}
+            </>
+          )}
+        </div>
       </div>
 
       {/* Centered logo, top-middle */}

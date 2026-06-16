@@ -49,12 +49,14 @@ export function Menu({ trigger, children, align = "left", showChevron = true }: 
 interface MenuItemProps {
   children?: React.ReactNode
   onClick?: () => void
+  onMouseEnter?: () => void
+  onMouseLeave?: () => void
   disabled?: boolean
   icon?: React.ReactNode
   isActive?: boolean
 }
 
-export function MenuItem({ children, onClick, disabled = false, icon, isActive = false }: MenuItemProps) {
+export function MenuItem({ children, onClick, onMouseEnter, onMouseLeave, disabled = false, icon, isActive = false }: MenuItemProps) {
   return (
     <button
       className={`relative block w-full h-16 text-center group
@@ -63,6 +65,8 @@ export function MenuItem({ children, onClick, disabled = false, icon, isActive =
       `}
       role="menuitem"
       onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       disabled={disabled}
     >
       <span className="flex items-center justify-center h-full mt-[5%]">

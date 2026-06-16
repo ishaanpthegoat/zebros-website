@@ -221,6 +221,20 @@ export default function RadialOrbitalTimeline({
                   e.stopPropagation();
                   toggleItem(item.id);
                 }}
+                onMouseEnter={() => {
+                  setActiveNodeId(item.id);
+                  setAutoRotate(false);
+                  setExpandedItems({ [item.id]: true });
+                  const rel: Record<number, boolean> = {};
+                  getRelatedItems(item.id).forEach((r) => (rel[r] = true));
+                  setPulseEffect(rel);
+                }}
+                onMouseLeave={() => {
+                  setActiveNodeId(null);
+                  setAutoRotate(true);
+                  setExpandedItems({});
+                  setPulseEffect({});
+                }}
               >
                 <div
                   className={`absolute rounded-full -inset-1 ${

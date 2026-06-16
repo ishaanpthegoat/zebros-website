@@ -4,6 +4,7 @@ import { Spotlight } from "@/components/ui/spotlight";
 import { PixelCanvas } from "@/components/ui/pixel-perfect-hero";
 import { GooeyText } from "@/components/ui/gooey-text-morphing";
 import { ZebroGooglyLogo } from "@/components/ui/zebro-googly-logo";
+import AnimatedTextCycle from "@/components/ui/animated-text-cycle";
 
 export function Home() {
   return (
@@ -34,6 +35,15 @@ export function Home() {
               textClassName="tracking-tight"
             />
           </div>
+
+          <p className="text-xl sm:text-2xl font-light text-foreground/75">
+            We do{" "}
+            <AnimatedTextCycle
+              words={["robotics", "CAD", "code", "outreach", "competition"]}
+              interval={2200}
+              className="text-primary"
+            />
+          </p>
 
           <p className="text-base sm:text-lg md:text-xl font-light text-foreground/85 max-w-xl px-2 leading-relaxed">
             We are Team 30415, the Zebros, a high school robotics team in Cary, North Carolina.
@@ -129,7 +139,7 @@ export function Home() {
           <a href="/blog.html" className="btn btn-secondary">All posts</a>
         </div>
 
-        <article className="featured-blog reveal">
+        <article className="featured-blog" data-reveal="right">
           <div className="featured-blog-content">
             <span className="blog-date">Week of June 8, 2026</span>
             <h3 className="featured-blog-title">Outreach and first drivetrain build</h3>
@@ -147,7 +157,7 @@ export function Home() {
 
       {/* ========= SUPPORT CTA ========= */}
       <section className="container sponsor-cta-section">
-        <div className="cta-big reveal">
+        <div className="cta-big" data-reveal="up">
           <h2 className="cta-big-title">Support the <span className="accent">Zebros.</span></h2>
           <p className="cta-big-sub">Help us pay for parts and travel to events. Sponsorship details are coming soon.</p>
           <a href="mailto:infocary@zebrarobotics.com" className="btn btn-primary btn-big">Contact us</a>

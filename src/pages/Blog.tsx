@@ -113,7 +113,7 @@ export function Blog() {
       <section className="container" style={{ paddingTop: "5.5rem", textAlign: "center", marginBottom: "-3rem" }}>
         <span className="eyebrow">Weekly updates</span>
         <h1 className="mega-text-mid">The <span className="accent">Blog.</span></h1>
-        <p className="section-sub">Hover the center for this week. Tap any node to read that week.</p>
+        <p className="section-sub">Our week by week progress.</p>
       </section>
 
       <RadialOrbitalTimeline timelineData={timelineData} centerContent={centerCard} />
