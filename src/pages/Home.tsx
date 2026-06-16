@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { PixelHero } from "@/components/ui/pixel-perfect-hero";
+import { ArrowRight, Github } from "lucide-react";
+import { Spotlight } from "@/components/ui/spotlight";
+import { ZebroGooglyLogo } from "@/components/ui/zebro-googly-logo";
+import { SplineSceneBasic } from "@/components/ui/spline-scene-basic";
 import { useSiteEffects } from "@/hooks/use-site-effects";
 
 const GITHUB_URL = "https://github.com/ishaanpthegoat/zebros-website";
@@ -41,20 +44,44 @@ export function Home() {
         </ul>
       </nav>
 
-      {/* ========= PIXEL HERO (shadcn component) ========= */}
-      <PixelHero
-        word1="Team 30415"
-        word2="Zebros."
-        description="We're FTC Team 30415, the Zebros — a student robotics team in Cary, North Carolina. We design, build, and program competition robots and mentor the next generation of FIRST."
-        primaryCta="Meet the team"
-        primaryCtaMobile="Team"
-        secondaryCta="View GitHub"
-        secondaryCtaMobile="GitHub"
-        githubUrl={GITHUB_URL}
-        onPrimaryClick={() => {
-          window.location.href = "/team.html";
-        }}
-      />
+      {/* ========= HERO: centered googly logo + spotlight ========= */}
+      <section className="relative w-full min-h-[100dvh] overflow-hidden bg-background flex items-center justify-center isolate px-4">
+        <Spotlight className="-top-40 left-0 md:-top-20 md:left-1/4" fill="#ff1f8f" />
+
+        <div className="relative z-10 flex flex-col items-center text-center gap-6 py-24">
+          {/* Logo in the center — eyes pop out of the glasses and follow the cursor */}
+          <ZebroGooglyLogo className="w-[clamp(220px,40vw,400px)] aspect-square" />
+
+          <h1 className="font-black tracking-tight leading-[0.95] text-[clamp(2.5rem,9vw,6rem)]">
+            <span className="bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">Team 30415 </span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-b from-[#ffb3d6] to-[#ff1f8f]">Zebros.</span>
+          </h1>
+
+          <p className="text-base sm:text-lg md:text-xl font-light text-foreground/85 max-w-xl px-2 leading-relaxed">
+            FTC Team 30415, the Zebros — a student robotics team in Cary, North Carolina.
+            We design, build, and program competition robots and mentor the next generation of FIRST.
+          </p>
+
+          <div className="flex flex-row items-center justify-center gap-3 mt-2">
+            <a
+              href="/team.html"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-primary/90 to-primary px-7 text-sm font-semibold text-primary-foreground shadow-[inset_0_1px_1px_rgba(255,255,255,0.3),0_12px_24px_rgba(255,31,143,0.25)] ring-1 ring-primary/20 transition-transform duration-200 hover:scale-[1.03] active:scale-[0.98]"
+            >
+              Meet the team
+              <ArrowRight className="w-4 h-4" />
+            </a>
+            <a
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-card/80 to-card px-7 text-sm font-semibold text-card-foreground ring-1 ring-border/60 backdrop-blur-md transition-transform duration-200 hover:scale-[1.03] active:scale-[0.98]"
+            >
+              <Github className="w-4 h-4" />
+              View GitHub
+            </a>
+          </div>
+        </div>
+      </section>
 
       {/* ========= MASSIVE STATS STRIP ========= */}
       <section className="stats-strip">
@@ -117,6 +144,13 @@ export function Home() {
             <h3>Grow the next class.</h3>
             <p>We mentor FIRST LEGO League teams, run library STEM days, and open our workshop to younger students. FIRST is bigger than any one team.</p>
           </div>
+        </div>
+      </section>
+
+      {/* ========= INTERACTIVE 3D (Spline) ========= */}
+      <section className="container">
+        <div className="reveal">
+          <SplineSceneBasic />
         </div>
       </section>
 
