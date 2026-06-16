@@ -1,47 +1,46 @@
-import { useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Wrench, Code2, Megaphone } from "lucide-react";
+import { Navbar } from "@/components/site/navbar";
+import { Footer } from "@/components/site/footer";
 import { Spotlight } from "@/components/ui/spotlight";
 import { PixelCanvas } from "@/components/ui/pixel-perfect-hero";
 import { GooeyText } from "@/components/ui/gooey-text-morphing";
 import { ZebroGooglyLogo } from "@/components/ui/zebro-googly-logo";
+import DisplayCards from "@/components/ui/display-cards";
 import { useSiteEffects } from "@/hooks/use-site-effects";
 
-const NAV_LINKS = [
-  { label: "Home", href: "/", active: true },
-  { label: "About", href: "/about.html" },
-  { label: "Team", href: "/team.html" },
-  { label: "Coaches", href: "/coaches.html" },
-  { label: "Past Seasons", href: "/past-seasons.html" },
-  { label: "Blog", href: "/blog.html" },
-  { label: "Sponsors", href: "/sponsors.html" },
+const STACK_BASE =
+  "before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0";
+
+const TEAM_CARDS = [
+  {
+    icon: <Wrench className="size-4 text-pink-200" />,
+    title: "Build",
+    description: "CAD, fabrication, drivetrain",
+    date: "Mechanical",
+    className: `[grid-area:stack] hover:-translate-y-10 ${STACK_BASE}`,
+  },
+  {
+    icon: <Code2 className="size-4 text-pink-200" />,
+    title: "Code",
+    description: "Autonomous and tele-op",
+    date: "Programming",
+    className: `[grid-area:stack] translate-x-12 translate-y-10 hover:-translate-y-1 ${STACK_BASE}`,
+  },
+  {
+    icon: <Megaphone className="size-4 text-pink-200" />,
+    title: "Outreach",
+    description: "STEM in the community",
+    date: "Community",
+    className: "[grid-area:stack] translate-x-24 translate-y-20 hover:translate-y-10",
+  },
 ];
 
 export function Home() {
   useSiteEffects();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const year = new Date().getFullYear();
 
   return (
     <>
-      {/* ========= NAVBAR ========= */}
-      <nav className="navbar">
-        <a href="/" className="nav-brand">
-          <img className="logo-svg" src="/img/logo-mark.png" alt="Team 30415 Zebros logo" width={44} height={44} />
-          <span>Team <span className="team-num">30415</span></span>
-        </a>
-        <button className="nav-toggle" aria-label="Toggle menu" onClick={() => setMenuOpen((o) => !o)}>
-          ☰
-        </button>
-        <ul className={menuOpen ? "nav-links open" : "nav-links"}>
-          {NAV_LINKS.map((l) => (
-            <li key={l.href}>
-              <a href={l.href} className={l.active ? "active" : undefined} onClick={() => setMenuOpen(false)}>
-                {l.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <Navbar active="/" />
 
       {/* ========= HERO: centered logo + spotlight ========= */}
       <section className="relative w-full min-h-[100dvh] overflow-hidden bg-background flex items-center justify-center isolate px-4">
@@ -157,6 +156,20 @@ export function Home() {
         </div>
       </section>
 
+      {/* ========= MEET THE TEAM (stacked display cards) ========= */}
+      <section className="container">
+        <div className="reveal text-center">
+          <span className="eyebrow">Our people</span>
+          <h2 className="mega-text-mid">Meet the <span className="accent">team.</span></h2>
+        </div>
+        <div className="reveal flex justify-center items-center min-h-[340px] py-8">
+          <DisplayCards cards={TEAM_CARDS} />
+        </div>
+        <div className="text-center" style={{ marginTop: "1rem" }}>
+          <a href="/team.html" className="btn btn-primary">See the full roster</a>
+        </div>
+      </section>
+
       {/* ========= FEATURED BLOG TEASER ========= */}
       <section className="container">
         <div className="flex-between reveal">
@@ -189,20 +202,7 @@ export function Home() {
         </div>
       </section>
 
-      {/* ========= FOOTER ========= */}
-      <footer className="footer">
-        <div className="footer-logo">
-          <img className="footer-logo-img" src="/img/logo-mark.png" alt="Zebros logo" />
-          <span>Zebros, Team 30415</span>
-        </div>
-        <p>FIRST Tech Challenge, Cary, North Carolina</p>
-        <div className="footer-contact">
-          <p>1408 Boulderstone Way, Cary, NC 27519</p>
-          <p>(919) 650-6333</p>
-          <p><a href="mailto:infocary@zebrarobotics.com">infocary@zebrarobotics.com</a></p>
-        </div>
-        <p style={{ marginTop: "1.5rem", fontSize: "0.8rem", opacity: 0.6 }}>© {year} Team 30415 Zebros</p>
-      </footer>
+      <Footer />
     </>
   );
 }
