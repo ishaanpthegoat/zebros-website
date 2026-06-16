@@ -29,17 +29,20 @@ const MEMBERS: Member[] = [
 // Spread the cards far enough apart that each is easy to read and click. The
 // hover state nudges each card up RELATIVE to its own resting spot (a literal
 // pixel value, not a fixed keyword offset), so cards never snap or jump.
+// Offsets are centered around (0,0) — the first card sits up-and-left of
+// center and the last sits down-and-right — so the whole fan (not just its
+// top-left corner) lands in the middle of the page.
 const POS = [
-  "translate-x-[0px] translate-y-[0px] hover:translate-x-[0px] hover:translate-y-[-16px]",
-  "translate-x-[58px] translate-y-[33px] hover:translate-x-[58px] hover:translate-y-[17px]",
-  "translate-x-[116px] translate-y-[66px] hover:translate-x-[116px] hover:translate-y-[50px]",
-  "translate-x-[174px] translate-y-[99px] hover:translate-x-[174px] hover:translate-y-[83px]",
-  "translate-x-[232px] translate-y-[132px] hover:translate-x-[232px] hover:translate-y-[116px]",
-  "translate-x-[290px] translate-y-[165px] hover:translate-x-[290px] hover:translate-y-[149px]",
-  "translate-x-[348px] translate-y-[198px] hover:translate-x-[348px] hover:translate-y-[182px]",
-  "translate-x-[406px] translate-y-[231px] hover:translate-x-[406px] hover:translate-y-[215px]",
-  "translate-x-[464px] translate-y-[264px] hover:translate-x-[464px] hover:translate-y-[248px]",
-  "translate-x-[522px] translate-y-[297px] hover:translate-x-[522px] hover:translate-y-[281px]",
+  "translate-x-[-261px] translate-y-[-148px] hover:translate-x-[-261px] hover:translate-y-[-164px]",
+  "translate-x-[-203px] translate-y-[-115px] hover:translate-x-[-203px] hover:translate-y-[-131px]",
+  "translate-x-[-145px] translate-y-[-82px] hover:translate-x-[-145px] hover:translate-y-[-98px]",
+  "translate-x-[-87px] translate-y-[-49px] hover:translate-x-[-87px] hover:translate-y-[-65px]",
+  "translate-x-[-29px] translate-y-[-16px] hover:translate-x-[-29px] hover:translate-y-[-32px]",
+  "translate-x-[29px] translate-y-[17px] hover:translate-x-[29px] hover:translate-y-[1px]",
+  "translate-x-[87px] translate-y-[50px] hover:translate-x-[87px] hover:translate-y-[34px]",
+  "translate-x-[145px] translate-y-[83px] hover:translate-x-[145px] hover:translate-y-[67px]",
+  "translate-x-[203px] translate-y-[116px] hover:translate-x-[203px] hover:translate-y-[100px]",
+  "translate-x-[261px] translate-y-[149px] hover:translate-x-[261px] hover:translate-y-[133px]",
 ];
 
 export function Team() {
