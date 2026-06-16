@@ -7,3 +7,14 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Node / Vite build
+node_modules/
+dist/
+dist-ssr/
+*.local
+.vite/
+*.tsbuildinfo
+
+# Local preview / editor config
+.claude/

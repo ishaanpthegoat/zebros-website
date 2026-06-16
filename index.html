@@ -1,175 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Team 30415 Zebros</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css" />
-<link rel="stylesheet" href="css/enhance.css" />
-<link rel="icon" type="image/png" href="img/logo-mark.png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team 30415 Zebros</title>
+  <meta name="description" content="FTC Team 30415, the Zebros — a FIRST Tech Challenge robotics team based in Cary, North Carolina." />
+  <link rel="icon" type="image/png" href="/img/logo-mark.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+
+  <!-- Legacy global styles (shared with the static pages in /public) -->
+  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="stylesheet" href="/css/enhance.css" />
 </head>
 <body>
-
-<div class="stripe-bg"></div>
-<div class="float-stripes"></div>
-
-<!-- ========= NAVBAR ========= -->
-<nav class="navbar">
-  <a href="index.html" class="nav-brand">
-    <img class="logo-svg" src="img/logo-mark.png" alt="Zebros — Team 30415 logo" width="44" height="44" />
-    <span>Team <span class="team-num">30415</span></span>
-  </a>
-  <button class="nav-toggle" aria-label="Toggle menu">☰</button>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="team.html">Team</a></li>
-    <li><a href="coaches.html">Coaches</a></li>
-    <li><a href="past-seasons.html">Past Seasons</a></li>
-    <li><a href="blog.html">Blog</a></li>
-    <li><a href="sponsors.html">Sponsors</a></li>
-  </ul>
-</nav>
-
-<!-- ========= MEGA HERO ========= -->
-<section class="hero hero-mega">
-  <img class="hero-zebra" src="img/logo-mark.png" alt="" aria-hidden="true" data-parallax="0.18" />
-
-  <div class="hero-content">
-    <img class="hero-badge" src="img/logo-mark.png" alt="Zebros team logo" />
-    <span class="eyebrow">FTC Team 30415 · Cary, North Carolina</span>
-    <h1 class="mega-text">
-      <span class="word-reveal"><span>Team 30415.</span></span><br>
-      <span class="accent word-reveal delay-1"><span>Zebros.</span></span>
-    </h1>
-    <p class="lead">The Zebros are FTC Team 30415, based in Cary, North Carolina. We design, build, and program competition robots, and run STEM outreach across the Triangle community.</p>
-    <div class="hero-cta">
-      <a href="about.html" class="btn btn-primary">Meet the team</a>
-      <a href="past-seasons.html" class="btn btn-secondary">View results</a>
-    </div>
-  </div>
-
-  <div class="scroll-hint" aria-hidden="true">
-    <span>Scroll</span>
-    <div class="scroll-line"></div>
-  </div>
-</section>
-
-<!-- ========= MASSIVE STATS STRIP ========= -->
-<section class="stats-strip">
-  <div class="container">
-    <div class="stats-grid-big">
-      <div class="stat-big-item reveal">
-        <div class="stat-big-num"><span data-count="10">0</span></div>
-        <div class="stat-big-label">Active Members</div>
-      </div>
-      <div class="stat-big-item reveal reveal-delay-1">
-        <div class="stat-big-num"><span data-count="4">0</span></div>
-        <div class="stat-big-label">Awards Won</div>
-      </div>
-      <div class="stat-big-item reveal reveal-delay-2">
-        <div class="stat-big-num"><span data-count="6">0</span></div>
-        <div class="stat-big-label">Events Attended</div>
-      </div>
-      <div class="stat-big-item reveal reveal-delay-3">
-        <div class="stat-big-num"><span data-count="14">0</span></div>
-        <div class="stat-big-label">Match Wins</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ========= MARQUEE STRIP ========= -->
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track">
-    <span>30415 ZEBROS</span><div class="m-dot"></div>
-    <span>CARY · NORTH CAROLINA</span><div class="m-dot"></div>
-    <span>ZEBRA ROBOTICS</span><div class="m-dot"></div>
-    <span>FIRST TECH CHALLENGE</span><div class="m-dot"></div>
-    <span>30415 ZEBROS</span><div class="m-dot"></div>
-    <span>CARY · NORTH CAROLINA</span><div class="m-dot"></div>
-    <span>ZEBRA ROBOTICS</span><div class="m-dot"></div>
-    <span>FIRST TECH CHALLENGE</span><div class="m-dot"></div>
-  </div>
-</div>
-
-<!-- ========= THREE PILLARS ========= -->
-<section class="container pillars-section">
-  <div class="reveal">
-    <span class="eyebrow">What we do</span>
-    <h2 class="mega-text-mid">Build.<br>Compete.<br><span class="accent">Mentor.</span></h2>
-  </div>
-
-  <div class="pillar-grid">
-    <div class="pillar reveal">
-      <div class="pillar-num">01 / BUILD</div>
-      <h3>Prototype, iterate, ship.</h3>
-      <p>Quick prototypes, careful iteration. We design in CAD, fabricate in the shop, and test on the field. Each season's robot starts as a sketch and ends as a competition machine.</p>
-    </div>
-    <div class="pillar reveal reveal-delay-1">
-      <div class="pillar-num">02 / COMPETE</div>
-      <h3>Six events. Four awards.</h3>
-      <p>Across our rookie season we attended six qualifiers between two rosters, took home four judged awards, and stacked 14 match wins. We compete to learn, to win, and to push the robot further every event.</p>
-    </div>
-    <div class="pillar reveal reveal-delay-2">
-      <div class="pillar-num">03 / MENTOR</div>
-      <h3>Grow the next class.</h3>
-      <p>We mentor FIRST LEGO League teams, run library STEM days, and open our workshop to younger students. FIRST is bigger than any one team.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ========= FEATURED BLOG TEASER ========= -->
-<section class="container">
-  <div class="flex-between reveal">
-    <h2 class="section-title">From the <span class="accent">blog</span></h2>
-    <a href="blog.html" class="btn btn-secondary">All posts →</a>
-  </div>
-
-  <article class="featured-blog reveal">
-    <div class="featured-blog-content">
-      <span class="blog-date">Week of June 1, 2026</span>
-      <h3 class="featured-blog-title">Off-season prototyping begins</h3>
-      <p class="featured-blog-text">First week of summer build. We split into two prototype squads to compare a linear slide intake against a roller bar design. The slide squad had a working v1 by Friday, though the roller pickup proved faster off the ground. We will continue testing both before deciding.</p>
-      <div>
-        <a href="blog.html" class="btn btn-primary">Read the blog</a>
-      </div>
-    </div>
-    <div class="featured-blog-visual" aria-hidden="true">
-      <div class="visual-orb-2"></div>
-      <div class="visual-orb"></div>
-    </div>
-  </article>
-</section>
-
-<!-- ========= BIG SPONSOR CTA ========= -->
-<section class="container sponsor-cta-section">
-  <div class="cta-big reveal">
-    <h2 class="cta-big-title">Sponsor the <span class="accent">Zebros.</span></h2>
-    <p class="cta-big-sub">Help us fund parts, travel to qualifiers, and grow STEM in the Triangle. Three sponsorship tiers, real two-way value.</p>
-    <a href="sponsors.html" class="btn btn-primary btn-big">View packages →</a>
-  </div>
-</section>
-
-<!-- ========= FOOTER ========= -->
-<footer class="footer">
-  <div class="footer-logo">
-    <img class="footer-logo-img" src="img/logo-mark.png" alt="Zebros logo" />
-    <span>Zebros, Team 30415</span>
-  </div>
-  <p>FIRST Tech Challenge, Cary, North Carolina</p>
-  <div class="footer-contact">
-    <p>1408 Boulderstone Way, Cary, NC 27519</p>
-    <p>(919) 650-6333</p>
-    <p><a href="mailto:infocary@zebrarobotics.com">infocary@zebrarobotics.com</a></p>
-  </div>
-  <p style="margin-top: 1.5rem; font-size: 0.8rem; opacity: 0.6;">© <span data-year></span> Team 30415 Zebros</p>
-</footer>
-
-<script src="js/main.js"></script>
-<script src="js/enhance.js"></script>
+  <div class="stripe-bg"></div>
+  <div class="float-stripes"></div>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
 </body>
 </html>

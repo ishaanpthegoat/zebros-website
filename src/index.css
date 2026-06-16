@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+ * shadcn/ui design tokens — mapped to the Zebros pink/dark brand.
+ * The whole site runs in dark mode (class="dark" on <html>), so :root and
+ * .dark carry the same dark values; future shadcn components inherit these.
+ * ------------------------------------------------------------------------- */
+@layer base {
+  :root,
+  .dark {
+    --background: 0 0% 4%;            /* #0a0a0a */
+    --foreground: 0 0% 100%;          /* #ffffff */
+
+    --card: 240 13% 12%;              /* #1a1a22 */
+    --card-foreground: 0 0% 100%;
+
+    --popover: 240 13% 12%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 330 100% 56%;          /* #ff1f8f */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 11% 16%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 240 13% 12%;
+    --muted-foreground: 240 9% 75%;   /* #b8b8c4 */
+
+    --accent: 327 90% 68%;            /* #ffb3d6-ish */
+    --accent-foreground: 0 0% 4%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 10% 20%;
+    --input: 240 10% 20%;
+    --ring: 330 100% 56%;
+
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  /* Keep shadcn components on-theme without disturbing the legacy stylesheet,
+     which sets its own body background and typography. */
+  #root {
+    color: hsl(var(--foreground));
+  }
+}
