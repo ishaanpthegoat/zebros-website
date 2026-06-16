@@ -48,13 +48,13 @@ GitHub repo. Pushing to `main` triggers an automatic Vercel build. `vercel.json`
 
 ## Pages
 
-- `/` — Home (React)
-- `about.html` — Team story, values, and timeline
-- `team.html` — Roster (clickable profiles)
-- `coaches.html` — Coach profiles
-- `past-seasons.html` — 2025 rookie season stats for both 30415 and 30416
-- `blog.html` — Weekly team updates
-- `sponsors.html` — Sponsorship tiers (Silver / Gold / Title Sponsor)
+- `/`: Home (React)
+- `about.html`: Team story, values, and timeline
+- `team.html`: Roster (clickable profiles)
+- `coaches.html`: Coach profiles
+- `past-seasons.html`: 2025 rookie season stats for both 30415 and 30416
+- `blog.html`: Weekly team updates
+- `sponsors.html`: Sponsorship tiers (Silver / Gold / Title Sponsor)
 
 ## Contact
 

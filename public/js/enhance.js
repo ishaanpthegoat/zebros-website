@@ -1,5 +1,5 @@
 /* =====================================================================
-   ENHANCE.JS  —  Wow-factor interactivity layer
+   ENHANCE.JS  -  Wow-factor interactivity layer
    Loaded after main.js on every page. Self-contained IIFEs; each guards
    its own preconditions so it is safe to run on any page.
    ===================================================================== */
@@ -9,7 +9,7 @@
   var coarse = window.matchMedia('(pointer: coarse)').matches;
 
   /* ---------------------------------------------------------------- */
-  /* 1. Page intro overlay — quick branded loader, fades out on load   */
+  /* 1. Page intro overlay - quick branded loader, fades out on load   */
   /* ---------------------------------------------------------------- */
   (function intro() {
     if (reduceMotion) return;

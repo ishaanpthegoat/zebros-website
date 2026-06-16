@@ -10,6 +10,13 @@
   --white: #ffffff;
   --muted: #b8b8c4;
   --stripe: #1e1e26;
+  /* Motion tokens (Emil Kowalski animation principles) */
+  --ease-out: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --dur-fast: 160ms;
+  --dur: 220ms;
+  --dur-slow: 380ms;
 }
 html { scroll-behavior: smooth; }
 body {

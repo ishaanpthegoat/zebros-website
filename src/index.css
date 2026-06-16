@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* ---------------------------------------------------------------------------
- * shadcn/ui design tokens — mapped to the Zebros pink/dark brand.
+ * shadcn/ui design tokens, mapped to the Zebros pink/dark brand.
  * The whole site runs in dark mode (class="dark" on <html>), so :root and
  * .dark carry the same dark values; future shadcn components inherit these.
  * ------------------------------------------------------------------------- */
@@ -39,6 +39,14 @@
     --ring: 330 100% 56%;
 
     --radius: 0.75rem;
+
+    /* Motion tokens (Emil Kowalski animation principles) */
+    --ease-out: cubic-bezier(0.32, 0.72, 0, 1);
+    --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --dur-fast: 160ms;
+    --dur: 220ms;
+    --dur-slow: 380ms;
   }
 }
 
@@ -68,10 +76,10 @@
  * Eyeballs pop out of the sunglasses; pupils track the cursor.
  * ------------------------------------------------------------------------- */
 .zebro-googly { line-height: 0; }
+/* Eyes fade + scale in driven by --eye-reveal (set on scroll by the component). */
 .zebro-eye {
   position: absolute;
   aspect-ratio: 1 / 1;
-  transform: translate(-50%, -50%);
   border-radius: 50%;
   background: radial-gradient(circle at 35% 28%, #ffffff 0%, #f2f2f7 60%, #d9d9e3 100%);
   box-shadow:
@@ -82,8 +90,10 @@
   display: grid;
   place-items: center;
   z-index: 4;
-  opacity: 0;
-  animation: zebro-eye-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  opacity: var(--eye-reveal, 0);
+  transform: translate(-50%, -50%) scale(calc(0.5 + 0.5 * var(--eye-reveal, 0)));
+  transition: opacity var(--dur-fast, 160ms) linear,
+              transform var(--dur, 220ms) var(--ease-out, ease-out);
 }
 .zebro-pupil {
   width: 44%;
@@ -93,13 +103,4 @@
   box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.25);
   transition: transform 0.06s linear;
   will-change: transform;
-}
-@keyframes zebro-eye-pop {
-  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0); }
-  70%  { opacity: 1; transform: translate(-50%, -50%) scale(1.18); }
-  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .zebro-eye { animation: none; opacity: 1; }
-  .loader { animation-duration: 1.4s; }
 }

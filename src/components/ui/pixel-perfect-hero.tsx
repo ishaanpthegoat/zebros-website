@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 /* -----------------------------------------------------------------------------
  * BRAND / AFFILIATION WORDMARKS
- * Adapted for FTC Team 30415 — the team's real affiliations and partners.
+ * Adapted for FTC Team 30415, the team's real affiliations and partners.
  * (Original demo shipped tech-company logos; swapped for the team's context.)
  * -------------------------------------------------------------------------- */
 

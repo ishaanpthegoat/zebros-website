@@ -3,7 +3,7 @@
   "private": true,
   "version": "2.0.0",
   "type": "module",
-  "description": "FTC Team 30415 Zebros — Vite + React + TypeScript + Tailwind + shadcn/ui",
+  "description": "FTC Team 30415 Zebros, Vite + React + TypeScript + Tailwind + shadcn/ui",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

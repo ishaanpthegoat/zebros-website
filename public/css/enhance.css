@@ -1,5 +1,5 @@
 /* =====================================================================
-   ENHANCE.CSS  —  Wow-factor animation & interactivity layer
+   ENHANCE.CSS  -  Wow-factor animation & interactivity layer
    Loaded after styles.css on every page. Purely additive: no existing
    rule is overridden destructively. All heavy motion is disabled under
    prefers-reduced-motion at the bottom of this file.
@@ -86,7 +86,7 @@
 }
 
 /* ------------------------------------------------------------------ */
-/* 2. Hero aurora — drifting mesh-gradient blobs behind hero content   */
+/* 2. Hero aurora - drifting mesh-gradient blobs behind hero content   */
 /* ------------------------------------------------------------------ */
 .hero { isolation: isolate; }
 .hero-aurora {
@@ -181,7 +181,7 @@
 }
 
 /* ------------------------------------------------------------------ */
-/* 5. Reveal polish — add a soft blur-clear to the existing reveal     */
+/* 5. Reveal polish - add a soft blur-clear to the existing reveal     */
 /* ------------------------------------------------------------------ */
 .reveal { filter: blur(6px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16,1,0.3,1), filter 0.7s ease; }
 .reveal.in-view { filter: blur(0); }
@@ -195,7 +195,7 @@
 [data-reveal].in-view { opacity: 1; transform: none; }
 
 /* ------------------------------------------------------------------ */
-/* 6. Person photo — shine sweep + slow zoom on hover                  */
+/* 6. Person photo - shine sweep + slow zoom on hover                  */
 /* ------------------------------------------------------------------ */
 .person-card .person-photo { position: relative; }
 .person-card .person-photo img {
@@ -293,7 +293,7 @@
 .marquee:hover .marquee-track span { color: var(--pink-soft); }
 
 /* ------------------------------------------------------------------ */
-/* 11. Real Zebros logo — navbar emblem, footer mark, hero badge       */
+/* 11. Real Zebros logo - navbar emblem, footer mark, hero badge       */
 /* ------------------------------------------------------------------ */
 .nav-brand .logo-svg { object-fit: contain; }
 .footer .footer-logo img.footer-logo-img {
@@ -320,7 +320,7 @@
   50%      { transform: translateY(-11px) rotate(2.5deg); }
 }
 
-/* Weekly featured post — highlight list */
+/* Weekly featured post - highlight list */
 .featured-highlights {
   list-style: none;
   margin: 0.4rem 0 1.3rem;
@@ -360,7 +360,7 @@
 }
 
 /* ------------------------------------------------------------------ */
-/* 10. Accessibility — respect reduced-motion                          */
+/* 10. Accessibility - respect reduced-motion                          */
 /* ------------------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
   .hero-aurora .a1, .hero-aurora .a2, .hero-aurora .a3,
@@ -371,4 +371,31 @@
   .fx-tilt { transform: none !important; }
   .hero-badge { animation: badge-in 0.01s both; }
   #intro-overlay { display: none; }
+}
+
+/* ------------------------------------------------------------------ */
+/* 12. CAD photo gallery (blog)                                        */
+/* ------------------------------------------------------------------ */
+.cad-gallery {
+  margin: 0 0 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.cad-gallery img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--panel);
+  transition: transform var(--dur, 220ms) var(--ease-out, ease);
+}
+.cad-gallery img:hover { transform: scale(1.02); }
+.cad-gallery figcaption {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
 }

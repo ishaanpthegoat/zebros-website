@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { ArrowRight, Github } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Spotlight } from "@/components/ui/spotlight";
+import { GooeyText } from "@/components/ui/gooey-text-morphing";
 import { ZebroGooglyLogo } from "@/components/ui/zebro-googly-logo";
-import { SplineSceneBasic } from "@/components/ui/spline-scene-basic";
 import { useSiteEffects } from "@/hooks/use-site-effects";
-
-const GITHUB_URL = "https://github.com/ishaanpthegoat/zebros-website";
 
 const NAV_LINKS = [
   { label: "Home", href: "/", active: true },
@@ -27,7 +25,7 @@ export function Home() {
       {/* ========= NAVBAR ========= */}
       <nav className="navbar">
         <a href="/" className="nav-brand">
-          <img className="logo-svg" src="/img/logo-mark.png" alt="Zebros — Team 30415 logo" width={44} height={44} />
+          <img className="logo-svg" src="/img/logo-mark.png" alt="Team 30415 Zebros logo" width={44} height={44} />
           <span>Team <span className="team-num">30415</span></span>
         </a>
         <button className="nav-toggle" aria-label="Toggle menu" onClick={() => setMenuOpen((o) => !o)}>
@@ -44,22 +42,32 @@ export function Home() {
         </ul>
       </nav>
 
-      {/* ========= HERO: centered googly logo + spotlight ========= */}
+      {/* ========= HERO: centered logo + spotlight ========= */}
       <section className="relative w-full min-h-[100dvh] overflow-hidden bg-background flex items-center justify-center isolate px-4">
         <Spotlight className="-top-40 left-0 md:-top-20 md:left-1/4" fill="#ff1f8f" />
 
         <div className="relative z-10 flex flex-col items-center text-center gap-6 py-24">
-          {/* Logo in the center — eyes pop out of the glasses and follow the cursor */}
+          {/* Logo in the center. The eyes fade in as you scroll and follow the cursor. */}
           <ZebroGooglyLogo className="w-[clamp(220px,40vw,400px)] aspect-square" />
 
-          <h1 className="font-black tracking-tight leading-[0.95] text-[clamp(2.5rem,9vw,6rem)]">
-            <span className="bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">Team 30415 </span>
-            <span className="bg-clip-text text-transparent bg-gradient-to-b from-[#ffb3d6] to-[#ff1f8f]">Zebros.</span>
-          </h1>
+          {/* Gooey morphing headline */}
+          <h1 className="sr-only">Team 30415 Zebros</h1>
+          <div
+            className="h-[110px] sm:h-[160px] md:h-[200px] w-full flex items-center justify-center"
+            aria-hidden="true"
+          >
+            <GooeyText
+              texts={["Zebros", "Team 30415", "FIRST", "Robotics"]}
+              morphTime={1}
+              cooldownTime={1.1}
+              className="font-black"
+              textClassName="tracking-tight"
+            />
+          </div>
 
           <p className="text-base sm:text-lg md:text-xl font-light text-foreground/85 max-w-xl px-2 leading-relaxed">
-            FTC Team 30415, the Zebros — a student robotics team in Cary, North Carolina.
-            We design, build, and program competition robots and mentor the next generation of FIRST.
+            We are Team 30415, the Zebros, a high school robotics team in Cary, North Carolina.
+            We build and program robots for the FIRST Tech Challenge and help younger students get into STEM.
           </p>
 
           <div className="flex flex-row items-center justify-center gap-3 mt-2">
@@ -71,19 +79,16 @@ export function Home() {
               <ArrowRight className="w-4 h-4" />
             </a>
             <a
-              href={GITHUB_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/past-seasons.html"
               className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-card/80 to-card px-7 text-sm font-semibold text-card-foreground ring-1 ring-border/60 backdrop-blur-md transition-transform duration-200 hover:scale-[1.03] active:scale-[0.98]"
             >
-              <Github className="w-4 h-4" />
-              View GitHub
+              Past seasons
             </a>
           </div>
         </div>
       </section>
 
-      {/* ========= MASSIVE STATS STRIP ========= */}
+      {/* ========= STATS STRIP ========= */}
       <section className="stats-strip">
         <div className="container">
           <div className="stats-grid-big">
@@ -111,11 +116,11 @@ export function Home() {
       <div className="marquee" aria-hidden="true">
         <div className="marquee-track">
           <span>30415 ZEBROS</span><div className="m-dot"></div>
-          <span>CARY · NORTH CAROLINA</span><div className="m-dot"></div>
+          <span>CARY, NORTH CAROLINA</span><div className="m-dot"></div>
           <span>ZEBRA ROBOTICS</span><div className="m-dot"></div>
           <span>FIRST TECH CHALLENGE</span><div className="m-dot"></div>
           <span>30415 ZEBROS</span><div className="m-dot"></div>
-          <span>CARY · NORTH CAROLINA</span><div className="m-dot"></div>
+          <span>CARY, NORTH CAROLINA</span><div className="m-dot"></div>
           <span>ZEBRA ROBOTICS</span><div className="m-dot"></div>
           <span>FIRST TECH CHALLENGE</span><div className="m-dot"></div>
         </div>
@@ -131,26 +136,19 @@ export function Home() {
         <div className="pillar-grid">
           <div className="pillar reveal">
             <div className="pillar-num">01 / BUILD</div>
-            <h3>Prototype, iterate, ship.</h3>
-            <p>Quick prototypes, careful iteration. We design in CAD, fabricate in the shop, and test on the field. Each season's robot starts as a sketch and ends as a competition machine.</p>
+            <h3>We build the robot.</h3>
+            <p>We design parts in CAD, make them in the shop, and test them on the field. The robot changes a lot from the first sketch to the final build each season.</p>
           </div>
           <div className="pillar reveal reveal-delay-1">
             <div className="pillar-num">02 / COMPETE</div>
-            <h3>Six events. Four awards.</h3>
-            <p>Across our rookie season we attended six qualifiers between two rosters, took home four judged awards, and stacked 14 match wins. We compete to learn, to win, and to push the robot further every event.</p>
+            <h3>We compete.</h3>
+            <p>Last season we went to six qualifiers across two teams, won four awards, and got 14 match wins. We go to learn and to get better each event.</p>
           </div>
           <div className="pillar reveal reveal-delay-2">
             <div className="pillar-num">03 / MENTOR</div>
-            <h3>Grow the next class.</h3>
-            <p>We mentor FIRST LEGO League teams, run library STEM days, and open our workshop to younger students. FIRST is bigger than any one team.</p>
+            <h3>We help others.</h3>
+            <p>We help out local FIRST LEGO League teams, run STEM days at the library, and let younger students use our shop.</p>
           </div>
-        </div>
-      </section>
-
-      {/* ========= INTERACTIVE 3D (Spline) ========= */}
-      <section className="container">
-        <div className="reveal">
-          <SplineSceneBasic />
         </div>
       </section>
 
@@ -158,14 +156,14 @@ export function Home() {
       <section className="container">
         <div className="flex-between reveal">
           <h2 className="section-title">From the <span className="accent">blog</span></h2>
-          <a href="/blog.html" className="btn btn-secondary">All posts →</a>
+          <a href="/blog.html" className="btn btn-secondary">All posts</a>
         </div>
 
         <article className="featured-blog reveal">
           <div className="featured-blog-content">
             <span className="blog-date">Week of June 8, 2026</span>
-            <h3 className="featured-blog-title">Outreach momentum &amp; first drivetrain build</h3>
-            <p className="featured-blog-text">A big week on two fronts: public-facing outreach and sponsorship, and the first real robot design and drivetrain work. We landed Lunespark as a partner, stood up this site, and started fabricating the drivetrain.</p>
+            <h3 className="featured-blog-title">Outreach and first drivetrain build</h3>
+            <p className="featured-blog-text">Two big things this week. We started reaching out for sponsors, and we began building the drivetrain. We also got Lunespark on board and put up this website.</p>
             <div>
               <a href="/blog.html" className="btn btn-primary">Read the blog</a>
             </div>
@@ -177,12 +175,12 @@ export function Home() {
         </article>
       </section>
 
-      {/* ========= BIG SPONSOR CTA ========= */}
+      {/* ========= SUPPORT CTA ========= */}
       <section className="container sponsor-cta-section">
         <div className="cta-big reveal">
-          <h2 className="cta-big-title">Sponsor the <span className="accent">Zebros.</span></h2>
-          <p className="cta-big-sub">Help us fund parts, travel to qualifiers, and grow STEM in the Triangle. Three sponsorship tiers, real two-way value.</p>
-          <a href="/sponsors.html" className="btn btn-primary btn-big">View packages →</a>
+          <h2 className="cta-big-title">Support the <span className="accent">Zebros.</span></h2>
+          <p className="cta-big-sub">Help us pay for parts and travel to events. Sponsorship details are coming soon.</p>
+          <a href="mailto:infocary@zebrarobotics.com" className="btn btn-primary btn-big">Contact us</a>
         </div>
       </section>
 
