@@ -76,7 +76,7 @@
  * Eyeballs pop out of the sunglasses; pupils track the cursor.
  * ------------------------------------------------------------------------- */
 .zebro-googly { line-height: 0; }
-/* Eyes fade + scale in driven by --eye-reveal (set on scroll by the component). */
+/* The zebra's eyes. Always visible; pop in on load; pupils track the cursor. */
 .zebro-eye {
   position: absolute;
   aspect-ratio: 1 / 1;
@@ -90,10 +90,15 @@
   display: grid;
   place-items: center;
   z-index: 4;
-  opacity: var(--eye-reveal, 0);
-  transform: translate(-50%, -50%) scale(calc(0.5 + 0.5 * var(--eye-reveal, 0)));
-  transition: opacity var(--dur-fast, 160ms) linear,
-              transform var(--dur, 220ms) var(--ease-out, ease-out);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.4);
+  animation: zebro-eye-in 0.5s var(--ease-out, ease-out) both;
+}
+@keyframes zebro-eye-in {
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .zebro-eye { animation: none; opacity: 1; transform: translate(-50%, -50%); }
 }
 .zebro-pupil {
   width: 44%;

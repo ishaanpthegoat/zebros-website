@@ -134,7 +134,7 @@ type PixelCanvasProps = {
   speed?: number;
 };
 
-function PixelCanvas({ colors, gap = 5, speed = 30 }: PixelCanvasProps) {
+export function PixelCanvas({ colors, gap = 5, speed = 30 }: PixelCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
   const pixelsRef = useRef<Pixel[]>([]);
