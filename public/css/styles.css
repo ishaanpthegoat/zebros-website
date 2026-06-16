@@ -19,6 +19,13 @@
   --dur-slow: 380ms;
 }
 html { scroll-behavior: smooth; }
+
+/* Lenis smooth scroll */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
 body {
   font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
   background: var(--black);

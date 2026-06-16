@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import Lenis from "lenis";
 
 /**
  * Reimplements the legacy static-site scroll/animation behaviors for the
@@ -13,6 +14,24 @@ export function useSiteEffects() {
   useEffect(() => {
     const cleanups: Array<() => void> = [];
     const supportsIO = "IntersectionObserver" in window;
+    const reduceMotionScroll = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    /* ---- Apple-like smooth scrolling (Lenis) ---- */
+    let lenis: Lenis | null = null;
+    if (!reduceMotionScroll) {
+      lenis = new Lenis({ lerp: 0.09, wheelMultiplier: 1, smoothWheel: true });
+      let lenisRaf = 0;
+      const raf = (time: number) => {
+        lenis?.raf(time);
+        lenisRaf = requestAnimationFrame(raf);
+      };
+      lenisRaf = requestAnimationFrame(raf);
+      cleanups.push(() => {
+        cancelAnimationFrame(lenisRaf);
+        lenis?.destroy();
+        lenis = null;
+      });
+    }
 
     /* ---- Reveal on scroll ---- */
     const reveals = document.querySelectorAll<HTMLElement>(".reveal, [data-reveal]");
@@ -86,9 +105,10 @@ export function useSiteEffects() {
     const arc = toTop.querySelector<SVGCircleElement>(".tt-arc");
     const ARC_LEN = 157;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    toTop.addEventListener("click", () =>
-      window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" })
-    );
+    toTop.addEventListener("click", () => {
+      if (lenis) lenis.scrollTo(0);
+      else window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+    });
 
     let ticking = false;
     const onScroll = () => {

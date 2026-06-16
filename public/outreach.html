@@ -16,21 +16,16 @@
 <div class="stripe-bg"></div>
 <div class="float-stripes"></div>
 
-<nav class="navbar">
-  <a href="index.html" class="nav-brand">
-    <img class="logo-svg" src="img/logo-mark.png" alt="Team 30415 Zebros logo" width="44" height="44" />
-    <span>Team <span class="team-num">30415</span></span>
-  </a>
-  <button class="nav-toggle" aria-label="Toggle menu">☰</button>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="team.html">Team</a></li>
-    <li><a href="coaches.html">Coaches</a></li>
-    <li><a href="past-seasons.html">Past Seasons</a></li>
-    <li><a href="outreach.html">Outreach</a></li>
-    <li><a href="sponsors.html">Sponsors</a></li>
-  </ul>
+<a class="brand-top" href="index.html"><img src="img/logo-mark.png" alt="Team 30415 Zebros logo"><span>Team <span class="team-num">30415</span></span></a>
+<nav class="fluid-nav" aria-label="Main menu">
+  <button class="fluid-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+  <a class="fluid-item" style="--i:1" href="index.html" title="Home">H</a>
+  <a class="fluid-item" style="--i:2" href="about.html" title="About">A</a>
+  <a class="fluid-item" style="--i:3" href="team.html" title="Team">T</a>
+  <a class="fluid-item" style="--i:4" href="coaches.html" title="Coaches">C</a>
+  <a class="fluid-item" style="--i:5" href="past-seasons.html" title="Past Seasons">P</a>
+  <a class="fluid-item" style="--i:6" href="blog.html" title="Blog">B</a>
+  <a class="fluid-item" style="--i:7" href="sponsors.html" title="Sponsors">S</a>
 </nav>
 
 <section class="container" style="padding-top: 5rem;">
@@ -131,5 +126,6 @@
 
 <script src="js/main.js"></script>
 <script src="js/enhance.js"></script>
+  <script type="module" src="/js/smooth.js"></script>
 </body>
 </html>

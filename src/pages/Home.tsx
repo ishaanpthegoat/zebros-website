@@ -61,7 +61,7 @@ export function Home() {
             aria-hidden="true"
           >
             <GooeyText
-              texts={["Zebros", "Team 30415", "FIRST", "Robotics"]}
+              texts={["Zebros", "Team 30415", "Robotics"]}
               morphTime={1}
               cooldownTime={1.1}
               className="font-black"

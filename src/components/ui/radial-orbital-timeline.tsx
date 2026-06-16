@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { ArrowRight, Link, Zap } from "lucide-react";
+import { ArrowRight, Link } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,11 +19,14 @@ interface TimelineItem {
 
 interface RadialOrbitalTimelineProps {
   timelineData: TimelineItem[];
+  centerContent?: React.ReactNode;
 }
 
 export default function RadialOrbitalTimeline({
   timelineData,
+  centerContent,
 }: RadialOrbitalTimelineProps) {
+  const [centerHover, setCenterHover] = useState(false);
   const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>(
     {}
   );
@@ -167,13 +170,28 @@ export default function RadialOrbitalTimeline({
             transform: `translate(${centerOffset.x}px, ${centerOffset.y}px)`,
           }}
         >
-          <div className="absolute w-16 h-16 rounded-full bg-gradient-to-br from-[#ff1f8f] via-[#ff5fa8] to-[#ffb3d6] animate-pulse flex items-center justify-center z-10">
-            <div className="absolute w-20 h-20 rounded-full border border-white/20 animate-ping opacity-70"></div>
-            <div
-              className="absolute w-24 h-24 rounded-full border border-white/10 animate-ping opacity-50"
-              style={{ animationDelay: "0.5s" }}
-            ></div>
-            <div className="w-8 h-8 rounded-full bg-white/80 backdrop-blur-md"></div>
+          <div
+            className="absolute z-20 flex items-center justify-center"
+            onMouseEnter={() => setCenterHover(true)}
+            onMouseLeave={() => setCenterHover(false)}
+          >
+            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#ff1f8f] via-[#ff5fa8] to-[#ffb3d6] animate-pulse flex items-center justify-center">
+              <div className="absolute w-20 h-20 rounded-full border border-white/20 animate-ping opacity-70"></div>
+              <div
+                className="absolute w-24 h-24 rounded-full border border-white/10 animate-ping opacity-50"
+                style={{ animationDelay: "0.5s" }}
+              ></div>
+              <div className="w-8 h-8 rounded-full bg-white/80 backdrop-blur-md"></div>
+            </div>
+            {centerContent && (
+              <div
+                className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-40 w-[min(90vw,420px)] transition-all duration-300 ${
+                  centerHover ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-95 pointer-events-none"
+                }`}
+              >
+                {centerContent}
+              </div>
+            )}
           </div>
 
           <div className="absolute w-96 h-96 rounded-full border border-white/10"></div>
@@ -279,22 +297,6 @@ export default function RadialOrbitalTimeline({
                     </CardHeader>
                     <CardContent className="text-xs text-white/80">
                       <p>{item.content}</p>
-
-                      <div className="mt-4 pt-3 border-t border-white/10">
-                        <div className="flex justify-between items-center text-xs mb-1">
-                          <span className="flex items-center">
-                            <Zap size={10} className="mr-1" />
-                            Energy Level
-                          </span>
-                          <span className="font-mono">{item.energy}%</span>
-                        </div>
-                        <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-gradient-to-r from-[#ff1f8f] to-[#ffb3d6]"
-                            style={{ width: `${item.energy}%` }}
-                          ></div>
-                        </div>
-                      </div>
 
                       {item.relatedIds.length > 0 && (
                         <div className="mt-4 pt-3 border-t border-white/10">

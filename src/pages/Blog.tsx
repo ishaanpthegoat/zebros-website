@@ -95,6 +95,20 @@ const timelineData = [
   },
 ];
 
+const centerCard = (
+  <div className="rounded-xl border border-white/15 bg-black/90 backdrop-blur-lg p-4 shadow-2xl shadow-black/60">
+    <span className="text-[11px] uppercase tracking-wider text-primary font-semibold">Week of June 8, 2026</span>
+    <h3 className="mt-1 text-lg font-bold text-white">Outreach and first drivetrain build</h3>
+    <p className="mt-1 text-sm text-white/70">
+      We got Lunespark on board as a sponsor, started building the drivetrain, and put up this website.
+    </p>
+    <div className="mt-3 grid grid-cols-2 gap-2">
+      <img src="/img/cad-robot.png" alt="CAD of the full robot" className="w-full h-24 object-cover rounded-lg border border-white/10" loading="lazy" />
+      <img src="/img/cad-intake.webp" alt="CAD of the drivetrain and intake" className="w-full h-24 object-cover rounded-lg border border-white/10" loading="lazy" />
+    </div>
+  </div>
+);
+
 export function Blog() {
   useSiteEffects();
 
@@ -102,47 +116,13 @@ export function Blog() {
     <>
       <Navbar active="/blog.html" />
 
-      <section className="container" style={{ paddingTop: "5rem" }}>
-        <div className="reveal">
-          <span className="eyebrow">Weekly updates</span>
-          <h1 className="mega-text-mid">The <span className="accent">Blog.</span></h1>
-          <p className="section-sub">What the team has been working on each week, in build, programming, strategy, and outreach.</p>
-        </div>
-
-        {/* Featured (most recent) */}
-        <article className="featured-blog reveal mb-2">
-          <div className="featured-blog-content">
-            <span className="blog-date">Week of June 8, 2026</span>
-            <h3 className="featured-blog-title">Outreach and first drivetrain build</h3>
-            <p className="featured-blog-text">Two big areas this week: outreach and sponsorship, and the first real design and drivetrain work. We got our first partner, put up this website, and started building the drivetrain.</p>
-            <ul className="featured-highlights">
-              <li><strong>Outreach and sponsorship.</strong> We got <span className="accent">Lunespark</span> on board as a partner and are waiting on their call to pick a package. We also planned out our social media, summer STEM events, and team merch, found a good, cheap merch seller, and put up this website.</li>
-              <li><strong>Robot development.</strong> The design team planned the brake, intake, slides, and drivetrain, and finished CAD for the drivetrain, intake and slide, and the path from intake to outtake. They also redid the motor and middle section after finding a mounting issue. The build team made two drivetrain sides and did a full robot teardown.</li>
-              <li><strong>Team and tooling.</strong> We finished setting member roles, with team info still in progress, and kept setting up our AI and Claude tools for the team.</li>
-            </ul>
-            <span className="blog-tag">Outreach, CAD, Drivetrain</span>
-          </div>
-          <div className="featured-blog-visual" aria-hidden="true">
-            <div className="visual-orb-2"></div>
-            <div className="visual-orb"></div>
-          </div>
-        </article>
-
-        <figure className="cad-gallery reveal">
-          <img src="/img/cad-robot.png" alt="CAD model of the full robot" loading="lazy" />
-          <img src="/img/cad-intake.webp" alt="CAD model of the drivetrain and intake" loading="lazy" />
-          <figcaption>This week's CAD: the full robot, and the drivetrain and intake assembly.</figcaption>
-        </figure>
+      <section className="container" style={{ paddingTop: "5.5rem", textAlign: "center", marginBottom: "-3rem" }}>
+        <span className="eyebrow">Weekly updates</span>
+        <h1 className="mega-text-mid">The <span className="accent">Blog.</span></h1>
+        <p className="section-sub">Hover the center for this week. Tap any node to read that week.</p>
       </section>
 
-      {/* Orbital timeline of the weeks */}
-      <section>
-        <div className="container reveal" style={{ textAlign: "center", marginBottom: "-2rem" }}>
-          <h2 className="section-title">Week by <span className="accent">week</span></h2>
-          <p className="section-sub">Tap a node to read what happened that week.</p>
-        </div>
-        <RadialOrbitalTimeline timelineData={timelineData} />
-      </section>
+      <RadialOrbitalTimeline timelineData={timelineData} centerContent={centerCard} />
 
       <Footer />
     </>

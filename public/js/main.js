@@ -298,3 +298,27 @@
     if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
   });
 })();
+
+// ============ Floating fluid nav (static pages) ============
+(function () {
+  var nav = document.querySelector('.fluid-nav');
+  if (!nav) return;
+  var btn = nav.querySelector('.fluid-toggle');
+  btn.addEventListener('click', function () {
+    var open = nav.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(open));
+    btn.textContent = open ? '✕' : '☰';
+  });
+  document.addEventListener('click', function (e) {
+    if (nav.classList.contains('open') && !nav.contains(e.target)) {
+      nav.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      btn.textContent = '☰';
+    }
+  });
+  var page = location.pathname.split('/').pop() || 'index.html';
+  nav.querySelectorAll('.fluid-item').forEach(function (a) {
+    var href = a.getAttribute('href');
+    if (href === page || (page === '' && href === 'index.html')) a.classList.add('active');
+  });
+})();
