@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils'
 type Eye = { x: number; y: number; size: number }
 
 const EYES: Eye[] = [
-  { x: 61.0, y: 43.0, size: 13.5 }, // back eye (left), toward the snout
+  { x: 61.0, y: 41.0, size: 13.5 }, // back eye (left), toward the snout
   { x: 73.5, y: 39.0, size: 15.0 }, // front eye (right), toward the snout
 ]
 
