@@ -140,7 +140,7 @@ export function Home() {
           <div className="featured-blog-content">
             <span className="blog-date">Week of June 8, 2026</span>
             <h3 className="featured-blog-title">Outreach and first drivetrain build</h3>
-            <p className="featured-blog-text">Two big things this week. We started reaching out for sponsors, and we began building the drivetrain. We also got Lunespark on board and put up this website.</p>
+            <p className="featured-blog-text">Two big things this week. We started reaching out for sponsors, and we began building the drivetrain. We also put up this website.</p>
             <div>
               <a href="/blog.html" className="btn btn-primary">Read the blog</a>
             </div>

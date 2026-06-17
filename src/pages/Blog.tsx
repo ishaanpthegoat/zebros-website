@@ -7,7 +7,7 @@ const timelineData = [
     id: 1,
     title: "Drivetrain",
     date: "Jun 8",
-    content: "Started building the drivetrain, got Lunespark on board as a sponsor, and launched this website.",
+    content: "Started building the drivetrain and launched this website.",
     category: "Build",
     icon: Wrench,
     relatedIds: [2],
@@ -98,7 +98,7 @@ const centerCard = (
     <span className="text-[11px] uppercase tracking-wider text-primary font-semibold">Week of June 8, 2026</span>
     <h3 className="mt-1 text-lg font-bold text-white">Outreach and first drivetrain build</h3>
     <p className="mt-1 text-sm text-white/70">
-      We got Lunespark on board as a sponsor, started building the drivetrain, and put up this website.
+      Started building the drivetrain and put up this website.
     </p>
     <div className="mt-3 grid grid-cols-2 gap-2">
       <img src="/img/cad-robot.png" alt="CAD of the full robot" className="w-full h-24 object-cover rounded-lg border border-white/10" loading="lazy" />
