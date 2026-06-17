@@ -24,7 +24,6 @@ const BRAND_LOGOS = [
       Zebra<span className="text-primary"> </span>Robotics
     </span>
   ),
-  () => <span className={WORDMARK_CLASS}>Lunespark</span>,
   () => (
     <span className={WORDMARK_CLASS}>
       FTC<span className="text-primary"> </span>30415
