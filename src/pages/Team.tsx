@@ -18,9 +18,7 @@ const MEMBERS: Member[] = [
   { name: "Avani Poondota", initials: "AP", role: "Programming, Social Media, Script", bio: "Hey! I'm Avani, and I work on programming, social media, project management, and script. This is my 5th year doing robotics, and what I love about it is the creativity and competition. I also love connecting and spending time with the team and making fun memories!", photo: "/img/avani.jpg" },
   { name: "Virja Mehta", initials: "VM", role: "Bot Maintenance, Portfolio, Mechanical", bio: "Hey, I'm Virja! On the team, my role is to build, fix, and maintain the robot throughout the season and between matches, along with documenting our progress in the team portfolio. I love robotics because it lets me show my interests in a competitive context, and besides the hard work, I enjoy spending time with my team and all the fun memories we make along the way.", photo: "/img/virja.jpg" },
   { name: "Amir Islamkulov", initials: "AI", role: "Mechanical, CAD, Design", bio: "Amir works on the mechanical sub-team and handles a big share of the CAD and design work. Amir focuses on turning ideas into mechanisms we can actually build. More about Amir coming soon.", photo: null },
-  { name: "Hrithik Ajith", initials: "HA", role: "Project Management, Programming", bio: "Hrithik works on project management, programming, and the portfolio. Hrithik keeps the programming sub-team organized while writing code. More about Hrithik coming soon.", photo: null },
   { name: "Ishaan Pemmaraju", initials: "IP", role: "Management, STEM Connections, Script", bio: "Ishaan handles team management, builds STEM connections in the community, and works on script and the portfolio. Ishaan helps run team operations and outside partnerships. More about Ishaan coming soon.", photo: null },
-  { name: "Peter Napoleonak", initials: "PN", role: "Mood Booster, Helper", bio: "Peter keeps team morale up and helps out wherever an extra pair of hands is needed. The mood booster role is a real one on this team. More about Peter coming soon.", photo: null },
   { name: "Saisri Kondapaneni", initials: "SK", role: "Script, CAD, Mechanical", bio: "Saisri works on script, CAD, and the mechanical sub-team. Saisri is comfortable moving between design and build tasks during the season. More about Saisri coming soon.", photo: null },
   { name: "Sanya Patel", initials: "SP", role: "Bot Maintenance, Portfolio, Mechanical", bio: "Sanya keeps the bot working between matches, helps with the portfolio, and works on the mechanical sub-team. Bot maintenance is one of the most important roles during a competition. More about Sanya coming soon.", photo: null },
   { name: "Yuvika Kandel", initials: "YK", role: "Programming, Project Management", bio: "Yuvika works on programming and project management. Yuvika helps maintain the autonomous routines and keeps the programming tasks tracked. More about Yuvika coming soon.", photo: null },
@@ -35,7 +33,6 @@ const MEMBERS: Member[] = [
 // center and the last sits down-and-right — so the whole fan (not just its
 // top-left corner) lands in the middle of the page.
 const POS = [
-  "translate-x-[-261px] translate-y-[-148px] hover:translate-x-[-261px] hover:translate-y-[-164px]",
   "translate-x-[-203px] translate-y-[-115px] hover:translate-x-[-203px] hover:translate-y-[-131px]",
   "translate-x-[-145px] translate-y-[-82px] hover:translate-x-[-145px] hover:translate-y-[-98px]",
   "translate-x-[-87px] translate-y-[-49px] hover:translate-x-[-87px] hover:translate-y-[-65px]",
@@ -44,7 +41,6 @@ const POS = [
   "translate-x-[87px] translate-y-[50px] hover:translate-x-[87px] hover:translate-y-[34px]",
   "translate-x-[145px] translate-y-[83px] hover:translate-x-[145px] hover:translate-y-[67px]",
   "translate-x-[203px] translate-y-[116px] hover:translate-x-[203px] hover:translate-y-[100px]",
-  "translate-x-[261px] translate-y-[149px] hover:translate-x-[261px] hover:translate-y-[133px]",
 ];
 
 export function Team() {
