@@ -59,14 +59,20 @@ const BY_PAGE: Record<string, Tip[]> = {
 /* Random spots Zeke can pop from. `peek` is the transform while hidden (pushed
    toward that edge so ~70% of him still shows); `reverse` puts the bubble on the
    other side so it stays on-screen. */
-type Anchor = { pos: string; peek: string; reverse: boolean };
+/* `flip` mirrors the (left-facing) zebra so his HEAD is always on the visible,
+   interior side no matter which edge he peeks from — never cropped off. */
+type Anchor = { pos: string; peek: string; reverse: boolean; flip: boolean };
 const ANCHORS: Anchor[] = [
-  { pos: "bottom-0 left-2 sm:left-4", peek: "translateY(30%)", reverse: false },
-  { pos: "bottom-0 left-1/2 -translate-x-1/2", peek: "translateY(30%)", reverse: false },
-  { pos: "bottom-0 right-2 sm:right-4", peek: "translateY(30%)", reverse: true },
-  // Side peeks crop ~half of him behind the screen edge (peeking round a corner)
-  { pos: "top-1/2 -translate-y-1/2 left-0", peek: "translateX(-58%)", reverse: false },
-  { pos: "top-1/2 -translate-y-1/2 right-0", peek: "translateX(58%)", reverse: true },
+  // Bottom peeks rise up; legs go off-screen, head (top) always shows.
+  // Flip so each faces into the page (toward the content / its speech bubble).
+  { pos: "bottom-0 left-2 sm:left-4", peek: "translateY(30%)", reverse: false, flip: true },
+  { pos: "bottom-0 left-1/2 -translate-x-1/2", peek: "translateY(30%)", reverse: false, flip: true },
+  { pos: "bottom-0 right-2 sm:right-4", peek: "translateY(30%)", reverse: true, flip: false },
+  // Side peeks crop ~half of him behind the edge; head leads into the page.
+  // Left edge: mirror so the head faces right (into the page) and stays visible.
+  { pos: "top-1/2 -translate-y-1/2 left-0", peek: "translateX(-58%)", reverse: false, flip: true },
+  // Right edge: head already faces left (into the page) — no mirror needed.
+  { pos: "top-1/2 -translate-y-1/2 right-0", peek: "translateX(58%)", reverse: true, flip: false },
 ];
 
 export function ZebraGuide({ active = "/" }: { active?: string }) {
@@ -153,21 +159,19 @@ export function ZebraGuide({ active = "/" }: { active?: string }) {
         type="button"
         onClick={toggle}
         aria-label={open ? "Hide the guide" : "Open the Zebros guide"}
-        className="relative shrink-0 origin-bottom transition-transform duration-500 ease-out"
+        className="shrink-0 origin-bottom transition-transform duration-500 ease-out"
         style={{ transform: open ? "translate(0,0)" : anchor.peek }}
       >
-        <img
-          src="/img/mascot-zebra.png"
-          alt="Zeke, the Zebros guide"
-          className={`w-28 select-none drop-shadow-[0_8px_24px_rgba(0,0,0,0.5)] sm:w-36 ${
-            open ? "" : "zeke-bob"
-          }`}
-          draggable={false}
-        />
-        {/* little attention dot while peeking */}
-        {!open && (
-          <span className="absolute right-3 top-3 h-3 w-3 animate-ping rounded-full bg-primary" />
-        )}
+        {/* span carries the bob so it never clobbers the img's flip transform */}
+        <span className={`block ${open ? "" : "zeke-bob"}`}>
+          <img
+            src="/img/mascot-zebra.png"
+            alt="Zeke, the Zebros guide"
+            className="w-28 select-none drop-shadow-[0_8px_24px_rgba(0,0,0,0.5)] sm:w-36"
+            style={anchor.flip ? { transform: "scaleX(-1)" } : undefined}
+            draggable={false}
+          />
+        </span>
       </button>
 
       {/* Speech bubble */}
