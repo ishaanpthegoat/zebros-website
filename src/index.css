@@ -141,6 +141,18 @@ body.menu-locked {
   overflow: hidden;
 }
 
+/* Zeke the guide mascot: gentle bob while peeking, to draw the eye */
+@keyframes zeke-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.zeke-bob {
+  animation: zeke-bob 2.4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .zeke-bob { animation: none; }
+}
+
 /* ---------------------------------------------------------------------------
  * Mobile (<= 767px): drop high-render motion. The heavily animated React
  * pieces (gooey text, cycling words, card fan, orbital timeline) are swapped

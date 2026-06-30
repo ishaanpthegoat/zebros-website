@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/site/navbar";
 import { Footer } from "@/components/site/footer";
 import { ShaderBackground } from "@/components/site/shader-background";
+import { ZebraGuide } from "@/components/site/zebra-guide";
 import { useSiteEffects } from "@/hooks/use-site-effects";
 
 export function Layout({
@@ -21,6 +22,7 @@ export function Layout({
       <Navbar active={active} />
       {children}
       {footer && <Footer />}
+      <ZebraGuide active={active} />
     </>
   );
 }
