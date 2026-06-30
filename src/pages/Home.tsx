@@ -10,13 +10,14 @@ import { useIsMobile } from "@/hooks/use-is-mobile";
 export function Home() {
   const isMobile = useIsMobile();
   return (
-    <Layout active="/" shader={false}>
-      {/* Static team-color base — this is all that shows on mobile / reduced-motion */}
+    <Layout active="/" shader={!isMobile}>
+      {/* Desktop: the pink Three.js shader (via Layout). Mobile: the liquid below.
+          Static team-color base is the reduced-motion fallback on phones. */}
       <div
         aria-hidden="true"
         className="fixed inset-0 -z-20 bg-[radial-gradient(circle_at_50%_0%,rgba(255,31,143,0.28),transparent_55%),radial-gradient(circle_at_80%_30%,rgba(122,0,48,0.30),transparent_60%)] bg-background"
       />
-      {/* WebGL liquid homescreen (desktop only), painted over the static base */}
+      {/* WebGL liquid homescreen (phone only), painted over the static base */}
       <LiquidBackground />
       {/* ========= HERO: centered logo + spotlight ========= */}
       {/* The liquid homescreen (desktop) / static gradient (mobile) sits behind

@@ -6,9 +6,9 @@ import { useIsMobile } from "@/hooks/use-is-mobile";
  *
  * A reflective WebGL liquid surface (threejs-components) whose source texture is
  * generated on the fly in the team colors (pink #ff1f8f + black), so the liquid
- * itself reads as Zebros pink/black. Heavy by design: it only mounts on desktop,
- * motion-allowed screens. On phones it renders nothing and the caller's static
- * gradient shows instead.
+ * itself reads as Zebros pink/black. This is the PHONE homescreen background;
+ * desktop uses the Three.js shader instead. On reduced-motion phones it renders
+ * nothing and the caller's static gradient shows instead.
  */
 const LIQUID_CDN =
   "https://cdn.jsdelivr.net/npm/threejs-components@0.0.22/build/backgrounds/liquid1.min.js";
@@ -18,7 +18,7 @@ export function LiquidBackground() {
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    if (isMobile) return;
+    if (!isMobile) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -84,7 +84,7 @@ export function LiquidBackground() {
     };
   }, [isMobile]);
 
-  if (isMobile) return null;
+  if (!isMobile) return null;
 
   return (
     <div
