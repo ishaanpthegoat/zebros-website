@@ -1,17 +1,16 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { X, ArrowRight } from "lucide-react";
 
 /**
  * Zeke — the Zebros guide mascot.
  *
- * A friendly zebra that peeks in from the bottom-left and "pops out" now and
- * then with a speech bubble: how to use the site, what the team is doing right
- * now, and what to check out next. Tip set is page-aware (via `active`).
+ * A friendly zebra that peeks in from a random edge and "pops out" now and then
+ * with a speech bubble: how to use the site, what the team is doing right now,
+ * and what to check out next. Tip set is page-aware (via `active`).
  *
- * Modes: "peek" (just the zebra's head showing, gently bobbing) and "open"
- * (full zebra + speech bubble). It auto-opens shortly after load, auto-collapses
- * after a while, and re-pops occasionally while peeking. Tap the zebra to summon
- * it; tap × to send it back to peeking.
+ * Each time he pops he picks a random anchor (bottom-left / bottom-center /
+ * bottom-right / left / right edge). While peeking, only part of him shows from
+ * that edge and he bobs gently; tap him to summon, tap × to send him back.
  */
 type Tip = { text: string; cta?: { label: string; href: string } };
 
@@ -57,6 +56,18 @@ const BY_PAGE: Record<string, Tip[]> = {
   ],
 };
 
+/* Random spots Zeke can pop from. `peek` is the transform while hidden (pushed
+   toward that edge so ~70% of him still shows); `reverse` puts the bubble on the
+   other side so it stays on-screen. */
+type Anchor = { pos: string; peek: string; reverse: boolean };
+const ANCHORS: Anchor[] = [
+  { pos: "bottom-0 left-2 sm:left-4", peek: "translateY(30%)", reverse: false },
+  { pos: "bottom-0 left-1/2 -translate-x-1/2", peek: "translateY(30%)", reverse: false },
+  { pos: "bottom-0 right-2 sm:right-4", peek: "translateY(30%)", reverse: true },
+  { pos: "top-1/2 -translate-y-1/2 left-2 sm:left-4", peek: "translateX(-42%)", reverse: false },
+  { pos: "top-1/2 -translate-y-1/2 right-2 sm:right-4", peek: "translateX(42%)", reverse: true },
+];
+
 export function ZebraGuide({ active = "/" }: { active?: string }) {
   const tips = useMemo<Tip[]>(
     () => [...(BY_PAGE[active] ?? []), ...COMMON],
@@ -65,10 +76,30 @@ export function ZebraGuide({ active = "/" }: { active?: string }) {
 
   const [mode, setMode] = useState<"peek" | "open">("peek");
   const [idx, setIdx] = useState(0);
+  const [anchorIdx, setAnchorIdx] = useState(() =>
+    Math.floor(Math.random() * ANCHORS.length)
+  );
+
+  const modeRef = useRef(mode);
+  useEffect(() => {
+    modeRef.current = mode;
+  }, [mode]);
+
+  // Jump to a random spot different from the current one.
+  const pickAnchor = () =>
+    setAnchorIdx((cur) => {
+      if (ANCHORS.length < 2) return 0;
+      let n = cur;
+      while (n === cur) n = Math.floor(Math.random() * ANCHORS.length);
+      return n;
+    });
 
   // First pop-out shortly after the page settles.
   useEffect(() => {
-    const t = setTimeout(() => setMode("open"), 2600);
+    const t = setTimeout(() => {
+      pickAnchor();
+      setMode("open");
+    }, 2600);
     return () => clearTimeout(t);
   }, []);
 
@@ -79,37 +110,49 @@ export function ZebraGuide({ active = "/" }: { active?: string }) {
     return () => clearTimeout(t);
   }, [mode, idx]);
 
-  // Occasionally re-pop with the next tip while peeking.
+  // Occasionally re-pop (in a new random spot) with the next tip while peeking.
   useEffect(() => {
     const iv = setInterval(() => {
-      setMode((m) => {
-        if (m === "peek") {
-          setIdx((i) => (i + 1) % tips.length);
-          return "open";
-        }
-        return m;
-      });
+      if (modeRef.current === "peek") {
+        setIdx((i) => (i + 1) % tips.length);
+        pickAnchor();
+        setMode("open");
+      }
     }, 55000);
     return () => clearInterval(iv);
   }, [tips.length]);
 
   const open = mode === "open";
   const tip = tips[idx % tips.length];
+  const anchor = ANCHORS[anchorIdx];
+
+  const toggle = () => {
+    if (open) {
+      setMode("peek");
+    } else {
+      pickAnchor();
+      setMode("open");
+    }
+  };
 
   const nextTip = () => {
     setIdx((i) => (i + 1) % tips.length);
-    setMode("open");
+    setMode("open"); // keep the same spot while stepping through tips
   };
 
   return (
-    <div className="fixed bottom-0 left-2 z-[100] flex items-end gap-2 sm:left-4">
+    <div
+      className={`fixed z-[100] flex items-end gap-2 ${anchor.pos} ${
+        anchor.reverse ? "flex-row-reverse" : "flex-row"
+      }`}
+    >
       {/* Zebra mascot — tap to summon / it bobs while peeking */}
       <button
         type="button"
-        onClick={() => setMode(open ? "peek" : "open")}
+        onClick={toggle}
         aria-label={open ? "Hide the guide" : "Open the Zebros guide"}
         className="relative shrink-0 origin-bottom transition-transform duration-500 ease-out"
-        style={{ transform: open ? "translateY(0)" : "translateY(46%)" }}
+        style={{ transform: open ? "translate(0,0)" : anchor.peek }}
       >
         <img
           src="/img/mascot-zebra.png"
@@ -128,7 +171,7 @@ export function ZebraGuide({ active = "/" }: { active?: string }) {
       {/* Speech bubble */}
       <div
         aria-live="polite"
-        className={`relative mb-6 max-w-[15rem] origin-bottom-left rounded-2xl liquid-glass p-3 pr-8 text-left transition-all duration-300 sm:max-w-xs ${
+        className={`relative mb-6 max-w-[15rem] rounded-2xl liquid-glass p-3 pr-8 text-left transition-all duration-300 sm:max-w-xs ${
           open
             ? "translate-y-0 scale-100 opacity-100"
             : "pointer-events-none translate-y-2 scale-95 opacity-0"
