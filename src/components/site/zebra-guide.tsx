@@ -159,7 +159,7 @@ export function ZebraGuide({ active = "/" }: { active?: string }) {
         <img
           src="/img/mascot-zebra.png"
           alt="Zeke, the Zebros guide"
-          className={`w-24 select-none drop-shadow-[0_8px_24px_rgba(0,0,0,0.5)] sm:w-28 ${
+          className={`w-28 select-none drop-shadow-[0_8px_24px_rgba(0,0,0,0.5)] sm:w-36 ${
             open ? "" : "zeke-bob"
           }`}
           draggable={false}
