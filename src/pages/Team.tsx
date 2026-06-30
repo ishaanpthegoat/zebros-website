@@ -2,6 +2,8 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import { Layout } from "@/components/site/layout";
 import DisplayCards from "@/components/ui/display-cards";
+import { MemberAccordion } from "@/components/site/member-accordion";
+import { useIsMobile } from "@/hooks/use-is-mobile";
 
 type Member = {
   name: string;
@@ -47,6 +49,7 @@ const POS = [
 
 export function Team() {
   const [selected, setSelected] = useState<Member | null>(null);
+  const isMobile = useIsMobile();
 
   const avatar = (m: Member) =>
     m.photo ? (
@@ -66,15 +69,23 @@ export function Team() {
 
   return (
     <Layout active="/team.html">
-      <section className="container flex min-h-[100dvh] flex-col items-center justify-center text-center">
-        <h1 className="reveal mega-text-mid">The <span className="accent">Team.</span></h1>
+      {isMobile ? (
+        <section className="container flex flex-col text-center" style={{ paddingTop: "6rem", paddingBottom: "4rem" }}>
+          <h1 className="mega-text-mid">The <span className="accent">Team.</span></h1>
+          <p className="section-sub mb-6">Tap a card to read more.</p>
+          <MemberAccordion members={MEMBERS} />
+        </section>
+      ) : (
+        <section className="container flex min-h-[100dvh] flex-col items-center justify-center text-center">
+          <h1 className="reveal mega-text-mid">The <span className="accent">Team.</span></h1>
 
-        <div className="mt-10 flex min-h-[480px] w-full items-center justify-center">
-          <div className="origin-center scale-[0.42] sm:scale-[0.72] lg:scale-[1]">
-            <DisplayCards cards={cards} />
+          <div className="mt-10 flex min-h-[480px] w-full items-center justify-center">
+            <div className="origin-center scale-[0.42] sm:scale-[0.72] lg:scale-[1]">
+              <DisplayCards cards={cards} />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {selected && (
         <div

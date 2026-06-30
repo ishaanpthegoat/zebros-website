@@ -1,6 +1,7 @@
 import { Wrench, Cog, ClipboardList, Users, PenTool, Megaphone, Lightbulb } from "lucide-react";
 import { Layout } from "@/components/site/layout";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
+import { useIsMobile } from "@/hooks/use-is-mobile";
 
 const timelineData = [
   {
@@ -108,6 +109,52 @@ const centerCard = (
 );
 
 export function Blog() {
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return (
+      <Layout active="/blog.html">
+        <section className="container" style={{ paddingTop: "6rem" }}>
+          <div className="text-center">
+            <span className="eyebrow">Weekly updates</span>
+            <h1 className="mega-text-mid">The <span className="accent">Blog.</span></h1>
+            <p className="section-sub">Our week by week progress.</p>
+          </div>
+
+          <div className="mx-auto mt-6 w-full max-w-lg">{centerCard}</div>
+
+          {/* Vertical, full-width timeline — readable on a phone */}
+          <ol className="relative mx-auto mt-8 w-full max-w-lg space-y-4 border-l border-primary/25 pl-5">
+            {timelineData.map((item) => {
+              const Icon = item.icon;
+              return (
+                <li key={item.id} className="relative">
+                  <span className="absolute -left-[1.7rem] top-3 grid h-7 w-7 place-items-center rounded-full bg-primary/90 text-white ring-4 ring-background">
+                    <Icon className="h-3.5 w-3.5" />
+                  </span>
+                  <div className="liquid-glass rounded-2xl p-4 text-left">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-primary">
+                        {item.date}
+                      </span>
+                      <span className="rounded-full border border-border/60 bg-card/60 px-2 py-0.5 text-[10px] font-medium text-foreground/70">
+                        {item.category}
+                      </span>
+                    </div>
+                    <h3 className="mt-1 text-lg font-bold text-white">{item.title}</h3>
+                    <p className="mt-1 text-sm leading-relaxed text-foreground/80">
+                      {item.content}
+                    </p>
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+      </Layout>
+    );
+  }
+
   return (
     <Layout active="/blog.html" footer={false}>
       <section className="container" style={{ paddingTop: "5.5rem", textAlign: "center", marginBottom: "-3rem" }}>

@@ -4,13 +4,23 @@ import { Spotlight } from "@/components/ui/spotlight";
 import { GooeyText } from "@/components/ui/gooey-text-morphing";
 import { ZebroGooglyLogo } from "@/components/ui/zebro-googly-logo";
 import AnimatedTextCycle from "@/components/ui/animated-text-cycle";
+import { LiquidBackground } from "@/components/site/liquid-background";
+import { useIsMobile } from "@/hooks/use-is-mobile";
 
 export function Home() {
+  const isMobile = useIsMobile();
   return (
-    <Layout active="/">
+    <Layout active="/" shader={false}>
+      {/* Static team-color base — this is all that shows on mobile / reduced-motion */}
+      <div
+        aria-hidden="true"
+        className="fixed inset-0 -z-20 bg-[radial-gradient(circle_at_50%_0%,rgba(255,31,143,0.28),transparent_55%),radial-gradient(circle_at_80%_30%,rgba(122,0,48,0.30),transparent_60%)] bg-background"
+      />
+      {/* WebGL liquid homescreen (desktop only), painted over the static base */}
+      <LiquidBackground />
       {/* ========= HERO: centered logo + spotlight ========= */}
-      {/* No solid background here on purpose — the shader (rendered behind
-          every page in Layout) shows through, glowing from the logo. */}
+      {/* The liquid homescreen (desktop) / static gradient (mobile) sits behind
+          every section, glowing from the logo. */}
       <section className="relative w-full min-h-[100dvh] overflow-hidden flex items-center justify-center isolate px-4">
         <Spotlight className="-top-40 left-0 md:-top-20 md:left-1/4" fill="#ff1f8f" />
 
@@ -18,28 +28,40 @@ export function Home() {
           {/* Logo in the center. The eyes fade in as you scroll and follow the cursor. */}
           <ZebroGooglyLogo className="w-[clamp(220px,40vw,400px)] aspect-square" />
 
-          {/* Gooey morphing headline */}
+          {/* Headline — animated gooey morph on desktop, static on mobile */}
           <h1 className="sr-only">Team 30415 Zebros</h1>
-          <div
-            className="h-[110px] sm:h-[160px] md:h-[200px] w-full flex items-center justify-center"
-            aria-hidden="true"
-          >
-            <GooeyText
-              texts={["Zebros", "Team 30415", "Robotics"]}
-              morphTime={1}
-              cooldownTime={1.1}
-              className="font-black"
-              textClassName="tracking-tight"
-            />
-          </div>
+          {isMobile ? (
+            <div className="flex h-[110px] w-full items-center justify-center" aria-hidden="true">
+              <span className="text-6xl font-black tracking-tight text-foreground">
+                Zebros
+              </span>
+            </div>
+          ) : (
+            <div
+              className="h-[110px] sm:h-[160px] md:h-[200px] w-full flex items-center justify-center"
+              aria-hidden="true"
+            >
+              <GooeyText
+                texts={["Zebros", "Team 30415", "Robotics"]}
+                morphTime={1}
+                cooldownTime={1.1}
+                className="font-black"
+                textClassName="tracking-tight"
+              />
+            </div>
+          )}
 
           <p className="text-xl sm:text-2xl font-light text-foreground/75">
             We do{" "}
-            <AnimatedTextCycle
-              words={["robotics", "CAD", "code", "outreach", "competition"]}
-              interval={2200}
-              className="text-primary"
-            />
+            {isMobile ? (
+              <span className="font-bold text-primary">robotics</span>
+            ) : (
+              <AnimatedTextCycle
+                words={["robotics", "CAD", "code", "outreach", "competition"]}
+                interval={2200}
+                className="text-primary"
+              />
+            )}
           </p>
 
           <p className="text-base sm:text-lg md:text-xl font-light text-foreground/85 max-w-xl px-2 leading-relaxed">

@@ -99,7 +99,7 @@ export function MenuContainer({ children }: { children: React.ReactNode }) {
       <div className="relative">
         {/* First item - always visible */}
         <div
-          className="relative w-16 h-16 bg-card border border-border/60 cursor-pointer rounded-full group will-change-transform z-50"
+          className="relative w-16 h-16 liquid-glass cursor-pointer rounded-full group will-change-transform z-50"
           onClick={handleToggle}
         >
           {childrenArray[0]}
@@ -109,7 +109,7 @@ export function MenuContainer({ children }: { children: React.ReactNode }) {
         {childrenArray.slice(1).map((child, index) => (
           <div
             key={index}
-            className="absolute top-0 left-0 w-16 h-16 bg-card border border-border/60 will-change-transform"
+            className="absolute top-0 left-0 w-16 h-16 liquid-glass will-change-transform"
             style={{
               transform: `translateY(${isExpanded ? (index + 1) * 70 : 0}px)`,
               opacity: isExpanded ? 1 : 0,

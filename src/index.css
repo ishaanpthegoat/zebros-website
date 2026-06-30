@@ -109,3 +109,48 @@
   transition: transform 0.06s linear;
   will-change: transform;
 }
+
+/* ---------------------------------------------------------------------------
+ * Liquid glass — frosted, refractive surface for the menu and other chrome.
+ * (Apple "liquid glass" layered-shadow technique, dark-theme variant.)
+ * ------------------------------------------------------------------------- */
+.liquid-glass {
+  background: rgba(26, 26, 34, 0.55); /* card color @ ~55% */
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.45),
+    inset 1px 1px 1px -0.5px rgba(255, 255, 255, 0.28),
+    inset -1px -1px 1px -0.5px rgba(255, 255, 255, 0.16),
+    inset 0 0 8px 2px rgba(255, 255, 255, 0.05);
+}
+.liquid-glass-pink {
+  background: linear-gradient(135deg, rgba(255, 31, 143, 0.16), rgba(26, 26, 34, 0.5));
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 31, 143, 0.25);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.45),
+    inset 1px 1px 1px -0.5px rgba(255, 255, 255, 0.28),
+    0 0 24px rgba(255, 31, 143, 0.12);
+}
+
+/* Lock background scroll while the mobile menu is open */
+body.menu-locked {
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------------------
+ * Mobile (<= 767px): drop high-render motion. The heavily animated React
+ * pieces (gooey text, cycling words, card fan, orbital timeline) are swapped
+ * for static equivalents in the components; here we quiet the CSS animations
+ * (the marquee strip) so the phone experience reads as calm and static.
+ * ------------------------------------------------------------------------- */
+@media (max-width: 767px) {
+  .marquee-track {
+    animation: none !important;
+    transform: none !important;
+    justify-content: center;
+  }
+}
