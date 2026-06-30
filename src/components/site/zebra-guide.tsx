@@ -64,8 +64,9 @@ const ANCHORS: Anchor[] = [
   { pos: "bottom-0 left-2 sm:left-4", peek: "translateY(30%)", reverse: false },
   { pos: "bottom-0 left-1/2 -translate-x-1/2", peek: "translateY(30%)", reverse: false },
   { pos: "bottom-0 right-2 sm:right-4", peek: "translateY(30%)", reverse: true },
-  { pos: "top-1/2 -translate-y-1/2 left-2 sm:left-4", peek: "translateX(-42%)", reverse: false },
-  { pos: "top-1/2 -translate-y-1/2 right-2 sm:right-4", peek: "translateX(42%)", reverse: true },
+  // Side peeks crop ~half of him behind the screen edge (peeking round a corner)
+  { pos: "top-1/2 -translate-y-1/2 left-0", peek: "translateX(-58%)", reverse: false },
+  { pos: "top-1/2 -translate-y-1/2 right-0", peek: "translateX(58%)", reverse: true },
 ];
 
 export function ZebraGuide({ active = "/" }: { active?: string }) {
@@ -110,7 +111,8 @@ export function ZebraGuide({ active = "/" }: { active?: string }) {
     return () => clearTimeout(t);
   }, [mode, idx]);
 
-  // Occasionally re-pop (in a new random spot) with the next tip while peeking.
+  // Re-pop (in a new random spot) with the next tip while peeking. Spaced well
+  // apart so he isn't constantly jumping around — once every couple of minutes.
   useEffect(() => {
     const iv = setInterval(() => {
       if (modeRef.current === "peek") {
@@ -118,7 +120,7 @@ export function ZebraGuide({ active = "/" }: { active?: string }) {
         pickAnchor();
         setMode("open");
       }
-    }, 55000);
+    }, 120000);
     return () => clearInterval(iv);
   }, [tips.length]);
 
