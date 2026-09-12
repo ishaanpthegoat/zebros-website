@@ -2,15 +2,15 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { X, ArrowRight } from "lucide-react";
 
 /**
- * Zeke — the Zebros guide mascot.
+ * Debra — the Zebros guide mascot.
  *
  * A friendly zebra that peeks in from a random edge and "pops out" now and then
  * with a speech bubble: how to use the site, what the team is doing right now,
  * and what to check out next. Tip set is page-aware (via `active`).
  *
- * Each time he pops he picks a random anchor (bottom-left / bottom-center /
- * bottom-right / left / right edge). While peeking, only part of him shows from
- * that edge and he bobs gently; tap him to summon, tap × to send him back.
+ * Each time they pop they pick a random anchor (bottom-left / bottom-center /
+ * bottom-right / left / right edge). While peeking, only part of them shows from
+ * that edge and they bob gently; tap them to summon, tap × to send them back.
  */
 type Tip = { text: string; cta?: { label: string; href: string } };
 
@@ -28,7 +28,7 @@ const COMMON: Tip[] = [
 
 const BY_PAGE: Record<string, Tip[]> = {
   "/": [
-    { text: "Hey, I'm Zeke! Welcome to Team 30415. Let me show you around. 🦓" },
+    { text: "Hey, I'm Debra! Welcome to Team 30415. Let me show you around. 🦓" },
     { text: "New here? Here's our story and what we actually do.", cta: { label: "About us", href: "/about.html" } },
     { text: "Curious how last year went?", cta: { label: "Past seasons", href: "/past-seasons.html" } },
   ],
@@ -56,11 +56,11 @@ const BY_PAGE: Record<string, Tip[]> = {
   ],
 };
 
-/* Random spots Zeke can pop from. `peek` is the transform while hidden (pushed
-   toward that edge so ~70% of him still shows); `reverse` puts the bubble on the
+/* Random spots Debra can pop from. `peek` is the transform while hidden (pushed
+   toward that edge so ~70% of them still shows); `reverse` puts the bubble on the
    other side so it stays on-screen. */
-/* `flip` mirrors the (left-facing) zebra so his HEAD is always on the visible,
-   interior side no matter which edge he peeks from — never cropped off. */
+/* `flip` mirrors the (left-facing) zebra so their HEAD is always on the visible,
+   interior side no matter which edge they peek from — never cropped off. */
 type Anchor = { pos: string; peek: string; reverse: boolean; flip: boolean };
 const ANCHORS: Anchor[] = [
   // Bottom peeks rise up; legs go off-screen, head (top) always shows.
@@ -68,7 +68,7 @@ const ANCHORS: Anchor[] = [
   { pos: "bottom-0 left-2 sm:left-4", peek: "translateY(30%)", reverse: false, flip: true },
   { pos: "bottom-0 left-1/2 -translate-x-1/2", peek: "translateY(30%)", reverse: false, flip: true },
   { pos: "bottom-0 right-2 sm:right-4", peek: "translateY(30%)", reverse: true, flip: false },
-  // Side peeks crop ~half of him behind the edge; head leads into the page.
+  // Side peeks crop ~half of them behind the edge; head leads into the page.
   // Left edge: mirror so the head faces right (into the page) and stays visible.
   { pos: "top-1/2 -translate-y-1/2 left-0", peek: "translateX(-58%)", reverse: false, flip: true },
   // Right edge: head already faces left (into the page) — no mirror needed.
@@ -118,7 +118,7 @@ export function ZebraGuide({ active = "/" }: { active?: string }) {
   }, [mode, idx]);
 
   // Re-pop (in a new random spot) with the next tip while peeking. Spaced well
-  // apart so he isn't constantly jumping around — once every couple of minutes.
+  // apart so they aren't constantly jumping around — once every couple of minutes.
   useEffect(() => {
     const iv = setInterval(() => {
       if (modeRef.current === "peek") {
@@ -163,10 +163,10 @@ export function ZebraGuide({ active = "/" }: { active?: string }) {
         style={{ transform: open ? "translate(0,0)" : anchor.peek }}
       >
         {/* span carries the bob so it never clobbers the img's flip transform */}
-        <span className={`block ${open ? "" : "zeke-bob"}`}>
+        <span className={`block ${open ? "" : "debra-bob"}`}>
           <img
             src="/img/mascot-zebra.png"
-            alt="Zeke, the Zebros guide"
+            alt="Debra, the Zebros guide"
             className="w-28 select-none drop-shadow-[0_8px_24px_rgba(0,0,0,0.5)] sm:w-36"
             style={anchor.flip ? { transform: "scaleX(-1)" } : undefined}
             draggable={false}

@@ -16,8 +16,6 @@ type Member = {
 const MEMBERS: Member[] = [
   { name: "Aarnavi Boppana", initials: "AB", role: "Social Media, Project Management", bio: "Hi, I'm Aarnavi! I work on our social media, project management, and portfolio. My main jobs are to keep us organized on Notion and run the team's Instagram account. I also work on documentation throughout the season for our portfolio and social media. I love spending time with everyone on the team, whether it be during practices or competition!", photo: "/img/aarnavi.jpg" },
   { name: "Avani Poondota", initials: "AP", role: "Programming, Social Media, Script", bio: "Hey! I'm Avani, and I work on programming, social media, project management, and script. This is my 5th year doing robotics, and what I love about it is the creativity and competition. I also love connecting and spending time with the team and making fun memories!", photo: "/img/avani.jpg" },
-  { name: "Virja Mehta", initials: "VM", role: "Bot Maintenance, Portfolio, Mechanical", bio: "Hey, I'm Virja! On the team, my role is to build, fix, and maintain the robot throughout the season and between matches, along with documenting our progress in the team portfolio. I love robotics because it lets me show my interests in a competitive context, and besides the hard work, I enjoy spending time with my team and all the fun memories we make along the way.", photo: "/img/virja.jpg" },
-  { name: "Amir Islamkulov", initials: "AI", role: "Mechanical, CAD, Design", bio: "Amir works on the mechanical sub-team and handles a big share of the CAD and design work. Amir focuses on turning ideas into mechanisms we can actually build. More about Amir coming soon.", photo: null },
   { name: "Ishaan Pemmaraju", initials: "IP", role: "Management, STEM Connections, Script", bio: "Ishaan handles team management, builds STEM connections in the community, and works on script and the portfolio. Ishaan helps run team operations and outside partnerships. More about Ishaan coming soon.", photo: null },
   { name: "Saisri Kondapaneni", initials: "SK", role: "Script, CAD, Mechanical", bio: "Saisri works on script, CAD, and the mechanical sub-team. Saisri is comfortable moving between design and build tasks during the season. More about Saisri coming soon.", photo: "/img/saisri.jpg" },
   { name: "Sanya Patel", initials: "SP", role: "Bot Maintenance, Portfolio, Mechanical", bio: "Hi, I'm Sanya! I work on the mechanical team, help maintain our robot between matches, and contribute to our team's portfolio. Keeping the robot in top condition during competitions is one of my main responsibilities, as it helps ensure everything runs smoothly when it's time to compete. I enjoy solving problems, working with my teammates, and helping our team perform at its best. More about me coming soon!", photo: "/img/sanya.png" },
@@ -33,14 +31,12 @@ const MEMBERS: Member[] = [
 // center and the last sits down-and-right — so the whole fan (not just its
 // top-left corner) lands in the middle of the page.
 const POS = [
-  "translate-x-[-203px] translate-y-[-115px] hover:translate-x-[-203px] hover:translate-y-[-131px]",
   "translate-x-[-145px] translate-y-[-82px] hover:translate-x-[-145px] hover:translate-y-[-98px]",
   "translate-x-[-87px] translate-y-[-49px] hover:translate-x-[-87px] hover:translate-y-[-65px]",
   "translate-x-[-29px] translate-y-[-16px] hover:translate-x-[-29px] hover:translate-y-[-32px]",
   "translate-x-[29px] translate-y-[17px] hover:translate-x-[29px] hover:translate-y-[1px]",
   "translate-x-[87px] translate-y-[50px] hover:translate-x-[87px] hover:translate-y-[34px]",
   "translate-x-[145px] translate-y-[83px] hover:translate-x-[145px] hover:translate-y-[67px]",
-  "translate-x-[203px] translate-y-[116px] hover:translate-x-[203px] hover:translate-y-[100px]",
 ];
 
 export function Team() {
