@@ -19,6 +19,7 @@ const MEMBERS: Member[] = [
   { name: "Avani Poondota", initials: "AP", role: "Programming, Social Media, Script", bio: "Hey! I'm Avani, and I work on programming, social media, project management, and script. This is my 5th year doing robotics, and what I love about it is the creativity and competition. I also love connecting and spending time with the team and making fun memories!", photo: "/img/avani.jpg" },
   { name: "Ishaan Pemmaraju", initials: "IP", role: "Management, STEM Connections, Script", bio: "Ishaan handles team management, builds STEM connections in the community, and works on script and the portfolio. Ishaan helps run team operations and outside partnerships. More about Ishaan coming soon.", photo: null },
   { name: "Prabhas Vennapoosa", initials: "PV", role: "Role coming soon", bio: "Prabhas is a member of FTC Team 30415, the Zebros. Prabhas's role and full bio are coming soon.", photo: null },
+  { name: "Saimanvik Narravula", initials: "SN", role: "Role coming soon", bio: "Saimanvik is a member of FTC Team 30415, the Zebros. Saimanvik's role and full bio are coming soon.", photo: null },
   { name: "Saisri Kondapaneni", initials: "SK", role: "Script, CAD, Mechanical", bio: "Saisri works on script, CAD, and the mechanical sub-team. Saisri is comfortable moving between design and build tasks during the season. More about Saisri coming soon.", photo: "/img/saisri.jpg" },
   { name: "Sanya Patel", initials: "SP", role: "Bot Maintenance, Portfolio, Mechanical", bio: "Hi, I'm Sanya! I work on the mechanical team, help maintain our robot between matches, and contribute to our team's portfolio. Keeping the robot in top condition during competitions is one of my main responsibilities, as it helps ensure everything runs smoothly when it's time to compete. I enjoy solving problems, working with my teammates, and helping our team perform at its best. More about me coming soon!", photo: "/img/sanya.png" },
   { name: "Srivatsa Vadlamani", initials: "SV", role: "Role coming soon", bio: "Srivatsa is a member of FTC Team 30415, the Zebros. Srivatsa's role and full bio are coming soon.", photo: null },
@@ -34,15 +35,16 @@ const MEMBERS: Member[] = [
 // center and the last sits down-and-right — so the whole fan (not just its
 // top-left corner) lands in the middle of the page.
 const POS = [
-  "translate-x-[-232px] translate-y-[-132px] hover:translate-x-[-232px] hover:translate-y-[-148px]",
-  "translate-x-[-174px] translate-y-[-99px] hover:translate-x-[-174px] hover:translate-y-[-115px]",
-  "translate-x-[-116px] translate-y-[-66px] hover:translate-x-[-116px] hover:translate-y-[-82px]",
-  "translate-x-[-58px] translate-y-[-33px] hover:translate-x-[-58px] hover:translate-y-[-49px]",
-  "translate-x-[0px] translate-y-[0px] hover:translate-x-[0px] hover:translate-y-[-16px]",
-  "translate-x-[58px] translate-y-[33px] hover:translate-x-[58px] hover:translate-y-[17px]",
-  "translate-x-[116px] translate-y-[66px] hover:translate-x-[116px] hover:translate-y-[50px]",
-  "translate-x-[174px] translate-y-[99px] hover:translate-x-[174px] hover:translate-y-[83px]",
-  "translate-x-[232px] translate-y-[132px] hover:translate-x-[232px] hover:translate-y-[116px]",
+  "translate-x-[-234px] translate-y-[-133px] hover:translate-x-[-234px] hover:translate-y-[-149px]",
+  "translate-x-[-182px] translate-y-[-103px] hover:translate-x-[-182px] hover:translate-y-[-119px]",
+  "translate-x-[-130px] translate-y-[-74px] hover:translate-x-[-130px] hover:translate-y-[-90px]",
+  "translate-x-[-78px] translate-y-[-44px] hover:translate-x-[-78px] hover:translate-y-[-60px]",
+  "translate-x-[-26px] translate-y-[-15px] hover:translate-x-[-26px] hover:translate-y-[-31px]",
+  "translate-x-[26px] translate-y-[15px] hover:translate-x-[26px] hover:translate-y-[-1px]",
+  "translate-x-[78px] translate-y-[44px] hover:translate-x-[78px] hover:translate-y-[28px]",
+  "translate-x-[130px] translate-y-[74px] hover:translate-x-[130px] hover:translate-y-[58px]",
+  "translate-x-[182px] translate-y-[103px] hover:translate-x-[182px] hover:translate-y-[87px]",
+  "translate-x-[234px] translate-y-[133px] hover:translate-x-[234px] hover:translate-y-[117px]",
 ];
 
 export function Team() {
