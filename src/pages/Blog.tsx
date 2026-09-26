@@ -1,4 +1,4 @@
-import { Wrench, Cog, ClipboardList, Users, PenTool, Megaphone, Lightbulb } from "lucide-react";
+import { Wrench, Cog, ClipboardList, Users, PenTool, Megaphone, Lightbulb, Trophy, Handshake } from "lucide-react";
 import { Layout } from "@/components/site/layout";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 import { useIsMobile } from "@/hooks/use-is-mobile";
@@ -6,104 +6,159 @@ import { useIsMobile } from "@/hooks/use-is-mobile";
 const timelineData = [
   {
     id: 1,
+    title: "Build Plan",
+    date: "Sep 22",
+    content: "Locked in the intake and sorting concept — a vertical intake feeding a bucket that splits balls by size — and started planning our alliance-strategy slides for competition.",
+    category: "Strategy",
+    icon: Lightbulb,
+    relatedIds: [2],
+    status: "in-progress" as const,
+    energy: 100,
+  },
+  {
+    id: 2,
+    title: "First Iteration",
+    date: "Sep 19",
+    content: "Finished the first iteration of the intake and drivetrain — a working mechanical base we can now test, break, and improve before the next build.",
+    category: "Build",
+    icon: Cog,
+    relatedIds: [1, 3],
+    status: "completed" as const,
+    energy: 96,
+  },
+  {
+    id: 3,
+    title: "Concepts",
+    date: "Sep 15",
+    content: "Kicked off shooter CAD and intake concepts, including rubber-band wheels and a fold-up design to fit the 18-in start / 24-in deployed rule, while nailing down drive-chain plate spacing.",
+    category: "Design",
+    icon: PenTool,
+    relatedIds: [2, 4],
+    status: "completed" as const,
+    energy: 92,
+  },
+  {
+    id: 4,
+    title: "Outreach",
+    date: "Aug 29",
+    content: "Reaching out to local organizations to bring STEM and robotics demos to underprivileged kids in our community.",
+    category: "Outreach",
+    icon: Handshake,
+    relatedIds: [3, 5],
+    status: "completed" as const,
+    energy: 86,
+  },
+  {
+    id: 5,
+    title: "Scrimmage",
+    date: "Aug 22",
+    content: "Built V2 of the robot and ran our first scrimmage, winning 7-0 against our sister team, 30416. Wanted more endgame scoring out of it, so we're already moving to V3.",
+    category: "Competition",
+    icon: Trophy,
+    relatedIds: [4, 6],
+    status: "completed" as const,
+    energy: 80,
+  },
+  {
+    id: 6,
     title: "Drivetrain",
     date: "Jun 8",
     content: "Started building the drivetrain and launched this website.",
     category: "Build",
     icon: Wrench,
-    relatedIds: [2],
-    status: "in-progress" as const,
-    energy: 95,
+    relatedIds: [5, 7],
+    status: "completed" as const,
+    energy: 72,
   },
   {
-    id: 2,
+    id: 7,
     title: "Prototype",
     date: "Jun 1",
     content: "Split into two squads to test a linear slide intake against a roller bar design.",
     category: "Build",
     icon: Cog,
-    relatedIds: [1, 3],
+    relatedIds: [6, 8],
     status: "completed" as const,
-    energy: 85,
+    energy: 64,
   },
   {
-    id: 3,
+    id: 8,
     title: "Review",
     date: "May 25",
     content: "Reviewed every event from the 2025 season, including a recurring servo failure we are fixing.",
     category: "Strategy",
     icon: ClipboardList,
-    relatedIds: [2, 4],
+    relatedIds: [7, 9],
     status: "completed" as const,
-    energy: 75,
+    energy: 56,
   },
   {
-    id: 4,
+    id: 9,
     title: "Rosters",
     date: "May 18",
     content: "Finished the off-season roster reorganization across both 30415 and 30416.",
     category: "Team",
     icon: Users,
-    relatedIds: [3, 5],
+    relatedIds: [8, 10],
     status: "completed" as const,
-    energy: 65,
+    energy: 48,
   },
   {
-    id: 5,
+    id: 10,
     title: "CAD",
     date: "May 11",
     content: "Trained new members in Onshape so they can design custom mounting plates.",
     category: "Training",
     icon: PenTool,
-    relatedIds: [4, 6],
+    relatedIds: [9, 11],
     status: "completed" as const,
-    energy: 55,
+    energy: 40,
   },
   {
-    id: 6,
+    id: 11,
     title: "STEM Day",
     date: "May 4",
     content: "Ran a robotics demo booth at the Cary Library STEM day for about 80 kids.",
     category: "Outreach",
     icon: Megaphone,
-    relatedIds: [5, 7],
+    relatedIds: [10, 12],
     status: "completed" as const,
-    energy: 45,
+    energy: 32,
   },
   {
-    id: 7,
+    id: 12,
     title: "Pit",
     date: "Apr 27",
     content: "Sorted every fastener, labeled the drawers, and organized the pit for build season.",
     category: "Logistics",
     icon: Wrench,
-    relatedIds: [6, 8],
+    relatedIds: [11, 13],
     status: "completed" as const,
-    energy: 35,
+    energy: 24,
   },
   {
-    id: 8,
+    id: 13,
     title: "Strategy",
     date: "Apr 20",
     content: "First strategy meeting for next season: scoring priorities and robot ideas.",
     category: "Strategy",
     icon: Lightbulb,
-    relatedIds: [7],
+    relatedIds: [12],
     status: "completed" as const,
-    energy: 25,
+    energy: 16,
   },
 ];
 
 const centerCard = (
   <div className="rounded-xl border border-primary/20 bg-card/95 backdrop-blur-lg p-4 shadow-2xl shadow-black/60">
-    <span className="text-[11px] uppercase tracking-wider text-primary font-semibold">Week of June 8, 2026</span>
-    <h3 className="mt-1 text-lg font-bold text-white">Outreach and first drivetrain build</h3>
+    <span className="text-[11px] uppercase tracking-wider text-primary font-semibold">Week of September 22, 2026</span>
+    <h3 className="mt-1 text-lg font-bold text-white">First iteration done, intake and sorting locked in</h3>
     <p className="mt-1 text-sm text-white/70">
-      Started building the drivetrain and put up this website.
+      Finished our first intake and drivetrain iteration, settled on a vertical intake that sorts balls by size into a bucket, and started planning alliance strategy for competition.
     </p>
     <div className="mt-3 grid grid-cols-2 gap-2">
-      <img src="/img/cad-robot.png" alt="CAD of the full robot" className="w-full h-24 object-cover rounded-lg border border-white/10" loading="lazy" />
-      <img src="/img/cad-intake.webp" alt="CAD of the drivetrain and intake" className="w-full h-24 object-cover rounded-lg border border-white/10" loading="lazy" />
+      <img src="/img/robot/shot-1.png" alt="CAD of the full V2 robot, arm extended" className="w-full h-24 object-cover rounded-lg border border-white/10" loading="lazy" />
+      <img src="/img/robot/shot-6.png" alt="CAD of the arm module detached from the chassis" className="w-full h-24 object-cover rounded-lg border border-white/10" loading="lazy" />
     </div>
   </div>
 );
