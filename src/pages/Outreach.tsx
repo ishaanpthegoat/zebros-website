@@ -47,6 +47,14 @@ const CONTENT = `<section class="container" style="padding-top: 5rem;">
 
   </div>
 
+  <section class="card mt-3" aria-labelledby="outreach-current-title" style="padding: 2rem;">
+    <span class="eyebrow">Fall 2026 update</span>
+    <h2 id="outreach-current-title" class="section-title">Workshop <span class="accent">planning</span></h2>
+    <p>On October 24, we shared workshop ideas for different age groups and coordinated a planning call with the Boys &amp; Girls Club. The October 28 call could not go ahead because the meeting link did not arrive. Reconnecting and arranging another time remain next steps.</p>
+    <p style="margin-top: 1rem;">We also shared a Pink Day poster for October 27 to promote breast cancer awareness. In early November, we explored local STEM networks for future outreach opportunities.</p>
+    <a href="/blog.html#october-community" class="btn btn-secondary" style="margin-top: 1.5rem;">Read the dated team update</a>
+  </section>
+
   <!-- Outreach stats -->
   <div class="reveal mt-3">
     <h2 class="section-title" style="margin-top: 3rem;">By the <span class="accent">numbers</span></h2>
@@ -78,7 +86,7 @@ const CONTENT = `<section class="container" style="padding-top: 5rem;">
     <p style="color: var(--muted); margin-bottom: 1.5rem; max-width: 540px; margin-left: auto; margin-right: auto;">
       Schools, libraries, community groups, and fellow FIRST teams can contact us to schedule a demo or workshop.
     </p>
-    <a href="mailto:outreach@zebros30415.example" class="btn btn-primary">Contact Outreach</a>
+    <a href="mailto:infocary@zebrarobotics.com" class="btn btn-primary">Contact Outreach</a>
   </div>
 </section>`;
 

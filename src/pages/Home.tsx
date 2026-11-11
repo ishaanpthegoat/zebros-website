@@ -161,16 +161,15 @@ export function Home() {
 
         <article className="featured-blog" data-reveal="right">
           <div className="featured-blog-content">
-            <span className="blog-date">Week of June 8, 2026</span>
-            <h3 className="featured-blog-title">Outreach and first drivetrain build</h3>
-            <p className="featured-blog-text">Two big things this week. We started reaching out for sponsors, and we began building the drivetrain. We also put up this website.</p>
+            <span className="blog-date">November 10, 2026</span>
+            <h3 className="featured-blog-title">From an assembled robot to a reliable one</h3>
+            <p className="featured-blog-text">The drivetrain and ramp are built, and our latest photos show the robot coming together. Now we are focusing on programming, test videos, and scrimmage preparation.</p>
             <div>
               <a href="/blog.html" className="btn btn-primary">Read the blog</a>
             </div>
           </div>
-          <div className="featured-blog-visual" aria-hidden="true">
-            <div className="visual-orb-2"></div>
-            <div className="visual-orb"></div>
+          <div className="featured-blog-visual">
+            <img src="/img/updates/2026-10-29-robot-front.webp" alt="The assembled Zebros robot on the practice field, October 29, 2026" className="h-full w-full object-cover" loading="lazy" width="918" height="1224" />
           </div>
         </article>
       </section>

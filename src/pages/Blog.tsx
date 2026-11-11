@@ -1,6 +1,7 @@
 import { Wrench, Cog, ClipboardList, Users, PenTool, Megaphone, Lightbulb, Trophy, Handshake } from "lucide-react";
 import { Layout } from "@/components/site/layout";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
+import { RecentUpdates } from "@/components/site/recent-updates";
 import { useIsMobile } from "@/hooks/use-is-mobile";
 
 const timelineData = [
@@ -176,6 +177,10 @@ export function Blog() {
             <p className="section-sub">Our week by week progress.</p>
           </div>
 
+          </section>
+        <RecentUpdates />
+        <section className="container">
+          <h2 className="section-title text-center">Earlier updates</h2>
           <div className="mx-auto mt-6 w-full max-w-lg">{centerCard}</div>
 
           {/* Vertical, full-width timeline — readable on a phone */}
@@ -211,13 +216,15 @@ export function Blog() {
   }
 
   return (
-    <Layout active="/blog.html" footer={false}>
-      <section className="container" style={{ paddingTop: "5.5rem", textAlign: "center", marginBottom: "-3rem" }}>
+    <Layout active="/blog.html" footer={true}>
+      <section className="container" style={{ paddingTop: "5.5rem", textAlign: "center", marginBottom: "2rem" }}>
         <span className="eyebrow">Weekly updates</span>
         <h1 className="mega-text-mid">The <span className="accent">Blog.</span></h1>
         <p className="section-sub">Our week by week progress.</p>
       </section>
 
+      <RecentUpdates />
+      <h2 className="section-title text-center">Earlier updates</h2>
       <RadialOrbitalTimeline timelineData={timelineData} centerContent={centerCard} />
     </Layout>
   );
