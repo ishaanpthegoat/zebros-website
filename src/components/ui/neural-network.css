@@ -1,0 +1,29 @@
+.neural-console {
+  background-image: radial-gradient(ellipse at 30% 45%, rgb(8 145 178 / 0.09), transparent 65%);
+  box-shadow: inset 0 1px 0 rgb(165 243 252 / 0.06), 0 24px 80px rgb(0 0 0 / 0.25);
+}
+.neural-core-halo {
+  background: radial-gradient(circle, rgb(34 211 238 / 0.13), transparent 68%);
+}
+.neural-core::before, .neural-core::after {
+  content: "";
+  position: absolute;
+  inset: -9px;
+  border-radius: 50%;
+  border: 1px solid rgb(103 232 249 / 0.2);
+  border-top-color: rgb(207 250 254 / 0.8);
+  border-bottom-color: rgb(34 211 238 / 0.7);
+  animation: neural-orbit 16s linear infinite;
+  pointer-events: none;
+}
+.neural-core::after { inset: -17px; animation-direction: reverse; animation-duration: 24s; opacity: 0.4; }
+.neural-scan-ring { transform-origin: 360px 360px; animation: neural-orbit 28s linear infinite; }
+.neural-synapse { animation: neural-charge 3.6s ease-in-out infinite; }
+.neural-detail { box-shadow: inset 0 1px 0 rgb(103 232 249 / 0.07); }
+.neural-network button:focus-visible { outline-color: rgb(103 232 249); }
+.neural-network button:hover .neural-node { box-shadow: 0 0 22px rgb(34 211 238 / 0.3); }
+@keyframes neural-orbit { to { transform: rotate(360deg); } }
+@keyframes neural-charge { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .neural-core::before, .neural-core::after, .neural-scan-ring, .neural-synapse { animation: none; }
+}

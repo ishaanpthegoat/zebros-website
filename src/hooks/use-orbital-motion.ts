@@ -12,13 +12,13 @@ export function useOrbitalMotion(rotating: boolean) {
   }, []);
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
-  const spring = { stiffness: 180, damping: 28, mass: 0.7 };
+  const spring = { stiffness: 160, damping: 24, mass: 0.8 };
   const smoothX = useSpring(pointerX, spring);
   const smoothY = useSpring(pointerY, spring);
-  const x = useTransform(smoothX, [-1, 1], [-6, 6]);
-  const y = useTransform(smoothY, [-1, 1], [-4, 4]);
-  const rotateX = useTransform(smoothY, [-1, 1], [1.5, -1.5]);
-  const rotateY = useTransform(smoothX, [-1, 1], [-1.5, 1.5]);
+  const x = useTransform(smoothX, [-1, 1], [-24, 24]);
+  const y = useTransform(smoothY, [-1, 1], [-18, 18]);
+  const rotateX = useTransform(smoothY, [-1, 1], [6, -6]);
+  const rotateY = useTransform(smoothX, [-1, 1], [-6, 6]);
   const rotation = useMotionValue(0);
   const counterRotation = useTransform(rotation, (value) => -value);
   const speed = useSpring(0, { stiffness: 100, damping: 24 });
@@ -52,5 +52,5 @@ export function useOrbitalMotion(rotating: boolean) {
     pointerY.set(clamp(((event.clientY - bounds.top) / bounds.height - 0.5) * 2));
   };
 
-  return { reducedMotion, x, y, rotateX, rotateY, rotation, counterRotation, trackPointer, resetPointer };
+  return { reducedMotion, pointerX: smoothX, pointerY: smoothY, x, y, rotateX, rotateY, rotation, counterRotation, trackPointer, resetPointer };
 }

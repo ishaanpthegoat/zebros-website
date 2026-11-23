@@ -1,8 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useState, useId } from "react";
 import { motion } from "framer-motion";
 import { useOrbitalMotion } from "@/hooks/use-orbital-motion";
-import { ArrowRight, Pause, Play } from "lucide-react";
+import { NeuralField } from "@/components/ui/neural-field";
+import "./neural-network.css";
+import { ArrowRight, Pause, Play, Activity } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface TimelineItem {
@@ -24,10 +26,11 @@ interface RadialOrbitalTimelineProps {
 }
 
 export default function RadialOrbitalTimeline({ timelineData, centerContent }: RadialOrbitalTimelineProps) {
+  const networkId = useId().replace(/:/g, "");
   const [activeId, setActiveId] = useState(timelineData[0]?.id);
   const [showOverview, setShowOverview] = useState(false);
   const [rotating, setRotating] = useState(false);
-  const { reducedMotion, x, y, rotateX, rotateY, rotation, counterRotation, trackPointer, resetPointer } = useOrbitalMotion(rotating);
+  const { reducedMotion, pointerX, pointerY, x, y, rotateX, rotateY, rotation, counterRotation, trackPointer, resetPointer } = useOrbitalMotion(rotating);
 
   const recent = timelineData.filter((item) => item.id >= 100);
   const earlier = timelineData.filter((item) => item.id < 100);
@@ -45,27 +48,39 @@ export default function RadialOrbitalTimeline({ timelineData, centerContent }: R
   };
 
   return (
-    <section className="container pb-12" aria-label="Connected season timeline">
+    <section className="neural-network container pb-12" aria-label="Connected season timeline">
       <div className="mx-auto mb-4 flex max-w-5xl items-center justify-between gap-4 text-sm text-muted-foreground">
-        <p>{timelineData.length} connected updates · Inner ring: fall progress · Outer ring: earlier milestones</p>
+        <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.18em] text-cyan-200/70"><Activity className="h-4 w-4 text-cyan-300" /><span>Neural archive <span className="mx-2 text-cyan-800">/</span> {timelineData.length} connected records</span></div>
         <Button variant="outline" size="sm" disabled={reducedMotion} onClick={() => setRotating(!rotating)} aria-pressed={rotating && !reducedMotion}>
           {rotating && !reducedMotion ? <Pause className="mr-2 h-3 w-3" /> : <Play className="mr-2 h-3 w-3" />}
           {rotating && !reducedMotion ? "Pause" : "Rotate"}
         </Button>
       </div>
-      <div className="mx-auto grid max-w-6xl items-center gap-6 lg:grid-cols-[minmax(0,720px)_minmax(260px,1fr)]">
-        <div className="relative mx-auto aspect-square w-full max-w-[720px] [perspective:1200px]" onPointerMove={trackPointer} onPointerLeave={resetPointer} onPointerCancel={resetPointer} onFocusCapture={() => { setRotating(false); resetPointer(); }}>
+      <div className="neural-console mx-auto grid max-w-6xl items-center gap-6 rounded-3xl border border-cyan-300/15 bg-slate-950/80 p-5 lg:grid-cols-[minmax(0,720px)_minmax(260px,1fr)]">
+        <div className="relative mx-auto aspect-square w-full max-w-[720px] [perspective:1000px]" onPointerMove={trackPointer} onPointerLeave={resetPointer} onPointerCancel={resetPointer} onFocusCapture={() => { setRotating(false); resetPointer(); }}>
+          <div aria-hidden="true" className="pointer-events-none absolute left-4 top-4 z-20 font-mono text-[9px] uppercase tracking-[0.25em] text-cyan-300/40">ZB / 30415<br /><span className="text-cyan-100/60">Season intelligence</span></div>
           <motion.div className="absolute inset-0" style={{ x, y, rotateX, rotateY }}>
+          <NeuralField pointerX={pointerX} pointerY={pointerY} reducedMotion={reducedMotion} />
+          <div className="neural-core-halo pointer-events-none absolute left-1/2 top-1/2 h-48 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full" aria-hidden="true" />
           <motion.div className="absolute inset-0" style={{ rotate: rotation }}>
           <svg viewBox="0 0 720 720" className="absolute inset-0 h-full w-full overflow-visible" aria-hidden="true">
-            <circle cx="360" cy="360" r="175" fill="none" className="stroke-primary/20" />
-            <circle cx="360" cy="360" r="295" fill="none" className="stroke-border" />
+            <defs>
+              <radialGradient id={`${networkId}-glow`}><stop offset="0%" stopColor="#22d3ee" stopOpacity="0.08" /><stop offset="100%" stopColor="#22d3ee" stopOpacity="0" /></radialGradient>
+            </defs>
+            <circle cx="360" cy="360" r="330" fill={`url(#${networkId}-glow)`} />
+            {[112, 175, 240, 295, 330].map((radius, index) => <circle key={radius} cx="360" cy="360" r={radius} fill="none" stroke="currentColor" className="text-cyan-300/15" strokeWidth={index === 4 ? 2 : 0.6} strokeDasharray={index % 2 ? "3 10" : "1 18"} />)}
+            <circle cx="360" cy="360" r="80" fill="none" className="text-cyan-300/40 neural-scan-ring" stroke="currentColor" strokeWidth="1" strokeDasharray="70 80 15 130" />
             <motion.g key={showOverview ? "overview" : activeId} initial={{ opacity: reducedMotion ? 1 : 0 }} animate={{ opacity: showOverview ? 0 : 1 }} transition={{ duration: reducedMotion ? 0 : 0.22 }}>
             {active?.relatedIds.map((id) => {
               const related = timelineData.find((item) => item.id === id);
               if (!related) return null;
               const from = position(active), to = position(related);
-              return <line key={id} x1={from.x} y1={from.y} x2={to.x} y2={to.y} className="stroke-primary/60" strokeWidth="1.5" />;
+              const dx = to.x - from.x, dy = to.y - from.y, length = Math.hypot(dx, dy);
+              const path = Array.from({ length: 9 }, (_, i) => {
+                const t = i / 8, offset = i === 0 || i === 8 ? 0 : Math.sin(i * 8 + id) * 5;
+                return `${i ? "L" : "M"}${from.x + dx * t - dy / length * offset},${from.y + dy * t + dx / length * offset}`;
+              }).join(" ");
+              return <g key={id}><path d={path} fill="none" className="stroke-cyan-300/15" strokeWidth="5" /><path d={path} fill="none" className="neural-synapse stroke-cyan-200/80" strokeWidth="1.2" /><circle cx={to.x} cy={to.y} r="5" fill="none" className="stroke-cyan-200/60" /></g>;
             })}
             </motion.g>
           </svg>
@@ -75,29 +90,29 @@ export default function RadialOrbitalTimeline({ timelineData, centerContent }: R
             const related = active?.relatedIds.includes(item.id);
             const Icon = item.icon;
             return (
-              <button type="button" key={item.id} onClick={() => select(item.id)} aria-pressed={selected} aria-controls="season-node-detail" aria-label={`${item.title}, ${item.date}`} className="group absolute z-10 flex w-[88px] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-2 rounded-lg text-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" style={{ left: `${point.x / 7.2}%`, top: `${point.y / 7.2}%` }}>
+              <button type="button" key={item.id} onClick={() => select(item.id)} aria-pressed={selected} aria-controls="season-node-detail" aria-label={`${item.title}, ${item.date}`} className="group absolute z-10 flex w-[88px] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-2 rounded-lg text-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300" style={{ left: `${point.x / 7.2}%`, top: `${point.y / 7.2}%` }}>
                 <motion.span style={{ rotate: counterRotation }} className="flex flex-col items-center gap-2">
-                <span className={`grid h-10 w-10 place-items-center rounded-full border-2 transition-transform [transition-duration:var(--dur)] [transition-timing-function:var(--ease-out)] motion-safe:group-hover:scale-[1.06] motion-safe:group-active:scale-[0.97] ${selected ? "border-primary bg-primary text-primary-foreground shadow-lg shadow-primary/20" : related ? "border-primary/60 bg-card text-primary" : "border-border bg-card text-foreground"}`}><Icon className="h-4 w-4" /></span>
-                <span className={`text-[11px] font-semibold leading-tight ${selected ? "text-primary" : "text-muted-foreground group-hover:text-foreground"}`}>{item.title}</span>
+                <span className={`grid h-10 w-10 place-items-center rounded-full neural-node border transition-transform [transition-duration:var(--dur)] [transition-timing-function:var(--ease-out)] motion-safe:group-hover:scale-[1.06] motion-safe:group-active:scale-[0.97] ${selected ? "border-cyan-100 bg-cyan-200 text-slate-950 shadow-[0_0_28px_rgba(34,211,238,0.5)]" : related ? "border-cyan-300/70 bg-slate-900 text-cyan-200 shadow-[0_0_18px_rgba(34,211,238,0.2)]" : "border-cyan-300/30 bg-slate-950/95 text-cyan-100"}`}><Icon className="h-4 w-4" /></span>
+                <span className={`rounded bg-slate-950/80 px-1.5 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wide leading-tight ${selected ? "text-cyan-300" : "text-muted-foreground group-hover:text-foreground"}`}>{item.title}</span>
                 </motion.span>
               </button>
             );
           })}
           </motion.div>
-          <button type="button" onClick={() => { setShowOverview(true); setRotating(false); }} className="absolute left-1/2 top-1/2 z-10 grid h-20 w-20 -translate-x-1/2 -translate-y-1/2 place-content-center rounded-full border border-primary/50 bg-card text-center shadow-lg shadow-primary/10 transition-transform [transition-duration:var(--dur)] [transition-timing-function:var(--ease-out)] motion-safe:hover:scale-[1.03] motion-safe:active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" aria-label="Show latest season overview">
-            <span className="text-xl font-bold text-primary">26/27</span><span className="text-[10px] text-muted-foreground">THE SEASON</span>
+          <button type="button" onClick={() => { setShowOverview(true); setRotating(false); }} className="absolute left-1/2 top-1/2 z-10 grid h-24 w-24 -translate-x-1/2 -translate-y-1/2 place-content-center rounded-full border neural-core border-cyan-200/60 bg-slate-950/95 text-center shadow-[0_0_45px_rgba(34,211,238,0.25)] transition-transform [transition-duration:var(--dur)] [transition-timing-function:var(--ease-out)] motion-safe:hover:scale-[1.03] motion-safe:active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300" aria-label="Show latest season overview">
+            <span className="font-mono text-3xl font-light tracking-tighter text-cyan-100">Z</span><span className="mt-1 font-mono text-[8px] tracking-[0.18em] text-cyan-300/70">NEURAL CORE</span>
           </button>
           </motion.div>
         </div>
-        <aside id="season-node-detail" aria-live="polite" className="relative z-20 rounded-2xl border border-border bg-card/95 p-6">
+        <aside id="season-node-detail" aria-live="polite" className="neural-detail relative z-20 rounded-2xl border border-cyan-300/20 bg-slate-950/90 p-6">
           <motion.div key={showOverview ? "overview" : activeId} initial={reducedMotion ? false : { opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reducedMotion ? 0 : 0.22, ease: [0.32, 0.72, 0, 1] }}>
           {showOverview ? centerContent : active && <>
-            <span className="text-xs font-semibold uppercase tracking-wider text-primary">{active.category}</span>
+            <span className="font-mono text-[10px] font-medium uppercase tracking-[0.2em] text-cyan-300">{active.category}</span>
             <h3 className="mt-2 text-2xl font-bold text-foreground">{active.title}</h3>
             <p className="mt-2 text-xs text-muted-foreground">{active.date}</p>
             <span className="mt-4 inline-block rounded-full border border-border px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{active.status === "completed" ? "Recorded milestone" : active.status === "in-progress" ? "Work in progress" : "Pending"}</span>
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{active.content}</p>
-            {active.href && <a href={active.href} className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary underline underline-offset-4">Full update <ArrowRight className="h-3 w-3" /></a>}
+            {active.href && <a href={active.href} className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-cyan-300 underline underline-offset-4">Full update <ArrowRight className="h-3 w-3" /></a>}
             <div className="mt-6 border-t border-border pt-4">
               <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Connected updates</p>
               <div className="flex flex-wrap gap-2">
