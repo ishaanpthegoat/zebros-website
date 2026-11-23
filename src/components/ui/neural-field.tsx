@@ -28,6 +28,10 @@ export function NeuralField({ pointerX, pointerY, reducedMotion }: { pointerX: M
     const canvas = canvasRef.current;
     const context = canvas?.getContext("2d");
     if (!canvas || !context) return;
+    const palette = getComputedStyle(canvas);
+    const accent = palette.getPropertyValue("--neural-accent-rgb").trim();
+    const light = palette.getPropertyValue("--neural-light-rgb").trim();
+    const white = palette.getPropertyValue("--neural-white-rgb").trim();
     let frame = 0;
     let visible = true;
     let time = 0;
@@ -38,7 +42,7 @@ export function NeuralField({ pointerX, pointerY, reducedMotion }: { pointerX: M
       ctx.clearRect(0, 0, 720, 720);
       const mouse = { x: 360 + pointerX.get() * 360, y: 360 + pointerY.get() * 360 };
       const glow = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 210);
-      glow.addColorStop(0, "rgba(34,211,238,0.09)"); glow.addColorStop(1, "rgba(34,211,238,0)");
+      glow.addColorStop(0, `rgba(${accent},0.09)`); glow.addColorStop(1, `rgba(${accent},0)`);
       ctx.fillStyle = glow; ctx.fillRect(0, 0, 720, 720);
       field.edges.forEach(([a, b], index) => {
         const from = field.points[a], to = field.points[b];
@@ -52,17 +56,17 @@ export function NeuralField({ pointerX, pointerY, reducedMotion }: { pointerX: M
           const jitter = Math.sin(index * 11 + step * 7 + Math.floor(time * 5)) * (1.2 + surge * 3);
           ctx.lineTo(from.x + dx * fraction - dy / length * jitter, from.y + dy * fraction + dx / length * jitter);
         }
-        ctx.lineTo(to.x, to.y); ctx.strokeStyle = `rgba(103,232,249,${opacity})`; ctx.lineWidth = surge > 0.6 ? 1.1 : 0.65; ctx.stroke();
+        ctx.lineTo(to.x, to.y); ctx.strokeStyle = `rgba(${light},${opacity})`; ctx.lineWidth = surge > 0.6 ? 1.1 : 0.65; ctx.stroke();
         if (!reducedMotion && index % 4 === 0) {
           const progress = (time * 0.16 + index * 0.17) % 1;
           ctx.beginPath(); ctx.arc(from.x + dx * progress, from.y + dy * progress, 1.2 + near, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(207,250,254,${0.3 + near * 0.5})`; ctx.fill();
+          ctx.fillStyle = `rgba(${white},${0.3 + near * 0.5})`; ctx.fill();
         }
       });
       field.points.forEach((point) => {
         const pulse = reducedMotion ? 0.4 : 0.45 + Math.sin(time + point.phase) * 0.2;
         ctx.beginPath(); ctx.arc(point.x, point.y, 1.3, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(165,243,252,${pulse})`; ctx.fill();
+        ctx.fillStyle = `rgba(${light},${pulse})`; ctx.fill();
       });
     };
     const resize = () => {
