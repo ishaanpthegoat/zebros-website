@@ -1,9 +1,7 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
-import { ArrowRight, Link } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { useEffect, useState } from "react";
+import { ArrowRight, Pause, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface TimelineItem {
   id: number;
@@ -15,6 +13,7 @@ interface TimelineItem {
   relatedIds: number[];
   status: "completed" | "in-progress" | "pending";
   energy: number;
+  href?: string;
 }
 
 interface RadialOrbitalTimelineProps {
@@ -22,339 +21,106 @@ interface RadialOrbitalTimelineProps {
   centerContent?: React.ReactNode;
 }
 
-export default function RadialOrbitalTimeline({
-  timelineData,
-  centerContent,
-}: RadialOrbitalTimelineProps) {
-  const [centerHover, setCenterHover] = useState(false);
-  const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>(
-    {}
-  );
-  const [viewMode] = useState<"orbital">("orbital");
-  const [rotationAngle, setRotationAngle] = useState<number>(0);
-  const [autoRotate, setAutoRotate] = useState<boolean>(true);
-  const [pulseEffect, setPulseEffect] = useState<Record<number, boolean>>({});
-  const [centerOffset] = useState<{ x: number; y: number }>({
-    x: 0,
-    y: 0,
-  });
-  const [activeNodeId, setActiveNodeId] = useState<number | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const orbitRef = useRef<HTMLDivElement>(null);
-  const nodeRefs = useRef<Record<number, HTMLDivElement | null>>({});
-
-  const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === containerRef.current || e.target === orbitRef.current) {
-      setExpandedItems({});
-      setActiveNodeId(null);
-      setPulseEffect({});
-      setAutoRotate(true);
-    }
-  };
-
-  const toggleItem = (id: number) => {
-    setExpandedItems((prev) => {
-      const newState = { ...prev };
-      Object.keys(newState).forEach((key) => {
-        if (parseInt(key) !== id) {
-          newState[parseInt(key)] = false;
-        }
-      });
-
-      newState[id] = !prev[id];
-
-      if (!prev[id]) {
-        setActiveNodeId(id);
-        setAutoRotate(false);
-
-        const relatedItems = getRelatedItems(id);
-        const newPulseEffect: Record<number, boolean> = {};
-        relatedItems.forEach((relId) => {
-          newPulseEffect[relId] = true;
-        });
-        setPulseEffect(newPulseEffect);
-
-        centerViewOnNode(id);
-      } else {
-        setActiveNodeId(null);
-        setAutoRotate(true);
-        setPulseEffect({});
-      }
-
-      return newState;
-    });
-  };
+export default function RadialOrbitalTimeline({ timelineData, centerContent }: RadialOrbitalTimelineProps) {
+  const [activeId, setActiveId] = useState(timelineData[0]?.id);
+  const [showOverview, setShowOverview] = useState(false);
+  const [rotating, setRotating] = useState(false);
+  const [angle, setAngle] = useState(0);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
-    let rotationTimer: ReturnType<typeof setInterval>;
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReducedMotion(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
 
-    if (autoRotate && viewMode === "orbital") {
-      rotationTimer = setInterval(() => {
-        setRotationAngle((prev) => {
-          const newAngle = (prev + 0.3) % 360;
-          return Number(newAngle.toFixed(3));
-        });
-      }, 50);
-    }
-
-    return () => {
-      if (rotationTimer) {
-        clearInterval(rotationTimer);
-      }
+  useEffect(() => {
+    if (!rotating || reducedMotion) return;
+    let frame: number;
+    let previous = 0;
+    const animate = (time: number) => {
+      if (previous) setAngle((value) => (value + Math.min(time - previous, 50) * 0.003) % 360);
+      previous = time;
+      frame = requestAnimationFrame(animate);
     };
-  }, [autoRotate, viewMode]);
+    frame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frame);
+  }, [rotating, reducedMotion]);
 
-  const centerViewOnNode = (nodeId: number) => {
-    if (viewMode !== "orbital" || !nodeRefs.current[nodeId]) return;
-
-    const nodeIndex = timelineData.findIndex((item) => item.id === nodeId);
-    const totalNodes = timelineData.length;
-    const targetAngle = (nodeIndex / totalNodes) * 360;
-
-    setRotationAngle(270 - targetAngle);
+  const recent = timelineData.filter((item) => item.id >= 100);
+  const earlier = timelineData.filter((item) => item.id < 100);
+  const active = timelineData.find((item) => item.id === activeId) ?? timelineData[0];
+  const select = (id: number) => {
+    setActiveId(id);
+    setShowOverview(false);
+    setRotating(false);
   };
-
-  const calculateNodePosition = (index: number, total: number) => {
-    const angle = ((index / total) * 360 + rotationAngle) % 360;
-    const radius = 200;
-    const radian = (angle * Math.PI) / 180;
-
-    const x = radius * Math.cos(radian) + centerOffset.x;
-    const y = radius * Math.sin(radian) + centerOffset.y;
-
-    const zIndex = Math.round(100 + 50 * Math.cos(radian));
-    const opacity = Math.max(
-      0.4,
-      Math.min(1, 0.4 + 0.6 * ((1 + Math.sin(radian)) / 2))
-    );
-
-    return { x, y, angle, zIndex, opacity };
-  };
-
-  const getRelatedItems = (itemId: number): number[] => {
-    const currentItem = timelineData.find((item) => item.id === itemId);
-    return currentItem ? currentItem.relatedIds : [];
-  };
-
-  const isRelatedToActive = (itemId: number): boolean => {
-    if (!activeNodeId) return false;
-    const relatedItems = getRelatedItems(activeNodeId);
-    return relatedItems.includes(itemId);
-  };
-
-  const getStatusStyles = (status: TimelineItem["status"]): string => {
-    switch (status) {
-      case "completed":
-        return "text-white bg-black border-white";
-      case "in-progress":
-        return "text-black bg-white border-black";
-      case "pending":
-        return "text-white bg-black/40 border-white/50";
-      default:
-        return "text-white bg-black/40 border-white/50";
-    }
+  const position = (item: TimelineItem) => {
+    const ring = item.id >= 100 ? recent : earlier;
+    const radius = item.id >= 100 ? 175 : 295;
+    const radians = ((ring.indexOf(item) / ring.length) * 360 - 90 + angle) * Math.PI / 180;
+    return { x: 360 + radius * Math.cos(radians), y: 360 + radius * Math.sin(radians) };
   };
 
   return (
-    <div
-      className="w-full h-screen flex flex-col items-center justify-center bg-transparent overflow-hidden"
-      ref={containerRef}
-      onClick={handleContainerClick}
-    >
-      <div className="relative w-full max-w-4xl h-full flex items-center justify-center">
-        <div
-          className="absolute w-full h-full flex items-center justify-center"
-          ref={orbitRef}
-          style={{
-            perspective: "1000px",
-            transform: `translate(${centerOffset.x}px, ${centerOffset.y}px)`,
-          }}
-        >
-          <div
-            className="absolute z-20 flex items-center justify-center"
-            onMouseEnter={() => setCenterHover(true)}
-            onMouseLeave={() => setCenterHover(false)}
-          >
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#ff1f8f] via-[#ff5fa8] to-[#ffb3d6] animate-pulse flex items-center justify-center">
-              <div className="absolute w-20 h-20 rounded-full border border-white/20 animate-ping opacity-70"></div>
-              <div
-                className="absolute w-24 h-24 rounded-full border border-white/10 animate-ping opacity-50"
-                style={{ animationDelay: "0.5s" }}
-              ></div>
-              <div className="w-8 h-8 rounded-full bg-white/80 backdrop-blur-md"></div>
-            </div>
-            {centerContent && (
-              <div
-                className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-40 w-[min(90vw,420px)] transition-all duration-300 ${
-                  centerHover ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-95 pointer-events-none"
-                }`}
-              >
-                {centerContent}
-              </div>
-            )}
-          </div>
-
-          <div className="absolute w-96 h-96 rounded-full border border-white/10"></div>
-
-          {timelineData.map((item, index) => {
-            const position = calculateNodePosition(index, timelineData.length);
-            const isExpanded = expandedItems[item.id];
-            const isRelated = isRelatedToActive(item.id);
-            const isPulsing = pulseEffect[item.id];
+    <section className="container pb-12" aria-label="Connected season timeline">
+      <div className="mx-auto mb-4 flex max-w-5xl items-center justify-between gap-4 text-sm text-muted-foreground">
+        <p>{timelineData.length} connected updates · Inner ring: fall progress · Outer ring: earlier milestones</p>
+        <Button variant="outline" size="sm" disabled={reducedMotion} onClick={() => setRotating(!rotating)} aria-pressed={rotating && !reducedMotion}>
+          {rotating && !reducedMotion ? <Pause className="mr-2 h-3 w-3" /> : <Play className="mr-2 h-3 w-3" />}
+          {rotating && !reducedMotion ? "Pause" : "Rotate"}
+        </Button>
+      </div>
+      <div className="mx-auto grid max-w-6xl items-center gap-6 lg:grid-cols-[minmax(0,720px)_minmax(260px,1fr)]">
+        <div className="relative mx-auto aspect-square w-full max-w-[720px]" onFocusCapture={() => setRotating(false)}>
+          <svg viewBox="0 0 720 720" className="absolute inset-0 h-full w-full overflow-visible" aria-hidden="true">
+            <circle cx="360" cy="360" r="175" fill="none" className="stroke-primary/20" />
+            <circle cx="360" cy="360" r="295" fill="none" className="stroke-border" />
+            {active?.relatedIds.map((id) => {
+              const related = timelineData.find((item) => item.id === id);
+              if (!related) return null;
+              const from = position(active), to = position(related);
+              return <line key={id} x1={from.x} y1={from.y} x2={to.x} y2={to.y} className="stroke-primary/60" strokeWidth="1.5" />;
+            })}
+          </svg>
+          <button type="button" onClick={() => { setShowOverview(true); setRotating(false); }} className="absolute left-1/2 top-1/2 z-10 grid h-20 w-20 -translate-x-1/2 -translate-y-1/2 place-content-center rounded-full border border-primary/50 bg-card text-center shadow-lg shadow-primary/10 transition-transform duration-200 hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" aria-label="Show latest season overview">
+            <span className="text-xl font-bold text-primary">26/27</span><span className="text-[10px] text-muted-foreground">THE SEASON</span>
+          </button>
+          {timelineData.map((item) => {
+            const point = position(item);
+            const selected = item.id === activeId && !showOverview;
+            const related = active?.relatedIds.includes(item.id);
             const Icon = item.icon;
-
-            const nodeStyle = {
-              transform: `translate(${position.x}px, ${position.y}px)`,
-              zIndex: isExpanded ? 200 : position.zIndex,
-              opacity: isExpanded ? 1 : position.opacity,
-            };
-
             return (
-              <div
-                key={item.id}
-                ref={(el) => {
-                  nodeRefs.current[item.id] = el;
-                }}
-                className="absolute transition-all duration-700 cursor-pointer"
-                style={nodeStyle}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleItem(item.id);
-                }}
-                onMouseEnter={() => {
-                  setActiveNodeId(item.id);
-                  setAutoRotate(false);
-                  setExpandedItems({ [item.id]: true });
-                  const rel: Record<number, boolean> = {};
-                  getRelatedItems(item.id).forEach((r) => (rel[r] = true));
-                  setPulseEffect(rel);
-                }}
-                onMouseLeave={() => {
-                  setActiveNodeId(null);
-                  setAutoRotate(true);
-                  setExpandedItems({});
-                  setPulseEffect({});
-                }}
-              >
-                <div
-                  className={`absolute rounded-full -inset-1 ${
-                    isPulsing ? "animate-pulse duration-1000" : ""
-                  }`}
-                  style={{
-                    background: `radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%)`,
-                    width: `${item.energy * 0.5 + 40}px`,
-                    height: `${item.energy * 0.5 + 40}px`,
-                    left: `-${(item.energy * 0.5 + 40 - 40) / 2}px`,
-                    top: `-${(item.energy * 0.5 + 40 - 40) / 2}px`,
-                  }}
-                ></div>
-
-                <div
-                  className={`
-                  w-10 h-10 rounded-full flex items-center justify-center
-                  ${
-                    isExpanded
-                      ? "bg-white text-black"
-                      : isRelated
-                      ? "bg-white/50 text-black"
-                      : "bg-black text-white"
-                  }
-                  border-2
-                  ${
-                    isExpanded
-                      ? "border-white shadow-lg shadow-white/30"
-                      : isRelated
-                      ? "border-white animate-pulse"
-                      : "border-white/40"
-                  }
-                  transition-all duration-300 transform
-                  ${isExpanded ? "scale-150" : ""}
-                `}
-                >
-                  <Icon size={16} />
-                </div>
-
-                <div
-                  className={`
-                  absolute top-12  whitespace-nowrap
-                  text-xs font-semibold tracking-wider
-                  transition-all duration-300
-                  ${isExpanded ? "text-white scale-125" : "text-white/70"}
-                `}
-                >
-                  {item.title}
-                </div>
-
-                {isExpanded && (
-                  <Card className="absolute top-20 left-1/2 -translate-x-1/2 w-64 bg-card/95 backdrop-blur-lg border-primary/30 shadow-xl shadow-black/40 overflow-visible">
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-px h-3 bg-white/50"></div>
-                    <CardHeader className="pb-2">
-                      <div className="flex justify-between items-center">
-                        <Badge
-                          className={`px-2 text-xs ${getStatusStyles(
-                            item.status
-                          )}`}
-                        >
-                          {item.status === "completed"
-                            ? "COMPLETE"
-                            : item.status === "in-progress"
-                            ? "IN PROGRESS"
-                            : "PENDING"}
-                        </Badge>
-                        <span className="text-xs font-mono text-white/50">
-                          {item.date}
-                        </span>
-                      </div>
-                      <CardTitle className="text-sm mt-2">
-                        {item.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="text-xs text-white/80">
-                      <p>{item.content}</p>
-
-                      {item.relatedIds.length > 0 && (
-                        <div className="mt-4 pt-3 border-t border-white/10">
-                          <div className="flex items-center mb-2">
-                            <Link size={10} className="text-white/70 mr-1" />
-                            <h4 className="text-xs uppercase tracking-wider font-medium text-white/70">
-                              Connected Nodes
-                            </h4>
-                          </div>
-                          <div className="flex flex-wrap gap-1">
-                            {item.relatedIds.map((relatedId) => {
-                              const relatedItem = timelineData.find(
-                                (i) => i.id === relatedId
-                              );
-                              return (
-                                <Button
-                                  key={relatedId}
-                                  variant="outline"
-                                  size="sm"
-                                  className="flex items-center h-6 px-2 py-0 text-xs rounded-none border-white/20 bg-transparent hover:bg-white/10 text-white/80 hover:text-white transition-all"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    toggleItem(relatedId);
-                                  }}
-                                >
-                                  {relatedItem?.title}
-                                  <ArrowRight
-                                    size={8}
-                                    className="ml-1 text-white/60"
-                                  />
-                                </Button>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
-                )}
-              </div>
+              <button type="button" key={item.id} onClick={() => select(item.id)} aria-pressed={selected} aria-controls="season-node-detail" aria-label={`${item.title}, ${item.date}`} className="group absolute z-10 flex w-[88px] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-2 rounded-lg text-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" style={{ left: `${point.x / 7.2}%`, top: `${point.y / 7.2}%` }}>
+                <span className={`grid h-10 w-10 place-items-center rounded-full border-2 transition-[transform,background-color] duration-200 group-hover:scale-110 ${selected ? "border-primary bg-primary text-primary-foreground shadow-lg shadow-primary/20" : related ? "border-primary/60 bg-card text-primary" : "border-border bg-card text-foreground"}`}><Icon className="h-4 w-4" /></span>
+                <span className={`text-[11px] font-semibold leading-tight ${selected ? "text-primary" : "text-muted-foreground group-hover:text-foreground"}`}>{item.title}</span>
+              </button>
             );
           })}
         </div>
+        <aside id="season-node-detail" aria-live="polite" className="relative z-20 rounded-2xl border border-border bg-card/95 p-6">
+          {showOverview ? centerContent : active && <>
+            <span className="text-xs font-semibold uppercase tracking-wider text-primary">{active.category}</span>
+            <h3 className="mt-2 text-2xl font-bold text-foreground">{active.title}</h3>
+            <p className="mt-2 text-xs text-muted-foreground">{active.date}</p>
+            <span className="mt-4 inline-block rounded-full border border-border px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{active.status === "completed" ? "Recorded milestone" : active.status === "in-progress" ? "Work in progress" : "Pending"}</span>
+            <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{active.content}</p>
+            {active.href && <a href={active.href} className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary underline underline-offset-4">Full update <ArrowRight className="h-3 w-3" /></a>}
+            <div className="mt-6 border-t border-border pt-4">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Connected updates</p>
+              <div className="flex flex-wrap gap-2">
+                {active.relatedIds.map((id) => {
+                  const related = timelineData.find((item) => item.id === id);
+                  return related && <Button key={id} variant="outline" size="sm" onClick={() => select(id)}>{related.title}<ArrowRight className="ml-2 h-3 w-3" /></Button>;
+                })}
+              </div>
+            </div>
+          </>}
+        </aside>
       </div>
-    </div>
+    </section>
   );
 }

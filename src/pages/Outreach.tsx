@@ -9,12 +9,6 @@ const CONTENT = `<section class="container" style="padding-top: 5rem;">
 
   <div class="outreach-grid">
 
-    <div class="outreach-card reveal">
-      <div class="outreach-icon">📚</div>
-      <h3>Library STEM Days</h3>
-      <p>We bring a practice robot and a mini-field to Cary Library STEM events, where children can drive a real robot and ask questions about how it works.</p>
-    </div>
-
     <div class="outreach-card reveal reveal-delay-1">
       <div class="outreach-icon">🧒</div>
       <h3>FLL Mentorship</h3>

@@ -147,7 +147,7 @@ export function Home() {
           <div className="pillar reveal reveal-delay-2">
             <div className="pillar-num">03 / MENTOR</div>
             <h3>We help others.</h3>
-            <p>We help out local FIRST LEGO League teams, run STEM days at the library, and let younger students use our shop.</p>
+            <p>We support younger robotics teams and plan hands-on workshops that make STEM more accessible in our community.</p>
           </div>
         </div>
       </section>

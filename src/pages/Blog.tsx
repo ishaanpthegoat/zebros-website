@@ -1,10 +1,11 @@
-import { Wrench, Cog, ClipboardList, Users, PenTool, Megaphone, Lightbulb, Trophy, Handshake } from "lucide-react";
+import { Wrench, Cog, ClipboardList, Users, PenTool, Lightbulb, Trophy, Handshake } from "lucide-react";
 import { Layout } from "@/components/site/layout";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 import { RecentUpdates } from "@/components/site/recent-updates";
+import { teamUpdates, latestTeamUpdate } from "@/data/team-updates";
 import { useIsMobile } from "@/hooks/use-is-mobile";
 
-const timelineData = [
+const earlierTimelineData = [
   {
     id: 1,
     title: "Build Plan",
@@ -111,20 +112,9 @@ const timelineData = [
     content: "Trained new members in Onshape so they can design custom mounting plates.",
     category: "Training",
     icon: PenTool,
-    relatedIds: [9, 11],
+    relatedIds: [9, 12],
     status: "completed" as const,
     energy: 40,
-  },
-  {
-    id: 11,
-    title: "STEM Day",
-    date: "May 4",
-    content: "Ran a robotics demo booth at the Cary Library STEM day for about 80 kids.",
-    category: "Outreach",
-    icon: Megaphone,
-    relatedIds: [10, 12],
-    status: "completed" as const,
-    energy: 32,
   },
   {
     id: 12,
@@ -133,7 +123,7 @@ const timelineData = [
     content: "Sorted every fastener, labeled the drawers, and organized the pit for build season.",
     category: "Logistics",
     icon: Wrench,
-    relatedIds: [11, 13],
+    relatedIds: [10, 13],
     status: "completed" as const,
     energy: 24,
   },
@@ -150,17 +140,30 @@ const timelineData = [
   },
 ];
 
+const fallTimelineData = teamUpdates.map((update, index) => ({
+  id: 100 + index,
+  title: ["Reliability", "Assembly", "Community", "Ramp", "Transfer", "Shooter", "Robot Code", "Intake Tests"][index],
+  date: update.dateLabel,
+  content: update.paragraphs.join(" "),
+  category: update.category,
+  icon: [ClipboardList, Cog, Handshake, Wrench, Cog, Wrench, PenTool, Lightbulb][index],
+  relatedIds: index === 0 ? [101, 103] : [99 + index, index < teamUpdates.length - 1 ? 101 + index : 1],
+  status: (["in-progress", "in-progress", "in-progress", "completed", "completed", "in-progress", "in-progress", "completed"] as const)[index],
+  energy: 100 - index * 5,
+  href: `#${update.id}`,
+}));
+
+const timelineData = [...fallTimelineData, ...earlierTimelineData.map((item) => ({
+  ...item,
+  relatedIds: item.id === 1 ? [...item.relatedIds, 107] : item.relatedIds,
+}))];
+
 const centerCard = (
-  <div className="rounded-xl border border-primary/20 bg-card/95 backdrop-blur-lg p-4 shadow-2xl shadow-black/60">
-    <span className="text-[11px] uppercase tracking-wider text-primary font-semibold">Week of September 22, 2026</span>
-    <h3 className="mt-1 text-lg font-bold text-white">First iteration done, intake and sorting locked in</h3>
-    <p className="mt-1 text-sm text-white/70">
-      Finished our first intake and drivetrain iteration, settled on a vertical intake that sorts balls by size into a bucket, and started planning alliance strategy for competition.
-    </p>
-    <div className="mt-3 grid grid-cols-2 gap-2">
-      <img src="/img/robot/shot-1.png" alt="CAD of the full V2 robot, arm extended" className="w-full h-24 object-cover rounded-lg border border-white/10" loading="lazy" />
-      <img src="/img/robot/shot-6.png" alt="CAD of the arm module detached from the chassis" className="w-full h-24 object-cover rounded-lg border border-white/10" loading="lazy" />
-    </div>
+  <div className="rounded-xl border border-primary/20 bg-card/95 p-5 shadow-2xl backdrop-blur-lg">
+    <span className="text-xs font-semibold uppercase tracking-wider text-primary">Latest documented update · November 10, 2026</span>
+    <h3 className="mt-2 text-lg font-bold text-foreground">{latestTeamUpdate.title}</h3>
+    <p className="mt-2 text-sm text-muted-foreground">{latestTeamUpdate.paragraphs[0]}</p>
+    <a href={`#${latestTeamUpdate.id}`} className="mt-3 inline-block text-sm font-semibold text-primary underline underline-offset-4">Read the full update</a>
   </div>
 );
 
@@ -181,11 +184,10 @@ export function Blog() {
         <RecentUpdates />
         <section className="container">
           <h2 className="section-title text-center">Earlier updates</h2>
-          <div className="mx-auto mt-6 w-full max-w-lg">{centerCard}</div>
 
           {/* Vertical, full-width timeline — readable on a phone */}
           <ol className="relative mx-auto mt-8 w-full max-w-lg space-y-4 border-l border-primary/25 pl-5">
-            {timelineData.map((item) => {
+            {earlierTimelineData.map((item) => {
               const Icon = item.icon;
               return (
                 <li key={item.id} className="relative">
@@ -223,9 +225,9 @@ export function Blog() {
         <p className="section-sub">Our week by week progress.</p>
       </section>
 
-      <RecentUpdates />
-      <h2 className="section-title text-center">Earlier updates</h2>
+      <h2 className="section-title text-center">The season, connected</h2>
       <RadialOrbitalTimeline timelineData={timelineData} centerContent={centerCard} />
+      <RecentUpdates />
     </Layout>
   );
 }
