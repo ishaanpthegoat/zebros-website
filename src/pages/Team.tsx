@@ -20,6 +20,11 @@ const MEMBERS: Member[] = [
   { name: "Saisri Kondapaneni", initials: "SK", role: "Script, CAD, Mechanical", bio: "Saisri works on script, CAD, and the mechanical sub-team. Saisri is comfortable moving between design and build tasks during the season. More about Saisri coming soon.", photo: "/img/saisri.jpg" },
   { name: "Sanya Patel", initials: "SP", role: "Bot Maintenance, Portfolio, Mechanical", bio: "Hi, I'm Sanya! I work on the mechanical team, help maintain our robot between matches, and contribute to our team's portfolio. Keeping the robot in top condition during competitions is one of my main responsibilities, as it helps ensure everything runs smoothly when it's time to compete. I enjoy solving problems, working with my teammates, and helping our team perform at its best. More about me coming soon!", photo: "/img/sanya.png" },
   { name: "Yuvika Kandel", initials: "YK", role: "Programming, Project Management", bio: "Hi, I'm Yuvika! I work on the programming team and help around with project management. My main job is to make sure all parts of the robot are coded and work how we want them to, making our drivers' jobs easier. I love robotics and enjoy spending time with my friends during practices, whether it's to work on the code or chat during lunch breaks.", photo: "/img/yuvika.jpg" },
+  { name: "Ashik", initials: "A", role: "Mechanical", bio: "Ashik is part of the Zebros mechanical team, working on the robot's mechanisms and build tasks.", photo: null },
+  { name: "John M.", initials: "JM", role: "Programming", bio: "John works with the Zebros programming team on robot code and tuning.", photo: "/img/team/john-m.webp" },
+  { name: "Nivaan", initials: "N", role: "Website", bio: "Nivaan works on the team website, helping keep the robot designs and teammate profiles up to date.", photo: "/img/team/nivaan.webp" },
+  { name: "Prabhas", initials: "P", role: "Programming", bio: "Prabhas is part of the Zebros programming team, working on robot code and tuning.", photo: null },
+  { name: "Saimanvik", initials: "S", role: "Team Member", bio: "Saimanvik is a member of FTC Team 30415 Zebros.", photo: "/img/team/saimanvik.webp" },
 ];
 
 // Fully literal class strings — Tailwind's scanner reads source text, so
@@ -31,14 +36,17 @@ const MEMBERS: Member[] = [
 // center and the last sits down-and-right — so the whole fan (not just its
 // top-left corner) lands in the middle of the page.
 const POS = [
-  "translate-x-[-203px] translate-y-[-115px] hover:translate-x-[-203px] hover:translate-y-[-131px]",
-  "translate-x-[-145px] translate-y-[-82px] hover:translate-x-[-145px] hover:translate-y-[-98px]",
-  "translate-x-[-87px] translate-y-[-49px] hover:translate-x-[-87px] hover:translate-y-[-65px]",
-  "translate-x-[-29px] translate-y-[-16px] hover:translate-x-[-29px] hover:translate-y-[-32px]",
-  "translate-x-[29px] translate-y-[17px] hover:translate-x-[29px] hover:translate-y-[1px]",
-  "translate-x-[87px] translate-y-[50px] hover:translate-x-[87px] hover:translate-y-[34px]",
-  "translate-x-[145px] translate-y-[83px] hover:translate-x-[145px] hover:translate-y-[67px]",
-  "translate-x-[203px] translate-y-[116px] hover:translate-x-[203px] hover:translate-y-[100px]",
+  "translate-x-[-250px] translate-y-[-175px] hover:translate-x-[-250px] hover:translate-y-[-191px]",
+  "translate-x-[-200px] translate-y-[-140px] hover:translate-x-[-200px] hover:translate-y-[-156px]",
+  "translate-x-[-150px] translate-y-[-105px] hover:translate-x-[-150px] hover:translate-y-[-121px]",
+  "translate-x-[-100px] translate-y-[-70px] hover:translate-x-[-100px] hover:translate-y-[-86px]",
+  "translate-x-[-50px] translate-y-[-35px] hover:translate-x-[-50px] hover:translate-y-[-51px]",
+  "translate-x-[0px] translate-y-[0px] hover:translate-x-[0px] hover:translate-y-[-16px]",
+  "translate-x-[50px] translate-y-[35px] hover:translate-x-[50px] hover:translate-y-[19px]",
+  "translate-x-[100px] translate-y-[70px] hover:translate-x-[100px] hover:translate-y-[54px]",
+  "translate-x-[150px] translate-y-[105px] hover:translate-x-[150px] hover:translate-y-[89px]",
+  "translate-x-[200px] translate-y-[140px] hover:translate-x-[200px] hover:translate-y-[124px]",
+  "translate-x-[250px] translate-y-[175px] hover:translate-x-[250px] hover:translate-y-[159px]",
 ];
 
 export function Team() {
@@ -73,7 +81,7 @@ export function Team() {
         <section className="container flex min-h-[100dvh] flex-col items-center justify-center text-center">
           <h1 className="reveal mega-text-mid">The <span className="accent">Team.</span></h1>
 
-          <div className="mt-10 flex min-h-[480px] w-full items-center justify-center">
+          <div className="mt-10 flex min-h-[620px] w-full items-center justify-center">
             <div className="origin-center scale-[0.42] sm:scale-[0.72] lg:scale-[1]">
               <DisplayCards cards={cards} />
             </div>
@@ -87,7 +95,7 @@ export function Team() {
           onClick={() => setSelected(null)}
         >
           <div
-            className="relative w-full max-w-md overflow-hidden rounded-2xl border border-border bg-card shadow-2xl"
+            role="dialog" aria-modal="true" aria-labelledby="member-profile-title" className="relative w-full max-w-md overflow-hidden rounded-2xl border border-border bg-card shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -105,7 +113,7 @@ export function Team() {
               )}
             </div>
             <div className="p-6">
-              <h3 className="text-2xl font-extrabold text-white">{selected.name}</h3>
+              <h3 id="member-profile-title" className="text-2xl font-extrabold text-white">{selected.name}</h3>
               <p className="mt-1 text-sm font-semibold uppercase tracking-wide text-primary">{selected.role}</p>
               <p className="mt-3 text-sm leading-relaxed text-foreground/80">{selected.bio}</p>
             </div>
